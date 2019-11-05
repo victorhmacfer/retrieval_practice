@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:retrieval_practice/bloc_base.dart';
-import 'package:retrieval_practice/subject.dart';
+import 'package:retrieval_practice/blocs/bloc_base.dart';
+import 'package:retrieval_practice/models/subject.dart';
 
 
 // import 'package:path/path.dart';

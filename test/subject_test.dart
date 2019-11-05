@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:retrieval_practice/subject.dart';
-import 'package:retrieval_practice/study.dart';
+import 'package:retrieval_practice/models/subject.dart';
+import 'package:retrieval_practice/models/study.dart';
 
 void main() {
   
