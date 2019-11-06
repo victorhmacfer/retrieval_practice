@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:retrieval_practice/custom_widgets/deck.dart';
+import 'package:retrieval_practice/screens/create_deck_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -8,7 +9,10 @@ class HomeScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
-          print('I pressed the FAB.');
+          Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => CreateDeckScreen()),
+        );
         },
       ),
       

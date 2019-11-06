@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:retrieval_practice/custom_widgets/deck.dart';
 import 'package:retrieval_practice/custom_widgets/pill_button.dart';
 import 'package:retrieval_practice/custom_widgets/subject_tile.dart';
 
