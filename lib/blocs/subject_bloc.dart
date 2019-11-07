@@ -9,34 +9,34 @@ import 'package:retrieval_practice/models/subject.dart';
 
 // const RET_PRAC_DB_NAME = 'ret_prac_database.db';
 
-class SubjectBloc extends BlocBase {
-  List<Subject> _subjects = [];
+// class SubjectBloc extends BlocBase {
+//   List<Question> _subjects = [];
 
-  final StreamController<List<Subject>> _subjectStreamController =
-      StreamController.broadcast();
+//   final StreamController<List<Question>> _subjectStreamController =
+//       StreamController.broadcast();
 
-  Stream<List<Subject>> get subjectStream => _subjectStreamController.stream;
+//   Stream<List<Question>> get subjectStream => _subjectStreamController.stream;
 
-  // Database _database;
+//   // Database _database;
 
-  SubjectBloc() {}
+//   SubjectBloc() {}
 
-  // void _initializeDatabaseReference() async {
-  //   var path = await getDatabasesPath();
-  //   _database = await openDatabase(join(path, RET_PRAC_DB_NAME));
-  // }
+//   // void _initializeDatabaseReference() async {
+//   //   var path = await getDatabasesPath();
+//   //   _database = await openDatabase(join(path, RET_PRAC_DB_NAME));
+//   // }
 
-  //TODO: should receive title as argument
-  void onNewSubjectPressed(String title) {
-    _subjects.add(Subject.firstStudied(title));
-    _subjectStreamController.add(_subjects);
-  }
+//   //TODO: should receive title as argument
+//   void onNewSubjectPressed(String title) {
+//     _subjects.add(Question.firstStudied(title));
+//     _subjectStreamController.add(_subjects);
+//   }
 
 
 
-  @override
-  void dispose() {
-    _subjectStreamController.close();
+//   @override
+//   void dispose() {
+//     _subjectStreamController.close();
     
-  }
-}
+//   }
+// }

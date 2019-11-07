@@ -6,6 +6,12 @@ import 'package:retrieval_practice/screens/deck_info_screen.dart';
 // TODO: sizes are wrong for different resolutions
 // TODO: change text to actual data
 class Deck extends StatelessWidget {
+
+  String title;
+
+  Deck(this.title);
+
+
   @override
   Widget build(BuildContext context) {
 
@@ -44,7 +50,7 @@ class Deck extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.only(bottom: 8),
                         child: Text(
-                          'OS Concepts',
+                          title,
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 22,

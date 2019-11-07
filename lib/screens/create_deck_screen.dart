@@ -1,15 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:retrieval_practice/blocs/main_bloc.dart';
 
 
 
 class CreateDeckScreen extends StatefulWidget {
+
+  final MainBloc mainBloc;
+
+  const CreateDeckScreen(this.mainBloc);
+
   @override
   _CreateDeckScreenState createState() => _CreateDeckScreenState();
 }
 
 class _CreateDeckScreenState extends State<CreateDeckScreen> {
+
+  final myController = TextEditingController();
+
+
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Create deck'),
@@ -21,6 +32,7 @@ class _CreateDeckScreenState extends State<CreateDeckScreen> {
             icon: Icon(Icons.check, color: Colors.blue[200], size: 30,),
             onPressed: () {
               print('I pressed check button.');
+              widget.mainBloc.onCreateNewSubject(myController.text);
             },
           )
         ],
@@ -40,6 +52,7 @@ class _CreateDeckScreenState extends State<CreateDeckScreen> {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: TextField(
+                controller: myController,
                 cursorColor: Colors.blue[200],
                 showCursor: true,
                 cursorWidth: 3,
@@ -58,4 +71,15 @@ class _CreateDeckScreenState extends State<CreateDeckScreen> {
       ),
     );
   }
+
+
+  @override
+  void dispose() {
+    myController.dispose();
+    super.dispose();
+  }
+
+
+
+
 }
