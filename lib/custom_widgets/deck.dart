@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:retrieval_practice/blocs/main_bloc.dart';
+import 'package:retrieval_practice/models/subject.dart';
 import 'package:retrieval_practice/screens/deck_info_screen.dart';
 
 
@@ -7,9 +9,11 @@ import 'package:retrieval_practice/screens/deck_info_screen.dart';
 // TODO: change text to actual data
 class Deck extends StatelessWidget {
 
-  String title;
+  final Subject _subject;
 
-  Deck(this.title);
+  final MainBloc _mainBloc;
+
+  Deck(this._subject, this._mainBloc);
 
 
   @override
@@ -20,9 +24,10 @@ class Deck extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => DeckInfoScreen()),
+          MaterialPageRoute(builder: (context) => DeckInfoScreen(_subject, _mainBloc)),
         );
       },
+      
           child: Container(
         padding: EdgeInsets.all(16.0),
         height: 280,
@@ -50,7 +55,7 @@ class Deck extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.only(bottom: 8),
                         child: Text(
-                          title,
+                          _subject.title,
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 22,
@@ -60,7 +65,7 @@ class Deck extends StatelessWidget {
                       ),
                       //TODO: interpolate data inside this string
                       Text(
-                        '24 cards  |  6 due',
+                        '${_subject.totalNumOfQuestions} questions  |  ${_subject.numOfDueQuestions} due',
                         style: TextStyle(
                           fontSize: 12,
                           color: Colors.grey
@@ -82,19 +87,3 @@ class Deck extends StatelessWidget {
   }
 }
 
-var sunda = Container(
-  padding: EdgeInsets.all(16.0),
-  color: Colors.blue,
-  height: 16,
-  child: Container(
-    //color: Colors.red,
-    decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(16.0)),
-        color: Colors.red),
-    child: Stack(
-      children: <Widget>[
-        Image.asset('assets/images/asian-woman.jpg'),
-      ],
-    ),
-  ),
-);

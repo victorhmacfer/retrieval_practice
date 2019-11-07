@@ -1,8 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:retrieval_practice/blocs/main_bloc.dart';
+
 import 'package:retrieval_practice/custom_widgets/pill_button.dart';
-import 'package:retrieval_practice/custom_widgets/subject_tile.dart';
+import 'package:retrieval_practice/custom_widgets/question_tile.dart';
+import 'package:retrieval_practice/models/subject.dart';
+import 'package:retrieval_practice/screens/answer_question_screen.dart';
+import 'package:retrieval_practice/screens/create_question_screen.dart';
+
 
 class DeckInfoScreen extends StatefulWidget {
+
+  final Subject _subject;
+
+  final MainBloc _mainBloc;
+
+  const DeckInfoScreen(this._subject, this._mainBloc);
+
   @override
   _DeckInfoScreenState createState() => _DeckInfoScreenState();
 }
@@ -14,6 +27,36 @@ class _DeckInfoScreenState extends State<DeckInfoScreen> {
     super.initState();
   }
 
+
+  List<Widget> _questions() {
+    var questionsList = widget._subject.questions;
+
+    if (questionsList.isNotEmpty) {
+      return questionsList.map((q) => QuestionTile(q)).toList();
+    }
+
+    return [
+      Container(
+        alignment: Alignment.center,
+        //color: Colors.blue,
+        constraints: BoxConstraints.expand(height: 200),
+        padding: EdgeInsets.all(32),
+        height: 300,
+        width: 140,
+        child: Text(
+          'Você ainda não criou nenhuma pergunta!',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w600
+          ),
+          ),
+      )
+    ];
+  }
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,6 +64,9 @@ class _DeckInfoScreenState extends State<DeckInfoScreen> {
         child: Icon(Icons.add),
         onPressed: () {
           print('I pressed the FAB.');
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => CreateQuestionScreen(widget._subject, widget._mainBloc)));
         },
       ),
 
@@ -30,7 +76,7 @@ class _DeckInfoScreenState extends State<DeckInfoScreen> {
             expandedHeight: 56.0,
             backgroundColor: Colors.black,
             pinned: true,
-            title: Text('My Title'),
+            title: Text(widget._subject.title),
             centerTitle: true,
           ),
           SliverList(
@@ -51,7 +97,7 @@ class _DeckInfoScreenState extends State<DeckInfoScreen> {
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 16.0),
                         child: Text(
-                          'OS Concepts',
+                          widget._subject.title,
                           style: TextStyle(
                               fontSize: 26, fontWeight: FontWeight.w600),
                         ),
@@ -61,8 +107,8 @@ class _DeckInfoScreenState extends State<DeckInfoScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            CardTotalPillButton(24),
-                            CardsDuePillButton(24),
+                            CardTotalPillButton(widget._subject.totalNumOfQuestions),
+                            CardsDuePillButton(widget._subject.numOfDueQuestions),
                           ],
                         ),
                       ),
@@ -76,16 +122,7 @@ class _DeckInfoScreenState extends State<DeckInfoScreen> {
                   color: Colors.black,
                   padding: EdgeInsets.only(bottom: 32.0),
                   child: Column(
-                    children: <Widget>[
-                      SubjectTile(),
-                  SubjectTile(),
-                  SubjectTile(),
-                  SubjectTile(),
-                  SubjectTile(),
-                  SubjectTile(),
-                  SubjectTile(),
-
-                    ],
+                    children: _questions(),
                   ),
                 )
 
@@ -101,10 +138,6 @@ class _DeckInfoScreenState extends State<DeckInfoScreen> {
   }
 }
 
-// var sunda = Container(
-//   color: Colors.green,
-//   height: 120,
-// );
 
 Widget myDivider() {
   return Container(

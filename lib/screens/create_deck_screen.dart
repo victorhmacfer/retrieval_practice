@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:retrieval_practice/blocs/main_bloc.dart';
+import 'package:retrieval_practice/screens/deck_info_screen.dart';
 
 
 
@@ -33,6 +34,7 @@ class _CreateDeckScreenState extends State<CreateDeckScreen> {
             onPressed: () {
               print('I pressed check button.');
               widget.mainBloc.onCreateNewSubject(myController.text);
+              Navigator.pop(context);
             },
           )
         ],

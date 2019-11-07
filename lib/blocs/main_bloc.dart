@@ -29,6 +29,10 @@ class MainBloc extends BlocBase {
     _subjectStreamController.add(_subjects);
   }
 
+  void onCreateNewQuestion(String questionTitle, Subject subject) {
+    subject.addNewQuestion(questionTitle);
+  }
+
 
 
   @override

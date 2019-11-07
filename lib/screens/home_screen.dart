@@ -30,19 +30,13 @@ class HomeScreen extends StatelessWidget {
                     expandedHeight: 56.0,
                     backgroundColor: Colors.black,
                     floating: true,
-                    //TODO: make this not hardcoded
                     title: Text('Retrieval Practice'),
                     centerTitle: true,
                   ),
                   SliverList(
-                    delegate: SliverChildBuilderDelegate(
-
-                      (context, index) {
-                        return Deck(snapshot.data[index].title);
-                      },
-                      childCount: snapshot.data.length
-                      
-                    ),
+                    delegate: SliverChildBuilderDelegate((context, index) {
+                      return Deck(snapshot.data[index], mainBloc);
+                    }, childCount: snapshot.data.length),
                   ),
                 ],
               );

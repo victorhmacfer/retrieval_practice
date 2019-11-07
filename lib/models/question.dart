@@ -4,9 +4,8 @@ import 'study.dart';
 
 
 class Question {
-  //int _id;
 
-  String title;
+  final String title;
 
   List<Study> _studies = [];
 
@@ -31,6 +30,8 @@ class Question {
     _studies.add(study);
     _computeDaysUntilNextStudy();
   }
+
+  bool get isDue => nextStudyDate.isBefore(DateTime.now());
 
   // Map<String, dynamic> toMap() {
   //   return {

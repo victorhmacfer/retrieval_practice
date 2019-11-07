@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class CardTotalPillButton extends StatelessWidget {
 
-  int _totalOfCards;
+  final int _totalOfCards;
 
   CardTotalPillButton(this._totalOfCards);
 
@@ -25,7 +25,7 @@ class CardTotalPillButton extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 10),
             //TODO: this should use actual data
-            child: Text('24 cards', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),),
+            child: Text('$_totalOfCards cards', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),),
           ),
         ],
       ),
@@ -37,7 +37,7 @@ class CardTotalPillButton extends StatelessWidget {
 
 class CardsDuePillButton extends StatelessWidget {
 
-  int _dueCards;
+  final int _dueCards;
 
   CardsDuePillButton(this._dueCards);
 
@@ -58,7 +58,7 @@ class CardsDuePillButton extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 10),
             //TODO: this should use actual data
-            child: Text('6 due', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, color: Colors.red[200]),),
+            child: Text('$_dueCards due', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, color: Colors.red[200]),),
           ),
         ],
       ),

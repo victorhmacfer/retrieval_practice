@@ -1,10 +1,17 @@
 
 import 'package:flutter/material.dart';
+import 'package:retrieval_practice/models/question.dart';
 import 'package:retrieval_practice/screens/answer_question_screen.dart';
 
 
 //TODO: should use actual data
-class SubjectTile extends StatelessWidget {
+class QuestionTile extends StatelessWidget {
+
+  final Question _question;
+
+  QuestionTile(this._question);
+
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -32,7 +39,7 @@ class SubjectTile extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text('System Calls', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),),
+                Text(_question.title, style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),),
                 Text('edited 9 days ago', style: TextStyle(fontSize: 12, color: Colors.grey),),
 
               ],
