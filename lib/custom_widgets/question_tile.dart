@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:retrieval_practice/blocs/main_bloc.dart';
 import 'package:retrieval_practice/models/question.dart';
 import 'package:retrieval_practice/screens/answer_question_screen.dart';
 
@@ -9,7 +10,21 @@ class QuestionTile extends StatelessWidget {
 
   final Question _question;
 
+  
+
   QuestionTile(this._question);
+
+  Color _circleAvatarColor() {
+    if (_question.isDue) return Color.fromARGB(140, 200, 56, 56);
+
+    return Colors.blue[200];
+  }
+
+  Widget _circleAvatarContent() {
+    if (_question.isDue) return Icon(Icons.timer_off, color: Colors.red[200],);
+
+    return Text('${_question.daysUntilNextStudyFromToday}d');
+  }
 
 
   @override
@@ -18,7 +33,7 @@ class QuestionTile extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => AnswerQuestionScreen()),
+          MaterialPageRoute(builder: (context) => AnswerQuestionScreen(_question)),
         );
       },
           child: Container(
@@ -31,8 +46,8 @@ class QuestionTile extends StatelessWidget {
               padding: const EdgeInsets.only(left: 8.0, right: 16.0),
               child: CircleAvatar(
                 radius: 24,
-                backgroundColor: Colors.blue[200],
-                child: Text('6d'),
+                backgroundColor: _circleAvatarColor(),
+                child: _circleAvatarContent(),
               ),
             ),
             Column(

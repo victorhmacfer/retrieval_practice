@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
 
+import 'package:retrieval_practice/models/question.dart';
+
+import 'package:retrieval_practice/models/study.dart';
+
+
 //TODO: use actual data
 class AnswerQuestionScreen extends StatefulWidget {
+  final Question _question;
+
+  AnswerQuestionScreen(this._question);
+
   @override
   _AnswerQuestionScreenState createState() => _AnswerQuestionScreenState();
 }
 
 class _AnswerQuestionScreenState extends State<AnswerQuestionScreen> {
 
-
-  double _answerGrade = 0;
-
+  double _answerQuality = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +33,8 @@ class _AnswerQuestionScreenState extends State<AnswerQuestionScreen> {
               size: 28,
             ),
             onPressed: () {
-              print('I pressed the delete question button.');
+              widget._question.addStudy(Study(_answerQuality.toInt(), DateTime.now()));
+              Navigator.pop(context);
             },
           ),
           IconButton(
@@ -41,21 +49,9 @@ class _AnswerQuestionScreenState extends State<AnswerQuestionScreen> {
           ),
         ],
       ),
-      // body: Container(
-      //   color: Colors.red,
-      //   padding: EdgeInsets.only(top: 24, right: 24, left: 24, bottom: 56),
-      //   constraints: BoxConstraints.expand(),
-      //   child: TextField(
-      //     decoration: InputDecoration.collapsed(hintText: ''),
-      //     maxLines: null,
-      //     style: TextStyle(
-      //       fontSize: 18
-      //     ),
-      //   ),
-      // ),
 
       body: Container(
-        color: Colors.red,
+        //color: Colors.red,
         padding: EdgeInsets.all(24),
         constraints: BoxConstraints.expand(),
         child: SingleChildScrollView(
@@ -65,30 +61,27 @@ class _AnswerQuestionScreenState extends State<AnswerQuestionScreen> {
             child: Column(
               children: <Widget>[
                 TextFormField(
-                  initialValue: 'blablbalblablablablablblalblal',
+                  initialValue: widget._question.title,
                   decoration: InputDecoration.collapsed(hintText: ''),
-                  maxLines: null,
+                  //TODO: this maxLines should be changed later ! Just making it work for now
+                  maxLines: 10,
                   style: TextStyle(fontSize: 18),
                 ),
 
                 SizedBox(height: 48,),
 
-
                 Slider(
-                  value: _answerGrade,
+                  value: _answerQuality,
                   onChanged: (newValue) {
                     setState(() {
-                      _answerGrade = newValue;
+                      _answerQuality = newValue;
                     });
                   },
                   divisions: 5,
                   min: 0,
                   max: 5,
-                  label: '${_answerGrade.toInt()}',
+                  label: '${_answerQuality.toInt()}',
                 )
-
-
-
 
               ],
             ),

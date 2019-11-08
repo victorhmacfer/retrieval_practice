@@ -20,18 +20,26 @@ class Question {
     var month = now.month;
     var day = now.day;
     _studies.add(Study(5, DateTime(year, month, day)));
-    _computeDaysUntilNextStudy();
+    _computeDaysUntilNextStudyFromLastStudyDone();
   }
 
   DateTime get nextStudyDate =>
       _studies.last.date.add(Duration(days: _interval));
 
-  void addStudy(Study study) {
-    _studies.add(study);
-    _computeDaysUntilNextStudy();
+  int get daysUntilNextStudyFromToday {
+    Duration diff = nextStudyDate.difference(DateTime.now());
+    if (diff.isNegative) return 0;
+    return (diff.inMinutes / (24*60)).ceil();
   }
 
-  bool get isDue => nextStudyDate.isBefore(DateTime.now());
+
+
+  void addStudy(Study study) {
+    _studies.add(study);
+    _computeDaysUntilNextStudyFromLastStudyDone();
+  }
+
+  bool get isDue => daysUntilNextStudyFromToday == 0;
 
   // Map<String, dynamic> toMap() {
   //   return {
@@ -42,7 +50,7 @@ class Question {
   //   };
   // }
 
-  void _computeDaysUntilNextStudy() {
+  void _computeDaysUntilNextStudyFromLastStudyDone() {
     if (_studies.length == 1) {
       _interval = 1;
       _lastEF = 2.5;
