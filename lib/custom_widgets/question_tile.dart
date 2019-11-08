@@ -39,7 +39,31 @@ class QuestionTile extends StatelessWidget {
         } else {
           Scaffold.of(context).showSnackBar(SnackBar(content: Text("Not the time to review this one yet!"),));
         }
+      },
+      onLongPress: () {
+        showDialog(context: context, builder: (context) {
+          return AlertDialog(
+            title: Text('Do you really want to remove this question?'),
+            content: Text('This action is irreversible.'),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('Cancel'),
+                onPressed: () {
+                  //Navigator.pop(context);
+                },
+              ),
 
+              FlatButton(
+                child: Text('Yes'),
+                onPressed: () {
+                  //Navigator.pop(context);
+                },
+              ),
+            ],
+            
+
+          );
+        });
       },
           child: Container(
         height: 80,

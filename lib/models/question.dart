@@ -10,7 +10,7 @@ class Question {
   List<Study> _studies = [];
 
   double _lastEF;
-  int _interval;
+  int _interval; // days until next study from the date the last study was done
 
   Question(this.title, this._studies, this._lastEF, this._interval);
 

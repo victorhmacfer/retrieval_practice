@@ -25,9 +25,4 @@ class Subject {
     _questions.add(newQuestion);
   }
 
-
-
-
-
-
 }

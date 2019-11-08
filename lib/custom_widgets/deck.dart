@@ -63,7 +63,7 @@ class Deck extends StatelessWidget {
                           ),
                         ),
                       ),
-                      //TODO: interpolate data inside this string
+                      //TODO: when only one question it should say "1 question" not "1 questions"
                       Text(
                         '${_subject.totalNumOfQuestions} questions  |  ${_subject.numOfDueQuestions} due',
                         style: TextStyle(
