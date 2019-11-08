@@ -31,10 +31,15 @@ class QuestionTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
+        if (_question.isDue) {
+          Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => AnswerQuestionScreen(_question)),
         );
+        } else {
+          Scaffold.of(context).showSnackBar(SnackBar(content: Text("Not the time to review this one yet!"),));
+        }
+
       },
           child: Container(
         height: 80,
