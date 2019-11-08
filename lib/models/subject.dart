@@ -10,6 +10,11 @@ class Subject {
 
   Subject(this.title);
 
+
+  Map<String, dynamic> toMap() {
+    return {'title': title};
+  }
+
   int get totalNumOfQuestions => _questions.length;
 
   int get numOfDueQuestions {

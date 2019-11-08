@@ -6,13 +6,27 @@ import 'blocs/main_bloc.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  MainBloc _mainBloc;
+
+  @override
+  void initState() {
+    super.initState();
+    _mainBloc = MainBloc();
+    _mainBloc.init();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Retrieval Practice',
-        theme: appTheme,
-        home: BlocProvider<MainBloc>(bloc: MainBloc(), child: HomeScreen()),
-      );
+      title: 'Retrieval Practice',
+      theme: appTheme,
+      home: BlocProvider<MainBloc>(bloc: _mainBloc, child: HomeScreen()),
+    );
   }
 }

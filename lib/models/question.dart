@@ -1,10 +1,7 @@
 import 'dart:math';
 import 'study.dart';
 
-
-
 class Question {
-
   final String title;
 
   List<Study> _studies = [];
@@ -13,6 +10,17 @@ class Question {
   int _interval; // days until next study from the date the last study was done
 
   Question(this.title, this._studies, this._lastEF, this._interval);
+
+  List<Study> get studies => List.unmodifiable(_studies);
+
+  Map<String, dynamic> toMap(int subjectId) {
+    return {
+      'title': title,
+      'lastEF': _lastEF,
+      'interval': _interval,
+      'sub_id': subjectId,
+    };
+  }
 
   Question.firstStudied(this.title) {
     var now = DateTime.now();
@@ -29,10 +37,8 @@ class Question {
   int get daysUntilNextStudyFromToday {
     Duration diff = nextStudyDate.difference(DateTime.now());
     if (diff.isNegative) return 0;
-    return (diff.inMinutes / (24*60)).ceil();
+    return (diff.inMinutes / (24 * 60)).ceil();
   }
-
-
 
   void addStudy(Study study) {
     _studies.add(study);
@@ -40,15 +46,6 @@ class Question {
   }
 
   bool get isDue => daysUntilNextStudyFromToday == 0;
-
-  // Map<String, dynamic> toMap() {
-  //   return {
-  //     'id': _id,
-  //     'title': _title,
-  //     'lastEF': _lastEF,
-  //     'interval': _interval,
-  //   };
-  // }
 
   void _computeDaysUntilNextStudyFromLastStudyDone() {
     if (_studies.length == 1) {

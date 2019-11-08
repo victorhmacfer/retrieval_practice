@@ -24,6 +24,12 @@ class HomeScreen extends StatelessWidget {
           stream: mainBloc.subjectStream,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
+              if (snapshot.data.isEmpty) {
+                return Center(
+                  child: Text('You have no decks yet.'),
+                );
+              }
+
               return CustomScrollView(
                 slivers: <Widget>[
                   SliverAppBar(
@@ -42,9 +48,7 @@ class HomeScreen extends StatelessWidget {
               );
             }
 
-            return Center(
-              child: Text('Nao tem nenhum deck ainda!'),
-            );
+            return Center(child: CircularProgressIndicator());
           }),
     );
   }

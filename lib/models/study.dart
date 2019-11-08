@@ -7,4 +7,12 @@ class Study {
   int get quality => _quality;
 
   Study(this._quality, this._date);
+
+  Map<String, dynamic> toMap(int questionId) {
+    return {
+      'quality': _quality,
+      'date': _date,
+      'q_id': questionId,
+    };
+  }
 }
