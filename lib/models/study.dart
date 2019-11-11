@@ -1,4 +1,5 @@
 class Study {
+  int id;
   final int _quality;
   final DateTime _date;
 
@@ -8,11 +9,16 @@ class Study {
 
   Study(this._quality, this._date);
 
-  Map<String, dynamic> toMap(int questionId) {
+
+  factory Study.fromMap(Map<String, dynamic> map) {
+    return Study(map['quality'], DateTime.parse(map['date']));
+  }
+
+
+  Map<String, dynamic> toMap() {
     return {
       'quality': _quality,
-      'date': _date,
-      'q_id': questionId,
+      'date': _date.toString(),
     };
   }
 }

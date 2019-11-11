@@ -2,6 +2,7 @@ import 'dart:math';
 import 'study.dart';
 
 class Question {
+  int id;
   final String title;
 
   List<Study> _studies = [];
@@ -13,14 +14,35 @@ class Question {
 
   List<Study> get studies => List.unmodifiable(_studies);
 
-  Map<String, dynamic> toMap(int subjectId) {
+
+
+  Map<String, dynamic> toMap() {
+    // create list of study maps from list of study objects
+    List<Map<String, dynamic>> studiesList = [];
+    _studies.forEach((s) {
+      studiesList.add(s.toMap());
+    });
+
     return {
       'title': title,
+      'studies': studiesList,
       'lastEF': _lastEF,
       'interval': _interval,
-      'sub_id': subjectId,
     };
   }
+
+
+
+  factory Question.fromMap(Map<String, dynamic> map) {
+    // create list of study objects from list of study maps
+    var studiesList = List.generate(map['studies'].length, (i) {
+      return Study.fromMap(map['studies'][i]);
+    }, growable: true);
+
+    return Question(map['title'], studiesList, map['lastEF'], map['interval']);
+  }
+
+
 
   Question.firstStudied(this.title) {
     var now = DateTime.now();

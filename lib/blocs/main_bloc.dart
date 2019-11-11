@@ -1,9 +1,13 @@
 import 'dart:async';
 
-import 'package:path/path.dart';
 import 'package:retrieval_practice/blocs/bloc_base.dart';
 import 'package:retrieval_practice/models/subject.dart';
-import 'package:sqflite/sqflite.dart';
+import 'package:sembast/sembast.dart';
+import 'package:sembast/sembast_io.dart';
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
+
+const DB_NAME = 'retrieval_practice.db';
 
 class MainBloc extends BlocBase {
   List<Subject> _subjects = [];
@@ -13,73 +17,17 @@ class MainBloc extends BlocBase {
 
   Stream<List<Subject>> get subjectStream => _subjectStreamController.stream;
 
-  Future<Database> _database;
+  Database db;
 
-  Future<void> init() async {
-    _database = openDatabase(
-      join(await getDatabasesPath(), 'retrieval_practice.db'),
-      onCreate: (db, version) {
-        db.execute("""
-            CREATE TABLE subject(
-              subject_id INTEGER PRIMARY KEY AUTOINCREMENT,
-              title TEXT)""");
-
-        db.execute("""
-            CREATE TABLE question(
-              question_id INTEGER PRIMARY KEY AUTOINCREMENT,
-              title TEXT,
-              lastEF REAL,
-              interval INTEGER,
-              sub_id INTEGER,
-              FOREIGN KEY(sub_id) REFERENCES subject(subject_id))""");
-
-        db.execute("""CREATE TABLE study(
-              study_id INTEGER PRIMARY KEY AUTOINCREMENT,
-              quality INTEGER,
-              date TEXT,
-              q_id INTEGER,
-              FOREIGN KEY(q_id) REFERENCES question(question_id))""");
-      },
-      version: 1,
-    );
-
-    _subjects = await _readSubjectsFromDb();
-    _subjectStreamController.add(_subjects);
-
-  }
-
-  //TODO: this is wrong.. only gets titles from subjects
-  Future<List<Subject>> _readSubjectsFromDb() async {
-    var myDb = await _database;
-
-    final List<Map<String, dynamic>> subjectMaps =
-        await myDb.query('subject');
-
-    return List.generate(subjectMaps.length, (i) {
-      return Subject(
-        subjectMaps[i]['title']
-      );
-    }, growable: true);
-  }
+  StoreRef<int, Map<String, dynamic>> mySubjectStore;
 
   MainBloc();
 
-  Future<void> _insertNewSubjectIntoDb(Subject subject) async {
-    final Database db = await _database;
-
-    var mySubjectId = await db.insert('subject', subject.toMap(),
-        conflictAlgorithm: ConflictAlgorithm.replace);
-
-    // var myQuestions = subject.questions;
-
-    // myQuestions.forEach((q) async {
-    //   var myQuestionId = await db.insert('question', q.toMap(mySubjectId),
-    //       conflictAlgorithm: ConflictAlgorithm.replace);
-    //   var questionStudies = q.studies;
-    //   questionStudies.forEach((s) async {
-    //     db.insert('study', s.toMap(myQuestionId));
-    //   });
-    // });
+  Future<void> init() async {
+    await _initDb();
+    mySubjectStore = intMapStoreFactory.store('subjects');
+    await _populateSubjectListFromDb();
+    _subjectStreamController.add(_subjects);
   }
 
   Future<void> onCreateNewSubject(String title) async {
@@ -87,15 +35,47 @@ class MainBloc extends BlocBase {
     _subjects.add(newSubject);
     _subjectStreamController.add(_subjects);
 
-    _insertNewSubjectIntoDb(newSubject);
+    //put new subject into database
+    int key = await mySubjectStore.add(db, newSubject.toMap());
+    newSubject.id = key;
   }
 
-  void onCreateNewQuestion(String questionTitle, Subject subject) {
+  Future<void> onCreateNewQuestion(
+      String questionTitle, Subject subject) async {
     subject.addNewQuestion(questionTitle);
+
+    // put subject updated with new question into database
+    final finder = Finder(filter: Filter.byKey(subject.id));
+    await mySubjectStore.update(
+      db,
+      subject.toMap(),
+      finder: finder,
+    );
+  }
+
+  Future _initDb() async {
+    var dir = await getApplicationDocumentsDirectory();
+    await dir.create(recursive: true);
+    var dbPath = join(dir.path, DB_NAME);
+    db = await databaseFactoryIo.openDatabase(dbPath);
+  }
+
+  Future<void> _populateSubjectListFromDb() async {
+    final finder = Finder(sortOrders: [SortOrder('id'),]);
+
+    final List<RecordSnapshot> recordSnapshots = await mySubjectStore.find(
+      db,
+      finder: finder,
+    );
+
+    _subjects = recordSnapshots
+        .map((snapshot) => Subject.fromMap(snapshot.value))
+        .toList();
   }
 
   @override
   void dispose() {
     _subjectStreamController.close();
+    db.close();
   }
 }
