@@ -14,8 +14,6 @@ class Question {
 
   List<Study> get studies => List.unmodifiable(_studies);
 
-
-
   Map<String, dynamic> toMap() {
     // create list of study maps from list of study objects
     List<Map<String, dynamic>> studiesList = [];
@@ -31,8 +29,6 @@ class Question {
     };
   }
 
-
-
   factory Question.fromMap(Map<String, dynamic> map) {
     // create list of study objects from list of study maps
     var studiesList = List.generate(map['studies'].length, (i) {
@@ -41,8 +37,6 @@ class Question {
 
     return Question(map['title'], studiesList, map['lastEF'], map['interval']);
   }
-
-
 
   Question.firstStudied(this.title) {
     var now = DateTime.now();
