@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:retrieval_practice/screens/home_screen.dart';
 import 'styles/my_styles.dart';
 import 'blocs/bloc_base.dart';
 import 'blocs/main_bloc.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown
+  ]);
+  runApp(MyApp());
+} 
 
 class MyApp extends StatefulWidget {
   @override
@@ -23,6 +30,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       title: 'Retrieval Practice',
       theme: appTheme,
