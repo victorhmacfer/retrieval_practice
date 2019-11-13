@@ -27,17 +27,22 @@ class MainBloc extends BlocBase {
     await _initDb();
     mySubjectStore = intMapStoreFactory.store('subjects');
     await _populateSubjectListFromDb();
+    //print('Estou no init, acabei de executar de popular a subject list.');
     _subjectStreamController.add(_subjects);
+    //print('Estou no init, acabei de colocar a subject list no stream.');
   }
 
   Future<void> onCreateNewSubject(String title) async {
     var newSubject = Subject(title);
+    //print('Estou no onCreateSubject acabei de criar o subject de title: $title');
     _subjects.add(newSubject);
     _subjectStreamController.add(_subjects);
+    //print('Estoi no onCreateSubject acabei de colocar a subject list no stream.');
 
     //put new subject into database
     int key = await mySubjectStore.add(db, newSubject.toMap());
     newSubject.id = key;
+    //print('acabei de pegar essa key: $key do metodo add da store para o subject ${newSubject.title}');
   }
 
   Future<void> onCreateNewQuestion(
@@ -53,6 +58,18 @@ class MainBloc extends BlocBase {
     );
   }
 
+  Future<void> onDeleteDeck(Subject subjectToBeDeleted) async {
+    _subjects.remove(subjectToBeDeleted);
+
+    final finder = Finder(filter: Filter.byKey(subjectToBeDeleted.id));
+    await mySubjectStore.delete(
+      db,
+      finder: finder,
+    );
+
+    _subjectStreamController.add(_subjects);
+  }
+
   Future _initDb() async {
     var dir = await getApplicationDocumentsDirectory();
     await dir.create(recursive: true);
@@ -61,16 +78,21 @@ class MainBloc extends BlocBase {
   }
 
   Future<void> _populateSubjectListFromDb() async {
-    final finder = Finder(sortOrders: [SortOrder('id'),]);
+    final finder = Finder(sortOrders: [
+      SortOrder('title'),
+    ]);
 
     final List<RecordSnapshot> recordSnapshots = await mySubjectStore.find(
       db,
       finder: finder,
     );
 
-    _subjects = recordSnapshots
-        .map((snapshot) => Subject.fromMap(snapshot.value))
-        .toList();
+    _subjects = recordSnapshots.map((snapshot) {
+      Subject mySub = Subject.fromMap(snapshot.value);
+      mySub.id = snapshot.key;
+      //print('Estou no populate.. id de subject do db: ${mySub.id}, nome: ${mySub.title}');
+      return mySub;
+    }).toList();
   }
 
   @override

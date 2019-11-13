@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:retrieval_practice/blocs/main_bloc.dart';
+import 'package:retrieval_practice/custom_widgets/deletion_modal.dart';
 import 'package:retrieval_practice/models/subject.dart';
 import 'package:retrieval_practice/screens/deck_info_screen.dart';
 import 'package:retrieval_practice/styles/my_styles.dart';
@@ -21,6 +22,15 @@ class Deck extends StatelessWidget {
           MaterialPageRoute(
               builder: (context) => DeckInfoScreen(_subject, _mainBloc)),
         );
+      },
+      onLongPress: () {
+        showModalBottomSheet(
+          context: context,
+          backgroundColor: appDarkGrey,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(12), topRight: Radius.circular(12))),
+          builder: (myContext) => DeletionModal(subject: _subject, bloc: _mainBloc,),
+        );
+        print('I long pressed the deck.');
       },
       child: Container(
         padding: EdgeInsets.all(16.0),
