@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:retrieval_practice/models/question.dart';
 
 import 'package:retrieval_practice/models/study.dart';
-
+import 'package:retrieval_practice/styles/my_styles.dart';
 
 //TODO: use actual data
 class AnswerQuestionScreen extends StatefulWidget {
@@ -16,14 +16,16 @@ class AnswerQuestionScreen extends StatefulWidget {
 }
 
 class _AnswerQuestionScreenState extends State<AnswerQuestionScreen> {
-
   double _answerQuality = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('OS Concepts'),
+        title: Text(
+          'OS Concepts',
+          style: deckTitleTextStyle,
+        ),
         centerTitle: true,
         actions: <Widget>[
           IconButton(
@@ -33,7 +35,8 @@ class _AnswerQuestionScreenState extends State<AnswerQuestionScreen> {
               size: 28,
             ),
             onPressed: () {
-              widget._question.addStudy(Study(_answerQuality.toInt(), DateTime.now()));
+              widget._question
+                  .addStudy(Study(_answerQuality.toInt(), DateTime.now()));
               Navigator.pop(context);
             },
           ),
@@ -49,14 +52,11 @@ class _AnswerQuestionScreenState extends State<AnswerQuestionScreen> {
           ),
         ],
       ),
-
       body: Container(
-        //color: Colors.red,
         padding: EdgeInsets.all(24),
         constraints: BoxConstraints.expand(),
         child: SingleChildScrollView(
           child: Container(
-            //color: Colors.blue,
             height: 500,
             child: Column(
               children: <Widget>[
@@ -67,9 +67,9 @@ class _AnswerQuestionScreenState extends State<AnswerQuestionScreen> {
                   maxLines: 10,
                   style: TextStyle(fontSize: 18),
                 ),
-
-                SizedBox(height: 48,),
-
+                SizedBox(
+                  height: 48,
+                ),
                 Slider(
                   value: _answerQuality,
                   onChanged: (newValue) {
@@ -82,7 +82,6 @@ class _AnswerQuestionScreenState extends State<AnswerQuestionScreen> {
                   max: 5,
                   label: '${_answerQuality.toInt()}',
                 )
-
               ],
             ),
           ),

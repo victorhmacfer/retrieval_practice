@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:retrieval_practice/blocs/main_bloc.dart';
-import 'package:retrieval_practice/screens/deck_info_screen.dart';
-
-
+import 'package:retrieval_practice/styles/my_styles.dart';
 
 class CreateDeckScreen extends StatefulWidget {
 
@@ -24,15 +22,15 @@ class _CreateDeckScreenState extends State<CreateDeckScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Create deck'),
+        title: Text('Create deck', style: deckTitleTextStyle,),
+        backgroundColor: appDarkGrey,
         centerTitle: true,
         elevation: 0,
         actions: <Widget>[
           IconButton(
             padding: EdgeInsets.only(right: 32),
-            icon: Icon(Icons.check, color: Colors.blue[200], size: 30,),
+            icon: Icon(Icons.check, color: appWhite, size: 30,),
             onPressed: () {
-              print('I pressed check button.');
               widget.mainBloc.onCreateNewSubject(myController.text);
               Navigator.pop(context);
             },
@@ -41,7 +39,7 @@ class _CreateDeckScreenState extends State<CreateDeckScreen> {
       ),
       body: Container(
         constraints: BoxConstraints.expand(height: 400),
-        color: Colors.black,
+        color: appBlack,
         child: SingleChildScrollView(
           child: Column(
           children: <Widget>[
@@ -55,12 +53,16 @@ class _CreateDeckScreenState extends State<CreateDeckScreen> {
               padding: const EdgeInsets.all(16.0),
               child: TextField(
                 controller: myController,
-                cursorColor: Colors.blue[200],
+                style: deckTitleTextStyleBigger,
+                cursorColor: appBlue,
                 showCursor: true,
                 cursorWidth: 3,
                 autofocus: true,
-                decoration: InputDecoration.collapsed(hintText: 'Untitled',),
-                style: TextStyle(fontSize: 30),
+                decoration: InputDecoration.collapsed(
+                  hintText: 'Untitled',
+                  hintStyle: hintTextStyle.copyWith(fontSize: 28),
+                )
+                
 
               ),
             ),

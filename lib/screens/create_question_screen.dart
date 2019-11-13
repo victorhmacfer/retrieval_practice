@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:retrieval_practice/blocs/main_bloc.dart';
 import 'package:retrieval_practice/models/subject.dart';
+import 'package:retrieval_practice/styles/my_styles.dart';
 
-//TODO: use actual data
 class CreateQuestionScreen extends StatefulWidget {
   final Subject subject;
 
@@ -15,15 +15,14 @@ class CreateQuestionScreen extends StatefulWidget {
 }
 
 class _CreateQuestionScreenState extends State<CreateQuestionScreen> {
-
-
   final myController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.subject.title),
+        title: Text(widget.subject.title, style: deckTitleTextStyle,),
+        backgroundColor: appDarkGrey,
         centerTitle: true,
         actions: <Widget>[
           IconButton(
@@ -33,23 +32,21 @@ class _CreateQuestionScreenState extends State<CreateQuestionScreen> {
               size: 28,
             ),
             onPressed: () {
-              print('I pressed the new question button.');
-              widget._mainBloc.onCreateNewQuestion(myController.text, widget.subject);
+              widget._mainBloc
+                  .onCreateNewQuestion(myController.text, widget.subject);
               Navigator.pop(context);
             },
           ),
         ],
       ),
-
-      //TODO: I want to be able to tap anywhere in this container to start typing on the textfield
       body: Container(
-        //color: Colors.red,
         padding: EdgeInsets.all(24),
         constraints: BoxConstraints.expand(),
         child: TextField(
           controller: myController,
           decoration: InputDecoration.collapsed(
-              hintText: 'What do you want to remember forever?'),
+              hintText: 'What do you want to remember forever?',
+              hintStyle: hintTextStyle),
           maxLines: 100,
           style: TextStyle(fontSize: 18),
         ),
@@ -57,13 +54,9 @@ class _CreateQuestionScreenState extends State<CreateQuestionScreen> {
     );
   }
 
-
   @override
   void dispose() {
     myController.dispose();
     super.dispose();
   }
-
-
-
 }

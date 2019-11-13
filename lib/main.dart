@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:retrieval_practice/screens/home_screen.dart';
-import 'themes/my_themes.dart';
+import 'styles/my_styles.dart';
 import 'blocs/bloc_base.dart';
 import 'blocs/main_bloc.dart';
 

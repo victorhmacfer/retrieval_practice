@@ -4,8 +4,8 @@ import 'package:retrieval_practice/blocs/main_bloc.dart';
 import 'package:retrieval_practice/custom_widgets/pill_button.dart';
 import 'package:retrieval_practice/custom_widgets/question_tile.dart';
 import 'package:retrieval_practice/models/subject.dart';
-import 'package:retrieval_practice/screens/answer_question_screen.dart';
 import 'package:retrieval_practice/screens/create_question_screen.dart';
+import 'package:retrieval_practice/styles/my_styles.dart';
 
 
 class DeckInfoScreen extends StatefulWidget {
@@ -34,21 +34,16 @@ class _DeckInfoScreenState extends State<DeckInfoScreen> {
     if (questionsList.isNotEmpty) {
       return questionsList.map((q) => QuestionTile(q)).toList();
     }
-
     return [
       Container(
         alignment: Alignment.center,
-        //color: Colors.blue,
         constraints: BoxConstraints.expand(height: 200),
         padding: EdgeInsets.all(32),
         height: 300,
-        width: 140,
+        width: 120,
         child: Text(
-          'Você ainda não criou nenhuma pergunta!',
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.w600
-          ),
+          'Você ainda não criou\n nenhuma pergunta!',
+          style: noQuestionsYetTextStyle,
           ),
       )
     ];
@@ -63,7 +58,6 @@ class _DeckInfoScreenState extends State<DeckInfoScreen> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
-          print('I pressed the FAB.');
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => CreateQuestionScreen(widget._subject, widget._mainBloc)));
@@ -74,9 +68,9 @@ class _DeckInfoScreenState extends State<DeckInfoScreen> {
         slivers: <Widget>[
           SliverAppBar(
             expandedHeight: 56.0,
-            backgroundColor: Colors.black,
+            backgroundColor: appDarkGrey,
             pinned: true,
-            title: Text(widget._subject.title),
+            title: Text(widget._subject.title, style: deckTitleTextStyle,),
             centerTitle: true,
           ),
           SliverList(
@@ -88,7 +82,7 @@ class _DeckInfoScreenState extends State<DeckInfoScreen> {
                 ),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 20.0),
-                  color: Colors.black,
+                  color: appBlack,
                   height: 180,
                   width: 360,
                   child: Column(
@@ -98,8 +92,7 @@ class _DeckInfoScreenState extends State<DeckInfoScreen> {
                         padding: const EdgeInsets.symmetric(vertical: 16.0),
                         child: Text(
                           widget._subject.title,
-                          style: TextStyle(
-                              fontSize: 26, fontWeight: FontWeight.w600),
+                          style: deckTitleTextStyleBigger
                         ),
                       ),
                       Padding(
@@ -117,17 +110,13 @@ class _DeckInfoScreenState extends State<DeckInfoScreen> {
                 ),
                 myDivider(),
 
-                //TODO: this should be a column with these children created from a list of models
                 Container(
-                  color: Colors.black,
+                  color: appBlack,
                   padding: EdgeInsets.only(bottom: 32.0),
                   child: Column(
                     children: _questions(),
                   ),
                 )
-
-
-
 
               ],
             ),

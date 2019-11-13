@@ -1,28 +1,23 @@
 
 import 'package:flutter/material.dart';
-import 'package:retrieval_practice/blocs/main_bloc.dart';
 import 'package:retrieval_practice/models/question.dart';
 import 'package:retrieval_practice/screens/answer_question_screen.dart';
+import 'package:retrieval_practice/styles/my_styles.dart';
 
 
-//TODO: should use actual data
 class QuestionTile extends StatelessWidget {
 
   final Question _question;
 
-  
-
   QuestionTile(this._question);
 
   Color _circleAvatarColor() {
-    if (_question.isDue) return Color.fromARGB(140, 200, 56, 56);
-
-    return Colors.blue[200];
+    if (_question.isDue) return appDueQuestionDarkRed;
+    return appBlue;
   }
 
   Widget _circleAvatarContent() {
-    if (_question.isDue) return Icon(Icons.timer_off, color: Colors.red[200],);
-
+    if (_question.isDue) return Icon(Icons.timer_off, color: appDueQuestionLightRed,);
     return Text('${_question.daysUntilNextStudyFromToday}d');
   }
 
@@ -67,7 +62,7 @@ class QuestionTile extends StatelessWidget {
       },
           child: Container(
         height: 80,
-        color: Colors.black,
+        color: appBlack,
         padding: EdgeInsets.all(8),
         child: Row(
           children: <Widget>[
@@ -79,14 +74,16 @@ class QuestionTile extends StatelessWidget {
                 child: _circleAvatarContent(),
               ),
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(_question.title, style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),),
-                Text('edited 9 days ago', style: TextStyle(fontSize: 12, color: Colors.grey),),
+            Flexible(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(_question.title, overflow: TextOverflow.ellipsis, maxLines: 1, style: deckTitleTextStyle.copyWith(fontSize: 19),),
+                  Text('edited 9 days ago', style: deckSubtitleTextStyle),
 
-              ],
+                ],
+              ),
             )
 
           ],

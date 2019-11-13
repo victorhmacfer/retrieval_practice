@@ -4,6 +4,7 @@ import 'package:retrieval_practice/custom_widgets/deck.dart';
 import 'package:retrieval_practice/models/subject.dart';
 import 'package:retrieval_practice/screens/create_deck_screen.dart';
 import 'package:retrieval_practice/blocs/main_bloc.dart';
+import 'package:retrieval_practice/styles/my_styles.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -34,9 +35,9 @@ class HomeScreen extends StatelessWidget {
                 slivers: <Widget>[
                   SliverAppBar(
                     expandedHeight: 56.0,
-                    backgroundColor: Colors.black,
+                    backgroundColor: appBlack,
                     floating: true,
-                    title: Text('Retrieval Practice'),
+                    title: Text('Retrieval Practice', style: appTitleTextStyle,),
                     centerTitle: true,
                   ),
                   SliverList(
