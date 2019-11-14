@@ -6,6 +6,8 @@ import 'package:retrieval_practice/screens/create_deck_screen.dart';
 import 'package:retrieval_practice/blocs/main_bloc.dart';
 import 'package:retrieval_practice/styles/my_styles.dart';
 
+import 'package:retrieval_practice/custom_widgets/due_questions_card.dart';
+
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -39,6 +41,14 @@ class HomeScreen extends StatelessWidget {
                     floating: true,
                     title: Text('Retrieval Practice', style: appTitleTextStyle,),
                     centerTitle: true,
+                  ),
+                  SliverList(
+                    delegate: SliverChildListDelegate.fixed(
+                      [Visibility(
+                        visible: true,
+                        child: DueQuestionsCard(),
+                      )]
+                    ),
                   ),
                   SliverList(
                     delegate: SliverChildBuilderDelegate((context, index) {

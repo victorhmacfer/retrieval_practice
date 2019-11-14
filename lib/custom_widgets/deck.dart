@@ -33,9 +33,10 @@ class Deck extends StatelessWidget {
         print('I long pressed the deck.');
       },
       child: Container(
-        padding: EdgeInsets.all(16.0),
-        height: 280,
-        color: appBlack,
+        padding: EdgeInsets.symmetric(horizontal: 28.0, vertical: 10),
+        height: 260,
+        //this part is transparent..
+        //color: appBlack,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(16.0),
           child: Stack(
@@ -47,12 +48,12 @@ class Deck extends StatelessWidget {
               ),
               Positioned(
                   width: 360,
-                  height: 88,
+                  height: 70,
                   bottom: 0,
                   left: 0,
                   child: Container(
                     color: appDarkGrey,
-                    padding: EdgeInsets.all(16),
+                    padding: EdgeInsets.only(top: 8, left: 16),
                     alignment: Alignment.centerLeft,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
