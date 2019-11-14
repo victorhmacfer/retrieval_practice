@@ -1,24 +1,28 @@
 
 import 'package:flutter/material.dart';
+import 'package:retrieval_practice/blocs/main_bloc.dart';
 import 'package:retrieval_practice/models/question.dart';
+import 'package:retrieval_practice/models/subject.dart';
 import 'package:retrieval_practice/screens/answer_question_screen.dart';
 import 'package:retrieval_practice/styles/my_styles.dart';
 
 
 class QuestionTile extends StatelessWidget {
 
-  final Question _question;
+  final Question question;
+  final Subject subject;
+  final MainBloc bloc;
 
-  QuestionTile(this._question);
+  QuestionTile(this.question, this.subject, this.bloc);
 
   Color _circleAvatarColor() {
-    if (_question.isDue) return appDueQuestionDarkRed;
+    if (question.isDue) return appDueQuestionDarkRed;
     return appBlue;
   }
 
   Widget _circleAvatarContent() {
-    if (_question.isDue) return Icon(Icons.timer_off, color: appDueQuestionLightRed,);
-    return Text('${_question.daysUntilNextStudyFromToday}d');
+    if (question.isDue) return Icon(Icons.timer_off, color: appDueQuestionLightRed,);
+    return Text('${question.daysUntilNextStudyFromToday}d');
   }
 
 
@@ -26,10 +30,10 @@ class QuestionTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if (_question.isDue) {
+        if (question.isDue) {
           Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => AnswerQuestionScreen(_question)),
+          MaterialPageRoute(builder: (context) => AnswerQuestionScreen(question)),
         );
         } else {
           Scaffold.of(context).showSnackBar(SnackBar(content: Text("Not the time to review this one yet!"),));
@@ -39,26 +43,35 @@ class QuestionTile extends StatelessWidget {
         showDialog(context: context, builder: (context) {
           return AlertDialog(
             title: Text('Do you really want to remove this question?'),
-            content: Text('This action is irreversible.'),
+            content: Text('This action is IRREVERSIBLE.'),
             actions: <Widget>[
               FlatButton(
                 child: Text('Cancel'),
                 onPressed: () {
-                  //Navigator.pop(context);
+                  Navigator.pop(context);
                 },
               ),
 
               FlatButton(
                 child: Text('Yes'),
                 onPressed: () {
-                  //Navigator.pop(context);
+                  bloc.onDeleteQuestion(question, subject);
+                  //TODO: this solution is temporary !!!
+                  // The deck info screen does not update to handle the deletion
+                  // of the question.. The only widget that knows about that
+                  // deletion is the homescreen (which has a streambuilder for list of subjects).
+                  // So I go back to homescreen so the user has to reopen the deck
+                  // and then, see the correct deck info screen, now created with
+                  // the updated subject (with question(s) deleted).
+                  Navigator.pop(context);
+                  Navigator.pop(context);
                 },
               ),
             ],
-            
-
           );
         });
+
+
       },
           child: Container(
         height: 80,
@@ -79,7 +92,7 @@ class QuestionTile extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(_question.title, overflow: TextOverflow.ellipsis, maxLines: 1, style: deckTitleTextStyle.copyWith(fontSize: 19),),
+                  Text(question.title, overflow: TextOverflow.ellipsis, maxLines: 1, style: deckTitleTextStyle.copyWith(fontSize: 19),),
                   Text('edited 9 days ago', style: deckSubtitleTextStyle),
 
                 ],

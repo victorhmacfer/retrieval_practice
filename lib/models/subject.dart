@@ -57,4 +57,9 @@ class Subject {
     _questions.add(newQuestion);
   }
 
+  bool removeQuestion(Question aQuestion) {
+    return _questions.remove(aQuestion);
+  }
+
+
 }

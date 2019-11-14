@@ -32,7 +32,7 @@ class _DeckInfoScreenState extends State<DeckInfoScreen> {
     var questionsList = widget._subject.questions;
 
     if (questionsList.isNotEmpty) {
-      return questionsList.map((q) => QuestionTile(q)).toList();
+      return questionsList.map((q) => QuestionTile(q, widget._subject, widget._mainBloc)).toList();
     }
     return [
       Container(
@@ -111,12 +111,12 @@ class _DeckInfoScreenState extends State<DeckInfoScreen> {
                 myDivider(),
 
                 Container(
-                  color: appBlack,
-                  padding: EdgeInsets.only(bottom: 32.0),
-                  child: Column(
-                    children: _questions(),
-                  ),
-                )
+                      color: appBlack,
+                      padding: EdgeInsets.only(bottom: 32.0),
+                      child: Column(
+                        children: _questions(),
+                      ),
+                ),
 
               ],
             ),

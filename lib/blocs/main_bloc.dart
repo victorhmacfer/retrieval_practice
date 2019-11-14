@@ -34,41 +34,49 @@ class MainBloc extends BlocBase {
 
   Future<void> onCreateNewSubject(String title) async {
     var newSubject = Subject(title);
-    //print('Estou no onCreateSubject acabei de criar o subject de title: $title');
     _subjects.add(newSubject);
     _subjectStreamController.add(_subjects);
-    //print('Estoi no onCreateSubject acabei de colocar a subject list no stream.');
-
+    
     //put new subject into database
     int key = await mySubjectStore.add(db, newSubject.toMap());
     newSubject.id = key;
-    //print('acabei de pegar essa key: $key do metodo add da store para o subject ${newSubject.title}');
   }
 
   Future<void> onCreateNewQuestion(
       String questionTitle, Subject subject) async {
     subject.addNewQuestion(questionTitle);
 
-    // put subject updated with new question into database
-    final finder = Finder(filter: Filter.byKey(subject.id));
-    await mySubjectStore.update(
-      db,
-      subject.toMap(),
-      finder: finder,
-    );
+    await _updateSubjectInDatabase(subject);
   }
-
+  
+  //TODO: maybe this should return bool to inform about success
   Future<void> onDeleteDeck(Subject subjectToBeDeleted) async {
     _subjects.remove(subjectToBeDeleted);
+    _subjectStreamController.add(_subjects);
 
     final finder = Finder(filter: Filter.byKey(subjectToBeDeleted.id));
     await mySubjectStore.delete(
       db,
       finder: finder,
     );
-
-    _subjectStreamController.add(_subjects);
   }
+
+  //TODO: maybe this should return bool to inform about success
+  Future<void> onDeleteQuestion(theQuestion, Subject itsSubject) async {
+    itsSubject.removeQuestion(theQuestion);
+    _subjectStreamController.add(_subjects);
+    _updateSubjectInDatabase(itsSubject);
+  }
+
+  Future<int> _updateSubjectInDatabase(Subject theSubject) async {
+    final finder = Finder(filter: Filter.byKey(theSubject.id));
+    return await mySubjectStore.update(
+      db,
+      theSubject.toMap(),
+      finder: finder,
+    );
+  }
+
 
   Future _initDb() async {
     var dir = await getApplicationDocumentsDirectory();
