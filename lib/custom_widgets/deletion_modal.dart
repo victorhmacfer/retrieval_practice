@@ -29,6 +29,7 @@ class DeletionModal extends StatelessWidget {
             GestureDetector(
               onTap: () {
                 bloc.onDeleteDeck(subject);
+                Navigator.pop(context);
               },
               child: Row(
                 children: <Widget>[
