@@ -1,12 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:retrieval_practice/blocs/main_bloc.dart';
+import 'package:retrieval_practice/models/question.dart';
+import 'package:retrieval_practice/navigation.dart';
+import 'package:retrieval_practice/screens/answer_question_screen.dart';
 
 //TODO: fix styles and colors 
 class DueQuestionsCard extends StatelessWidget {
+
+  final MainBloc bloc;
+
+  DueQuestionsCard(this.bloc);
+
+
+  List<Widget> _answerScreens(List<Question> questions) {
+    List<Widget> myList = [];
+    for (var q in questions) {
+      myList.add(AnswerQuestionScreen(q));
+    }
+    return myList;
+  }
+
+
   @override
   Widget build(BuildContext context) {
+
+    List<Question> myDueQuestions = bloc.allDueQuestions;
+    for (var i in myDueQuestions) print(i.title);
+    
+
     return GestureDetector(
       onTap: () {
         print('I pressed the blue button!');
+        // pushManyWithOnlyOneAnimation(context, _answerScreens(myDueQuestions));
+        pushWithoutAnimation(context, _answerScreens(myDueQuestions)[0]);
       },
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 28, vertical: 10),

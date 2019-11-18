@@ -60,7 +60,7 @@ class _DeckInfoScreenState extends State<DeckInfoScreen> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => CreateQuestionScreen(widget._subject, widget._mainBloc)));
+            MaterialPageRoute(settings: RouteSettings(name: '/createQuestion'), builder: (context) => CreateQuestionScreen(widget._subject, widget._mainBloc)));
         },
       ),
 

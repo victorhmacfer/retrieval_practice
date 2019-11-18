@@ -33,7 +33,7 @@ class QuestionTile extends StatelessWidget {
         if (question.isDue) {
           Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => AnswerQuestionScreen(question)),
+          MaterialPageRoute(settings: RouteSettings(name: '/answerQuestion'), builder: (context) => AnswerQuestionScreen(question)),
         );
         } else {
           Scaffold.of(context).showSnackBar(SnackBar(content: Text("Not the time to review this one yet!"),));

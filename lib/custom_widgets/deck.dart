@@ -20,6 +20,7 @@ class Deck extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
+              settings: RouteSettings(name: '/deckInfo'),
               builder: (context) => DeckInfoScreen(_subject, _mainBloc)),
         );
       },

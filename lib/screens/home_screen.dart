@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:retrieval_practice/blocs/bloc_base.dart';
 import 'package:retrieval_practice/custom_widgets/deck.dart';
+import 'package:retrieval_practice/main.dart';
 import 'package:retrieval_practice/models/subject.dart';
 import 'package:retrieval_practice/screens/create_deck_screen.dart';
 import 'package:retrieval_practice/blocs/main_bloc.dart';
@@ -19,7 +20,7 @@ class HomeScreen extends StatelessWidget {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => CreateDeckScreen(mainBloc)),
+            MaterialPageRoute(settings: RouteSettings(name: '/createDeck'), builder: (context) => CreateDeckScreen(mainBloc)),
           );
         },
       ),
@@ -46,7 +47,7 @@ class HomeScreen extends StatelessWidget {
                     delegate: SliverChildListDelegate.fixed(
                       [Visibility(
                         visible: true,
-                        child: DueQuestionsCard(),
+                        child: DueQuestionsCard(mainBloc),
                       )]
                     ),
                   ),

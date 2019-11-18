@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:retrieval_practice/blocs/bloc_base.dart';
+import 'package:retrieval_practice/models/question.dart';
 import 'package:retrieval_practice/models/subject.dart';
 import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_io.dart';
@@ -27,12 +28,12 @@ class MainBloc extends BlocBase {
   // I wish there were tuples so I could return a list of many (aDueQuestion, itsSubject)
   // This returns a List of lists...
   // A List of [aDueQuestion, itsSubject]
-  List<List<dynamic>> get allDueQuestions {
-    var myList = [];
+  List<Question> get allDueQuestions {
+    List<Question> myList = [];
     for (var s in _subjects) {
       var dueQuestionsForSubject = s.dueQuestions;
       for (var q in dueQuestionsForSubject) {
-        myList.add([q, s]);
+        myList.add(q);
       }
     }
     return myList;
