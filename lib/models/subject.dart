@@ -8,6 +8,14 @@ class Subject {
 
   List<Question> get questions => List.unmodifiable(_questions);
 
+  List<Question> get dueQuestions {
+    var myList = [];
+    for (var q in _questions) {
+      if (q.isDue) myList.add(q);
+    }
+    return List.unmodifiable(myList);
+  }
+
   Subject(this.title);
 
   Subject.withQuestions(this.id, this.title, this._questions);

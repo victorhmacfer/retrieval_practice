@@ -23,6 +23,21 @@ class MainBloc extends BlocBase {
 
   MainBloc();
 
+  //TODO: this is TERRIBLE.. find an alternative.
+  // I wish there were tuples so I could return a list of many (aDueQuestion, itsSubject)
+  // This returns a List of lists...
+  // A List of [aDueQuestion, itsSubject]
+  List<List<dynamic>> get allDueQuestions {
+    var myList = [];
+    for (var s in _subjects) {
+      var dueQuestionsForSubject = s.dueQuestions;
+      for (var q in dueQuestionsForSubject) {
+        myList.add([q, s]);
+      }
+    }
+    return myList;
+  }
+
   Future<void> init() async {
     await _initDb();
     mySubjectStore = intMapStoreFactory.store('subjects');

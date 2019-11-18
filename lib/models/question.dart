@@ -2,7 +2,6 @@ import 'dart:math';
 import 'study.dart';
 
 class Question {
-  int id;
   final String title;
 
   List<Study> _studies = [];
