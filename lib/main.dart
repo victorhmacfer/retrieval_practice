@@ -6,12 +6,10 @@ import 'blocs/bloc_base.dart';
 import 'blocs/main_bloc.dart';
 
 void main() {
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown
-  ]);
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   runApp(MyApp());
-} 
+}
 
 class MyApp extends StatefulWidget {
   @override
@@ -30,7 +28,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
       title: 'Retrieval Practice',
       theme: appTheme,

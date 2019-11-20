@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
-
+import 'package:retrieval_practice/blocs/main_bloc.dart';
 import 'package:retrieval_practice/models/question.dart';
-
-import 'package:retrieval_practice/models/study.dart';
+import 'package:retrieval_practice/models/subject.dart';
 import 'package:retrieval_practice/styles/my_styles.dart';
 
 //TODO: use actual data
 class AnswerQuestionScreen extends StatefulWidget {
-  final Question _question;
+  final Question question;
+  final GestureTapCallback tapCallback;
+  final Subject subject;
+  final MainBloc bloc;
 
-  AnswerQuestionScreen(this._question);
+  AnswerQuestionScreen(
+      {this.question, this.subject, this.bloc, this.tapCallback});
 
   @override
   _AnswerQuestionScreenState createState() => _AnswerQuestionScreenState();
@@ -22,6 +25,10 @@ class _AnswerQuestionScreenState extends State<AnswerQuestionScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: widget.tapCallback,
+        ),
         title: Text(
           'OS Concepts',
           style: deckTitleTextStyle,
@@ -35,8 +42,9 @@ class _AnswerQuestionScreenState extends State<AnswerQuestionScreen> {
               size: 28,
             ),
             onPressed: () {
-              widget._question
-                  .addStudy(Study(_answerQuality.toInt(), DateTime.now()));
+              print('Este eh o nome da question: ${widget.question.title}');
+              widget.bloc.onAddStudy(
+                  widget.question, widget.subject, _answerQuality.toInt());
               Navigator.pop(context);
             },
           ),
@@ -61,7 +69,7 @@ class _AnswerQuestionScreenState extends State<AnswerQuestionScreen> {
             child: Column(
               children: <Widget>[
                 TextFormField(
-                  initialValue: widget._question.title,
+                  initialValue: widget.question.title,
                   decoration: InputDecoration.collapsed(hintText: ''),
                   //TODO: this maxLines should be changed later ! Just making it work for now
                   maxLines: 10,

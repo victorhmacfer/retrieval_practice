@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:retrieval_practice/blocs/bloc_base.dart';
 import 'package:retrieval_practice/models/question.dart';
 import 'package:retrieval_practice/models/subject.dart';
+import 'package:retrieval_practice/models/study.dart';
 import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_io.dart';
 import 'package:path/path.dart';
@@ -28,12 +29,12 @@ class MainBloc extends BlocBase {
   // I wish there were tuples so I could return a list of many (aDueQuestion, itsSubject)
   // This returns a List of lists...
   // A List of [aDueQuestion, itsSubject]
-  List<Question> get allDueQuestions {
-    List<Question> myList = [];
+  List<dynamic> get allDueQuestions {
+    var myList = [];
     for (var s in _subjects) {
       var dueQuestionsForSubject = s.dueQuestions;
       for (var q in dueQuestionsForSubject) {
-        myList.add(q);
+        myList.add([q, s]);
       }
     }
     return myList;
@@ -43,16 +44,14 @@ class MainBloc extends BlocBase {
     await _initDb();
     mySubjectStore = intMapStoreFactory.store('subjects');
     await _populateSubjectListFromDb();
-    //print('Estou no init, acabei de executar de popular a subject list.');
     _subjectStreamController.add(_subjects);
-    //print('Estou no init, acabei de colocar a subject list no stream.');
   }
 
   Future<void> onCreateNewSubject(String title) async {
     var newSubject = Subject(title);
     _subjects.add(newSubject);
     _subjectStreamController.add(_subjects);
-    
+
     //put new subject into database
     int key = await mySubjectStore.add(db, newSubject.toMap());
     newSubject.id = key;
@@ -64,7 +63,12 @@ class MainBloc extends BlocBase {
 
     await _updateSubjectInDatabase(subject);
   }
-  
+
+  Future<void> onAddStudy(Question q, Subject s, int answerQuality) async {
+    q.addStudy(Study(answerQuality, DateTime.now()));
+    await _updateSubjectInDatabase(s);
+  }
+
   //TODO: maybe this should return bool to inform about success
   Future<void> onDeleteDeck(Subject subjectToBeDeleted) async {
     _subjects.remove(subjectToBeDeleted);
@@ -93,7 +97,6 @@ class MainBloc extends BlocBase {
     );
   }
 
-
   Future _initDb() async {
     var dir = await getApplicationDocumentsDirectory();
     await dir.create(recursive: true);
@@ -114,7 +117,6 @@ class MainBloc extends BlocBase {
     _subjects = recordSnapshots.map((snapshot) {
       Subject mySub = Subject.fromMap(snapshot.value);
       mySub.id = snapshot.key;
-      //print('Estou no populate.. id de subject do db: ${mySub.id}, nome: ${mySub.title}');
       return mySub;
     }).toList();
   }

@@ -15,17 +15,10 @@ Future pushWithoutAnimation(BuildContext context, Widget page) {
   return Navigator.push(context, route);
 }
 
-Future pushManyWithOnlyOneAnimation(
-    BuildContext context, List<Widget> pageList) {
+Future pushMany(BuildContext context, List<Widget> pageList) {
   for (var i = 0; i < pageList.length; i++) {
-    if (i == 0) {
-      print('passei no if = 0');
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => pageList[0]));
-    } else {
-      print('passei no else');
-      pushWithoutAnimation(context, pageList[i]);
-    }
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => pageList[i]));
   }
   return null;
 }

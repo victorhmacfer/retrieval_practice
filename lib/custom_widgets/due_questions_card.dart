@@ -12,10 +12,12 @@ class DueQuestionsCard extends StatelessWidget {
   DueQuestionsCard(this.bloc);
 
 
-  List<Widget> _answerScreens(List<Question> questions) {
+  List<Widget> _answerScreens(BuildContext context, List<dynamic> questions) {
     List<Widget> myList = [];
-    for (var q in questions) {
-      myList.add(AnswerQuestionScreen(q));
+    for (var aList in questions) {
+      myList.add(AnswerQuestionScreen(question: aList[0], subject: aList[1], bloc: bloc, tapCallback: () {
+        Navigator.popUntil(context, ModalRoute.withName('/'));
+      },));
     }
     return myList;
   }
@@ -23,16 +25,12 @@ class DueQuestionsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    List<Question> myDueQuestions = bloc.allDueQuestions;
-    for (var i in myDueQuestions) print(i.title);
-    
+    List<dynamic> myDueQuestions = bloc.allDueQuestions;
 
     return GestureDetector(
       onTap: () {
         print('I pressed the blue button!');
-        // pushManyWithOnlyOneAnimation(context, _answerScreens(myDueQuestions));
-        pushWithoutAnimation(context, _answerScreens(myDueQuestions)[0]);
+        pushMany(context, _answerScreens(context, myDueQuestions));
       },
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 28, vertical: 10),
@@ -51,8 +49,8 @@ class DueQuestionsCard extends StatelessWidget {
               Text('DUE QUESTIONS'),
               Row(
                 children: <Widget>[
-                  Text('9', style: TextStyle(fontSize: 44),),
-                  Text('  minutes'),
+                  Text('${myDueQuestions.length}', style: TextStyle(fontSize: 44),),
+                  Text('  cards'),
                 ],
               ),
               Row(
