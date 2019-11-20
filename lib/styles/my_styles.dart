@@ -12,7 +12,7 @@ const appDueQuestionLightRed = Color.fromRGBO(239, 154, 154, 1);
 const appBlue = Color.fromRGBO(144, 202, 249, 1);
 
 const deckTitleTextStyle =
-    TextStyle(fontSize: 22, color: appWhite, fontWeight: FontWeight.w500);
+    TextStyle(fontSize: 20, color: appWhite, fontWeight: FontWeight.w500);
 
 const deckSubtitleTextStyle = TextStyle(
   fontSize: 12,

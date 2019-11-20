@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:retrieval_practice/blocs/main_bloc.dart';
-import 'package:retrieval_practice/models/question.dart';
 import 'package:retrieval_practice/navigation.dart';
 import 'package:retrieval_practice/screens/answer_question_screen.dart';
 
@@ -34,7 +33,7 @@ class DueQuestionsCard extends StatelessWidget {
       },
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 28, vertical: 10),
-        height: 180,
+        height: 170,
         //color: Colors.red,
         child: Container(
           padding: EdgeInsets.all(20),
