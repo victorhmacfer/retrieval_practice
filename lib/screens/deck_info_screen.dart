@@ -7,9 +7,7 @@ import 'package:retrieval_practice/models/subject.dart';
 import 'package:retrieval_practice/screens/create_question_screen.dart';
 import 'package:retrieval_practice/styles/my_styles.dart';
 
-
 class DeckInfoScreen extends StatefulWidget {
-
   final Subject _subject;
 
   final MainBloc _mainBloc;
@@ -23,16 +21,16 @@ class DeckInfoScreen extends StatefulWidget {
 class _DeckInfoScreenState extends State<DeckInfoScreen> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
-
 
   List<Widget> _questions() {
     var questionsList = widget._subject.questions;
 
     if (questionsList.isNotEmpty) {
-      return questionsList.map((q) => QuestionTile(q, widget._subject, widget._mainBloc)).toList();
+      return questionsList
+          .map((q) => QuestionTile(q, widget._subject, widget._mainBloc))
+          .toList();
     }
     return [
       Container(
@@ -44,13 +42,10 @@ class _DeckInfoScreenState extends State<DeckInfoScreen> {
         child: Text(
           'Você ainda não criou\n nenhuma pergunta!',
           style: noQuestionsYetTextStyle,
-          ),
+        ),
       )
     ];
   }
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -59,18 +54,23 @@ class _DeckInfoScreenState extends State<DeckInfoScreen> {
         child: Icon(Icons.add),
         onPressed: () {
           Navigator.push(
-            context,
-            MaterialPageRoute(settings: RouteSettings(name: '/createQuestion'), builder: (context) => CreateQuestionScreen(widget._subject, widget._mainBloc)));
+              context,
+              MaterialPageRoute(
+                  settings: RouteSettings(name: '/createQuestion'),
+                  builder: (context) =>
+                      CreateQuestionScreen(widget._subject, widget._mainBloc)));
         },
       ),
-
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
             expandedHeight: 56.0,
             backgroundColor: appDarkGrey,
             pinned: true,
-            title: Text(widget._subject.title, style: deckTitleTextStyle,),
+            title: Text(
+              widget._subject.title,
+              style: deckTitleTextStyle,
+            ),
             centerTitle: true,
           ),
           SliverList(
@@ -90,18 +90,17 @@ class _DeckInfoScreenState extends State<DeckInfoScreen> {
                     children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 16.0),
-                        child: Text(
-                          widget._subject.title,
-                          style: deckTitleTextStyleBigger
-                        ),
+                        child: Text(widget._subject.title,
+                            style: deckTitleTextStyleBigger),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 16.0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            CardTotalPillButton(widget._subject.totalNumOfQuestions),
-                            CardsDuePillButton(widget._subject.numOfDueQuestions),
+                            CardTotalPillButton(
+                                widget._subject.totalNumOfQuestions),
+                            CardsDuePillButton(widget._subject, widget._mainBloc),
                           ],
                         ),
                       ),
@@ -109,15 +108,13 @@ class _DeckInfoScreenState extends State<DeckInfoScreen> {
                   ),
                 ),
                 myDivider(),
-
                 Container(
-                      color: appBlack,
-                      padding: EdgeInsets.only(bottom: 32.0),
-                      child: Column(
-                        children: _questions(),
-                      ),
+                  color: appBlack,
+                  padding: EdgeInsets.only(bottom: 32.0),
+                  child: Column(
+                    children: _questions(),
+                  ),
                 ),
-
               ],
             ),
           ),
@@ -126,7 +123,6 @@ class _DeckInfoScreenState extends State<DeckInfoScreen> {
     );
   }
 }
-
 
 Widget myDivider() {
   return Container(

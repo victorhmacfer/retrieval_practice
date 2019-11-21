@@ -3,24 +3,26 @@ import 'package:retrieval_practice/blocs/main_bloc.dart';
 import 'package:retrieval_practice/navigation.dart';
 import 'package:retrieval_practice/screens/answer_question_screen.dart';
 
-//TODO: fix styles and colors 
+//TODO: fix styles and colors
 class DueQuestionsCard extends StatelessWidget {
-
   final MainBloc bloc;
 
   DueQuestionsCard(this.bloc);
 
-
   List<Widget> _answerScreens(BuildContext context, List<dynamic> questions) {
     List<Widget> myList = [];
     for (var aList in questions) {
-      myList.add(AnswerQuestionScreen(question: aList[0], subject: aList[1], bloc: bloc, tapCallback: () {
-        Navigator.popUntil(context, ModalRoute.withName('/'));
-      },));
+      myList.add(AnswerQuestionScreen(
+        question: aList[0],
+        subject: aList[1],
+        bloc: bloc,
+        tapCallback: () {
+          Navigator.popUntil(context, ModalRoute.withName('/'));
+        },
+      ));
     }
     return myList;
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +50,10 @@ class DueQuestionsCard extends StatelessWidget {
               Text('DUE QUESTIONS'),
               Row(
                 children: <Widget>[
-                  Text('${myDueQuestions.length}', style: TextStyle(fontSize: 44),),
+                  Text(
+                    '${myDueQuestions.length}',
+                    style: TextStyle(fontSize: 44),
+                  ),
                   Text('  cards'),
                 ],
               ),
