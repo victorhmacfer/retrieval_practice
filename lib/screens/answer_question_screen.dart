@@ -4,7 +4,6 @@ import 'package:retrieval_practice/models/question.dart';
 import 'package:retrieval_practice/models/subject.dart';
 import 'package:retrieval_practice/styles/my_styles.dart';
 
-//TODO: use actual data
 class AnswerQuestionScreen extends StatefulWidget {
   final Question question;
   final GestureTapCallback tapCallback;

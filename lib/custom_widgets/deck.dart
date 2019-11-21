@@ -14,6 +14,11 @@ class Deck extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    var totalNumOfQuestions = _subject.totalNumOfQuestions;
+    var questionString = (totalNumOfQuestions > 1) ? 'questions' : 'question';
+
+
     //TODO: this is temporary
     return GestureDetector(
       onTap: () {
@@ -66,9 +71,8 @@ class Deck extends StatelessWidget {
                             style: deckTitleTextStyle,
                           ),
                         ),
-                        //TODO: when only one question it should say "1 question" not "1 questions"
                         Text(
-                          '${_subject.totalNumOfQuestions} questions  |  ${_subject.numOfDueQuestions} due',
+                          '$totalNumOfQuestions $questionString  |  ${_subject.numOfDueQuestions} due',
                           style: deckSubtitleTextStyle,
                         ),
                       ],
