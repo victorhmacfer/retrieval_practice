@@ -58,8 +58,8 @@ class MainBloc extends BlocBase {
   }
 
   Future<void> onCreateNewQuestion(
-      String questionTitle, Subject subject) async {
-    subject.addNewQuestion(questionTitle);
+      String questionFrontSide, String questionBackSide, Subject subject) async {
+    subject.addNewQuestion(questionFrontSide, questionBackSide);
 
     await _updateSubjectInDatabase(subject);
   }

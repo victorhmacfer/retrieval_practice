@@ -105,7 +105,7 @@ class QuestionTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    question.title,
+                    question.frontSide,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                     style: deckTitleTextStyle.copyWith(fontSize: 18),

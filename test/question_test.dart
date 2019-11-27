@@ -6,7 +6,7 @@ void main() {
   
   //TODO: this test uses now() ...  this is dangerous !
   test('create new question studied now, next study is 1 day later', () {
-    var question = Question.firstStudied('What is an operating system?');
+    var question = Question.firstStudied('What is an operating system?', 'bla bla');
     var now = DateTime.now();
     var year = now.year;
     var month = now.month;
@@ -18,7 +18,7 @@ void main() {
   test('daysUntilNextStudyFromToday() works properly when I add each new study manually',
       () {
     var question =
-        Question('What is an OS?', [Study(123, DateTime(2019, 9, 1))], 2.5, 1);
+        Question('What is an OS?', 'bla bla', [Study(123, DateTime(2019, 9, 1))], 2.5, 1);
 
     question.addStudy(Study(123, DateTime(2019, 9, 2)));
     expect(question.nextStudyDate, DateTime(2019, 9, 8)); // 6 days
@@ -33,7 +33,7 @@ void main() {
     expect(question.nextStudyDate, DateTime(2020, 2, 3)); // 95 days
 
     var questionTwo =
-        Question('What is an OS?', [Study(123, DateTime(2019, 9, 1))], 2.5, 1);
+        Question('What is an OS?', 'bla bla', [Study(123, DateTime(2019, 9, 1))], 2.5, 1);
 
     questionTwo.addStudy(Study(123, DateTime(2019, 9, 2)));
     expect(questionTwo.nextStudyDate, DateTime(2019, 9, 8)); // 6 days

@@ -53,8 +53,8 @@ class Subject {
     return dueQuestionsCount;
   }
 
-  void addNewQuestion(String title) {
-    var newQuestion = Question.firstStudied(title);
+  void addNewQuestion(String frontSide, String backSide) {
+    var newQuestion = Question.firstStudied(frontSide, backSide);
     _questions.add(newQuestion);
   }
 

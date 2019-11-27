@@ -2,14 +2,15 @@ import 'dart:math';
 import 'study.dart';
 
 class Question {
-  final String title;
+  final String frontSide;
+  final String backSide;
 
   List<Study> _studies = [];
 
   double _lastEF;
   int _interval; // days until next study from the date the last study was done
 
-  Question(this.title, this._studies, this._lastEF, this._interval);
+  Question(this.frontSide, this.backSide, this._studies, this._lastEF, this._interval);
 
   List<Study> get studies => List.unmodifiable(_studies);
 
@@ -21,7 +22,8 @@ class Question {
     });
 
     return {
-      'title': title,
+      'frontSide': frontSide,
+      'backSide': backSide,
       'studies': studiesList,
       'lastEF': _lastEF,
       'interval': _interval,
@@ -34,10 +36,10 @@ class Question {
       return Study.fromMap(map['studies'][i]);
     }, growable: true);
 
-    return Question(map['title'], studiesList, map['lastEF'], map['interval']);
+    return Question(map['frontSide'], map['backSide'], studiesList, map['lastEF'], map['interval']);
   }
 
-  Question.firstStudied(this.title) {
+  Question.firstStudied(this.frontSide, this.backSide) {
     var now = DateTime.now();
     var year = now.year;
     var month = now.month;

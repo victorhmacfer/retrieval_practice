@@ -41,7 +41,7 @@ class _AnswerQuestionScreenState extends State<AnswerQuestionScreen> {
               size: 28,
             ),
             onPressed: () {
-              print('Este eh o nome da question: ${widget.question.title}');
+              print('Este eh o nome da question: ${widget.question.frontSide}');
               widget.bloc.onAddStudy(
                   widget.question, widget.subject, _answerQuality.toInt());
               Navigator.pop(context);
@@ -68,7 +68,7 @@ class _AnswerQuestionScreenState extends State<AnswerQuestionScreen> {
             child: Column(
               children: <Widget>[
                 TextFormField(
-                  initialValue: widget.question.title,
+                  initialValue: widget.question.frontSide,
                   decoration: InputDecoration.collapsed(hintText: ''),
                   //TODO: this maxLines should be changed later ! Just making it work for now
                   maxLines: 10,
