@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:retrieval_practice/blocs/bloc_base.dart';
 import 'package:retrieval_practice/custom_widgets/deck.dart';
 import 'package:retrieval_practice/models/subject.dart';
@@ -24,6 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),

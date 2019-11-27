@@ -21,6 +21,7 @@ class QuestionTile extends StatelessWidget {
     if (question.isDue)
       return Icon(
         Icons.timer_off,
+        size: 18,
         color: appDueQuestionLightRed,
       );
     return Text('${question.daysUntilNextStudyFromToday}d');
@@ -93,7 +94,7 @@ class QuestionTile extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 8.0, right: 16.0),
               child: CircleAvatar(
-                radius: 24,
+                radius: 20,
                 backgroundColor: _circleAvatarColor(),
                 child: _circleAvatarContent(),
               ),
@@ -107,7 +108,7 @@ class QuestionTile extends StatelessWidget {
                     question.title,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
-                    style: deckTitleTextStyle.copyWith(fontSize: 19),
+                    style: deckTitleTextStyle.copyWith(fontSize: 18),
                   ),
                   Text('edited 9 days ago', style: deckSubtitleTextStyle),
                 ],

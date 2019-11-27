@@ -78,12 +78,13 @@ class _DeckInfoScreenState extends State<DeckInfoScreen> {
               [
                 Image.asset(
                   'assets/images/asian-woman.jpg',
+                  height: 216,
                   fit: BoxFit.fill,
                 ),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 20.0),
                   color: appBlack,
-                  height: 180,
+                  height: 165,
                   width: 360,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -127,6 +128,6 @@ class _DeckInfoScreenState extends State<DeckInfoScreen> {
 Widget myDivider() {
   return Container(
     height: 4,
-    color: Colors.grey[800],
+    color: Color.fromRGBO(33, 33, 33, 1),
   );
 }

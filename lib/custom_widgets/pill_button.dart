@@ -14,10 +14,10 @@ class CardTotalPillButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 60,
+      height: 52,
       width: 150,
       decoration: BoxDecoration(
-        color: appGrey,
+        color: appPillButtonGrey,
         borderRadius: BorderRadius.circular(72),
       ),
       child: Row(
@@ -68,7 +68,7 @@ class CardsDuePillButton extends StatelessWidget {
         pushMany(context, _answerScreens(context, myDueQuestions));
       },
       child: Container(
-        height: 60,
+        height: 52,
         width: 150,
         decoration: BoxDecoration(
           color: appDueQuestionDarkRed,

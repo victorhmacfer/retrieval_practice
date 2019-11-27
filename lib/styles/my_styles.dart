@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
 
-const appBlack = Color.fromRGBO(16, 16, 16, 1);
+const appBlack = Color.fromRGBO(18, 18, 18, 1);
 const appWhite = Color.fromRGBO(245, 245, 245, 1);
-const appLightGrey = Color.fromRGBO(158, 158, 158, 1);
+// const appLightGrey = Color.fromRGBO(158, 158, 158, 1);
+const appLightGrey = Color.fromRGBO(171, 171, 171, 1);
+
 const appGrey = Color.fromRGBO(72, 72, 72, 1);
-const appDarkGrey = Color.fromRGBO(48, 48, 48, 1);
+const appPillButtonGrey = Color.fromRGBO(50, 50, 52, 1);
+const appDarkGrey = Color.fromRGBO(44, 44, 44, 1);
 const appHintTextGrey = Color.fromRGBO(110, 110, 110, 1);
-const appDueQuestionDarkRed =
-    Color.fromARGB(140, 200, 56, 56); // THIS ONE IS ARGB !
-const appDueQuestionLightRed = Color.fromRGBO(239, 154, 154, 1);
+const appDueQuestionDarkRed = Color.fromRGBO(83, 41, 42, 1);
+const appDueQuestionLightRed = Color.fromRGBO(251, 139, 128, 1);
 const appBlue = Color.fromRGBO(144, 202, 249, 1);
+const appFabBlue = Color.fromRGBO(130, 177, 255, 1);
 
 const deckTitleTextStyle =
     TextStyle(fontSize: 20, color: appWhite, fontWeight: FontWeight.w500);
 
 const deckSubtitleTextStyle = TextStyle(
-  fontSize: 12,
+  fontSize: 11,
   color: appLightGrey,
 );
 
@@ -43,6 +46,6 @@ var appTheme = ThemeData(
   //TODO: make this button bigger
   floatingActionButtonTheme: FloatingActionButtonThemeData(
     foregroundColor: appBlack,
-    backgroundColor: Colors.blue[100],
+    backgroundColor: appFabBlue,
   ),
 );

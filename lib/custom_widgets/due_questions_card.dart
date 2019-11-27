@@ -34,8 +34,8 @@ class DueQuestionsCard extends StatelessWidget {
         pushMany(context, _answerScreens(context, myDueQuestions));
       },
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 28, vertical: 10),
-        height: 170,
+        padding: EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+        height: 160,
         //color: Colors.red,
         child: Container(
           padding: EdgeInsets.all(20),
