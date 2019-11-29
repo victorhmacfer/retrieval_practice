@@ -77,7 +77,7 @@ class _DeckInfoScreenState extends State<DeckInfoScreen> {
             delegate: SliverChildListDelegate(
               [
                 Image.asset(
-                  'assets/images/asian-woman.jpg',
+                  'assets/images/default-pic-better.jpg',
                   height: 216,
                   fit: BoxFit.fill,
                 ),

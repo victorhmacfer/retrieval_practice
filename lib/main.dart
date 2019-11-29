@@ -32,6 +32,7 @@ class _MyAppState extends State<MyApp> {
       title: 'Retrieval Practice',
       theme: appTheme,
       home: BlocProvider<MainBloc>(bloc: _mainBloc, child: HomeScreen()),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
