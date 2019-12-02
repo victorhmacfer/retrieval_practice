@@ -39,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
         },
       ),
       body: StreamBuilder<List<Subject>>(
-          stream: mainBloc.subjectStream,
+          stream: mainBloc.subjectListStream,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               if (snapshot.data.isEmpty) {

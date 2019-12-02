@@ -65,7 +65,7 @@ class _CreateDeckScreenState extends State<CreateDeckScreen> {
                                 MaterialPageRoute(
                                     settings:
                                         RouteSettings(name: '/createQuestion'),
-                                    builder: (context) => PickCoverScreen()));
+                                    builder: (context) => PickCoverScreen(bloc: widget.mainBloc)));
                           },
                           child: Container(
                             height: 36,

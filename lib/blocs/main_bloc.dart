@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:retrieval_practice/blocs/bloc_base.dart';
+import 'package:retrieval_practice/models/deck_cover_photo.dart';
 import 'package:retrieval_practice/models/question.dart';
 import 'package:retrieval_practice/models/subject.dart';
 import 'package:retrieval_practice/models/study.dart';
@@ -8,16 +10,25 @@ import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_io.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:http/http.dart' as http;
 
 const DB_NAME = 'retrieval_practice.db';
 
 class MainBloc extends BlocBase {
   List<Subject> _subjects = [];
 
-  final StreamController<List<Subject>> _subjectStreamController =
+  final StreamController<List<Subject>> _subjectListStreamController =
       StreamController.broadcast();
 
-  Stream<List<Subject>> get subjectStream => _subjectStreamController.stream;
+  Stream<List<Subject>> get subjectListStream =>
+      _subjectListStreamController.stream;
+
+  final StreamController<List<DeckCoverPhoto>>
+      _deckCoverPhotoListStreamController = StreamController.broadcast();
+
+  // IN CASE OF ERROR WHILE FETCHING PHOTOS, AN EMPTY LIST IS PUT ON THE STREAM !
+  Stream<List<DeckCoverPhoto>> get deckCoverPhotoListStream =>
+      _deckCoverPhotoListStreamController.stream;
 
   Database db;
 
@@ -25,8 +36,6 @@ class MainBloc extends BlocBase {
 
   MainBloc();
 
-  //TODO: this is TERRIBLE.. find an alternative.
-  // I wish there were tuples so I could return a list of many (aDueQuestion, itsSubject)
   // This returns a List of lists...
   // A List of [aDueQuestion, itsSubject]
   List<dynamic> get allDueQuestions {
@@ -44,21 +53,21 @@ class MainBloc extends BlocBase {
     await _initDb();
     mySubjectStore = intMapStoreFactory.store('subjects');
     await _populateSubjectListFromDb();
-    _subjectStreamController.add(_subjects);
+    _subjectListStreamController.add(_subjects);
   }
 
   Future<void> onCreateNewSubject(String title) async {
     var newSubject = Subject(title);
     _subjects.add(newSubject);
-    _subjectStreamController.add(_subjects);
+    _subjectListStreamController.add(_subjects);
 
     //put new subject into database
     int key = await mySubjectStore.add(db, newSubject.toMap());
     newSubject.id = key;
   }
 
-  Future<void> onCreateNewQuestion(
-      String questionFrontSide, String questionBackSide, Subject subject) async {
+  Future<void> onCreateNewQuestion(String questionFrontSide,
+      String questionBackSide, Subject subject) async {
     subject.addNewQuestion(questionFrontSide, questionBackSide);
 
     await _updateSubjectInDatabase(subject);
@@ -72,7 +81,7 @@ class MainBloc extends BlocBase {
   //TODO: maybe this should return bool to inform about success
   Future<void> onDeleteDeck(Subject subjectToBeDeleted) async {
     _subjects.remove(subjectToBeDeleted);
-    _subjectStreamController.add(_subjects);
+    _subjectListStreamController.add(_subjects);
 
     final finder = Finder(filter: Filter.byKey(subjectToBeDeleted.id));
     await mySubjectStore.delete(
@@ -84,7 +93,7 @@ class MainBloc extends BlocBase {
   //TODO: maybe this should return bool to inform about success
   Future<void> onDeleteQuestion(theQuestion, Subject itsSubject) async {
     itsSubject.removeQuestion(theQuestion);
-    _subjectStreamController.add(_subjects);
+    _subjectListStreamController.add(_subjects);
     _updateSubjectInDatabase(itsSubject);
   }
 
@@ -121,9 +130,71 @@ class MainBloc extends BlocBase {
     }).toList();
   }
 
+
+
+  Future<void> onCoverPhotoSearchSubmitted(String searchKeyword) async {
+    print('Entrei no onCoverPhotoSearch...');
+    List<DeckCoverPhoto> myPhotosList;
+    try {
+      myPhotosList = await _fetchListOfCoverPhotos(searchKeyword);
+      print('myPhotosList : ');
+      print(myPhotosList);
+    } catch (e) {
+      print('entrei no catch');
+      print(e.toString());
+      _deckCoverPhotoListStreamController.add([]);
+    }
+    _deckCoverPhotoListStreamController.add(myPhotosList);
+    print('I added to the stream the following list: ');
+    
+  }
+
+
+  // TODO: fetches hardcoded number of photos...  30.
+  Future<List<DeckCoverPhoto>> _fetchListOfCoverPhotos(
+      String searchKeyword) async {
+    print('Entrei no fetchList...');
+
+    //TODO: THE QUERY PARAMETERS DONT WORK !!! THIS RETURNS ALL RESULTS FOR THE KEYWORD , NOT ONLY 30
+    final String searchUrl =
+        'https://api.unsplash.com/search/photos/?client_id=238cc98d67d016f02e5aaf29a168c5aa8975d78bdf892198657abd3b49629b13' +
+            '&query=$searchKeyword&per_page=30';
+
+    final response = await http.get(searchUrl);
+
+    if (response.statusCode == 200) {
+      print('Entrei no if status == 200...');
+
+      print('Cheguei aqui  1');
+
+      final Map<String, dynamic> myJsonResponse = json.decode(response.body);
+
+      final List myJsonResultsList = myJsonResponse['results'];
+
+      print('Cheguei aqui  2');
+
+      List<DeckCoverPhoto> photosList = [];
+      // myJsonResultsList.forEach((e) {
+      //   print(e);
+      //   DeckCoverPhoto myDeckPhoto = DeckCoverPhoto.fromJson(e);
+      //   print('Cheguei aqui 3');
+      //   photosList.add(myDeckPhoto);
+      // });
+      for (int i = 0; i < 30 ; i++) {
+        photosList.add(DeckCoverPhoto.fromJson(myJsonResultsList[i]));
+      }
+
+      print('Cheguei aqui 4');
+
+      return photosList;
+    } else {
+      throw Exception('Failed to load photos.');
+    }
+  }
+
   @override
   void dispose() {
-    _subjectStreamController.close();
+    _subjectListStreamController.close();
     db.close();
   }
 }
