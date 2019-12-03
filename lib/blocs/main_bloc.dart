@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:retrieval_practice/blocs/bloc_base.dart';
 import 'package:retrieval_practice/models/deck_cover_photo.dart';
@@ -130,8 +131,6 @@ class MainBloc extends BlocBase {
     }).toList();
   }
 
-
-
   Future<void> onCoverPhotoSearchSubmitted(String searchKeyword) async {
     print('Entrei no onCoverPhotoSearch...');
     List<DeckCoverPhoto> myPhotosList;
@@ -139,16 +138,14 @@ class MainBloc extends BlocBase {
       myPhotosList = await _fetchListOfCoverPhotos(searchKeyword);
       print('myPhotosList : ');
       print(myPhotosList);
-    } catch (e) {
-      print('entrei no catch');
-      print(e.toString());
+    } on SocketException catch (e) {
+      print('entrei no catch de socket');
       _deckCoverPhotoListStreamController.add([]);
+      return;
     }
     _deckCoverPhotoListStreamController.add(myPhotosList);
     print('I added to the stream the following list: ');
-    
   }
-
 
   // TODO: fetches hardcoded number of photos...  30.
   Future<List<DeckCoverPhoto>> _fetchListOfCoverPhotos(
@@ -163,28 +160,14 @@ class MainBloc extends BlocBase {
     final response = await http.get(searchUrl);
 
     if (response.statusCode == 200) {
-      print('Entrei no if status == 200...');
-
-      print('Cheguei aqui  1');
-
       final Map<String, dynamic> myJsonResponse = json.decode(response.body);
 
       final List myJsonResultsList = myJsonResponse['results'];
 
-      print('Cheguei aqui  2');
-
       List<DeckCoverPhoto> photosList = [];
-      // myJsonResultsList.forEach((e) {
-      //   print(e);
-      //   DeckCoverPhoto myDeckPhoto = DeckCoverPhoto.fromJson(e);
-      //   print('Cheguei aqui 3');
-      //   photosList.add(myDeckPhoto);
-      // });
-      for (int i = 0; i < 30 ; i++) {
+      for (int i = 0; i < 30; i++) {
         photosList.add(DeckCoverPhoto.fromJson(myJsonResultsList[i]));
       }
-
-      print('Cheguei aqui 4');
 
       return photosList;
     } else {
