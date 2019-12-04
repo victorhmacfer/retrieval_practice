@@ -3,6 +3,8 @@ import 'package:retrieval_practice/blocs/main_bloc.dart';
 import 'package:retrieval_practice/models/deck_cover_photo.dart';
 import 'package:retrieval_practice/styles/my_styles.dart';
 
+import 'package:http/http.dart' as http;
+
 class PickCoverScreen extends StatefulWidget {
   final MainBloc bloc;
   PickCoverScreen({this.bloc});
@@ -13,6 +15,16 @@ class PickCoverScreen extends StatefulWidget {
 
 class _PickCoverScreenState extends State<PickCoverScreen> {
   TextEditingController myController = TextEditingController();
+  //FocusNode myFocusNode;
+  bool isLoading;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    isLoading = false;
+    //myFocusNode = FocusNode();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +48,7 @@ class _PickCoverScreenState extends State<PickCoverScreen> {
               height: 90,
               //color: Colors.green[800],
               child: TextField(
+                //focusNode: myFocusNode,
                 controller: myController,
                 autofocus: true,
                 cursorColor: appBlue,
@@ -43,7 +56,11 @@ class _PickCoverScreenState extends State<PickCoverScreen> {
                   fontSize: 16,
                 ),
                 onEditingComplete: () {
+                  setState(() {
+                    isLoading = true;
+                  });
                   widget.bloc.onCoverPhotoSearchSubmitted(myController.text);
+                  FocusScope.of(context).unfocus();
                 },
                 decoration: InputDecoration(
                     labelStyle: TextStyle(color: appBlue),
@@ -74,7 +91,8 @@ class _PickCoverScreenState extends State<PickCoverScreen> {
           stream: widget.bloc.deckCoverPhotoListStream,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              print('snapshot has data');
+              print('snapshot has data'); 
+              isLoading = false; 
               if (snapshot.data.isEmpty) {
                 return Container(
                   //color: Colors.red,
@@ -88,7 +106,6 @@ class _PickCoverScreenState extends State<PickCoverScreen> {
                   ),
                 );
               }
-
               return Container(
                 constraints: BoxConstraints.expand(),
                 color: appBlack,
@@ -104,22 +121,48 @@ class _PickCoverScreenState extends State<PickCoverScreen> {
 
                     // create widget from this deckCoverPhoto
 
-                    return _tinyImage(myDeckPhoto);
+                    return _tinyImage(myDeckPhoto, widget.bloc);
                   }),
                 ),
               );
             }
 
-            return Center(child: CircularProgressIndicator());
+            if (isLoading) {
+              return Center(child: CircularProgressIndicator());
+            } else {
+              return Container();
+            }
+
+
+            
           }),
     );
   }
 }
 
-Widget _tinyImage(DeckCoverPhoto photo) {
-  return ClipRRect(
-    borderRadius: BorderRadius.circular(6),
-    // child: Image.asset('assets/images/asian-woman.jpg', fit: BoxFit.fill,),
-    child: Image.network(photo.url, fit: BoxFit.cover),
+
+
+Widget _tinyImage(DeckCoverPhoto photo, MainBloc theBloc) {
+  return GestureDetector(
+    onTap: () {
+      print('I clicked a photo');
+
+      // see if image is already downloaded.. 
+      // if it is: have it ready to create subject with it.. pop to create deck
+      // if not:  download it, and ... 
+
+
+      //theBloc.downloadStuff(photo, 'photo-id-${photo.id}');
+
+      theBloc.onCoverPhotoChosen(photo);
+
+      
+
+    },
+      child: ClipRRect(
+      borderRadius: BorderRadius.circular(6),
+      // child: Image.asset('assets/images/asian-woman.jpg', fit: BoxFit.fill,),
+      child: Image.network(photo.url, fit: BoxFit.cover),
+    ),
   );
 }

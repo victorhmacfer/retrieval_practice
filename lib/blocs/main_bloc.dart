@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:retrieval_practice/blocs/bloc_base.dart';
 import 'package:retrieval_practice/models/deck_cover_photo.dart';
@@ -30,6 +31,11 @@ class MainBloc extends BlocBase {
   // IN CASE OF ERROR WHILE FETCHING PHOTOS, AN EMPTY LIST IS PUT ON THE STREAM !
   Stream<List<DeckCoverPhoto>> get deckCoverPhotoListStream =>
       _deckCoverPhotoListStreamController.stream;
+
+  final StreamController<File> _photoFileStreamController =
+      StreamController.broadcast();
+
+  Stream<File> get photoFileStream => _photoFileStreamController.stream;
 
   Database db;
 
@@ -144,7 +150,7 @@ class MainBloc extends BlocBase {
       return;
     }
     _deckCoverPhotoListStreamController.add(myPhotosList);
-    print('I added to the stream the following list: ');
+    
   }
 
   // TODO: fetches hardcoded number of photos...  30.
@@ -166,7 +172,7 @@ class MainBloc extends BlocBase {
 
       List<DeckCoverPhoto> photosList = [];
       for (int i = 0; i < 30; i++) {
-        photosList.add(DeckCoverPhoto.fromJson(myJsonResultsList[i]));
+        photosList.add(DeckCoverPhoto.fromMap(myJsonResultsList[i]));
       }
 
       return photosList;
@@ -174,6 +180,48 @@ class MainBloc extends BlocBase {
       throw Exception('Failed to load photos.');
     }
   }
+
+
+
+  Future<File> _downloadPhoto(DeckCoverPhoto photo, String filename) async {
+    String myDownloadLink = photo.downloadLink +
+        '?client_id=238cc98d67d016f02e5aaf29a168c5aa8975d78bdf892198657abd3b49629b13';
+
+    final http.Response response = await http.get(myDownloadLink);
+
+    var bytes = response.bodyBytes;
+
+    //TODO: THIS IS DUPLICATED CODE !!! HANDLE LATER
+    String dir = (await getApplicationDocumentsDirectory()).path;
+    File file = File('$dir/$filename');
+    await file.writeAsBytes(bytes);
+    print(file.path);
+    print(await file.lastModified());
+    return file;
+  }
+
+
+
+
+  Future<void> onCoverPhotoChosen(DeckCoverPhoto photo) async {
+    String dir = (await getApplicationDocumentsDirectory()).path;
+    File file = File('$dir/photo-id-${photo.id}');
+
+    bool fileExists = await file.exists();
+
+    if (fileExists) {
+      print('Entrei no file exists');
+      _photoFileStreamController.add(file);
+    } else {
+      print('Entrei no ELSE do file exists');
+      var photoFile = await _downloadPhoto(photo, 'photo-id-${photo.id}');
+      _photoFileStreamController.add(photoFile);
+    }
+  }
+
+
+  
+
 
   @override
   void dispose() {

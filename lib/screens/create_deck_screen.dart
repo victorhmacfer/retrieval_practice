@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:retrieval_practice/blocs/main_bloc.dart';
+import 'package:retrieval_practice/models/deck_cover_photo.dart';
 import 'package:retrieval_practice/screens/pick_cover_screen.dart';
 import 'package:retrieval_practice/styles/my_styles.dart';
 
@@ -14,6 +17,15 @@ class CreateDeckScreen extends StatefulWidget {
 
 class _CreateDeckScreenState extends State<CreateDeckScreen> {
   final myController = TextEditingController();
+
+  DeckCoverPhoto coverPhoto;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,9 +63,25 @@ class _CreateDeckScreenState extends State<CreateDeckScreen> {
                 height: 216,
                 child: Stack(
                   children: <Widget>[
-                    Image.asset(
-                      'assets/images/default-pic-better.jpg',
-                      fit: BoxFit.fill,
+                    StreamBuilder<File>(
+                      stream: widget.mainBloc.photoFileStream,
+                      builder: (context, snapshot) {
+                        if (!snapshot.hasData) {
+                          return Image.asset(
+                            'assets/images/default-pic-better.jpg',
+                            fit: BoxFit.fill,
+                          );
+                        }
+
+
+                        print(snapshot.data);
+                        // return Image.file(snapshot.data, fit: BoxFit.fill,);
+                        // return Image.asset(snapshot.data, fit: BoxFit.fill,);
+                        return Container();
+
+
+
+                      }
                     ),
                     Positioned(
                         right: 16,

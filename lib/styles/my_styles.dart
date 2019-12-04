@@ -42,6 +42,7 @@ var appTheme = ThemeData(
   brightness: Brightness.dark,
   primarySwatch: Colors.blue,
   scaffoldBackgroundColor: appBlack,
+  accentColor: appBlue,
 
   //TODO: make this button bigger
   floatingActionButtonTheme: FloatingActionButtonThemeData(
