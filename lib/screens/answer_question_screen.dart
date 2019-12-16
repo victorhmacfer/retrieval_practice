@@ -41,7 +41,6 @@ class _AnswerQuestionScreenState extends State<AnswerQuestionScreen> {
               size: 28,
             ),
             onPressed: () {
-              print('Este eh o nome da question: ${widget.question.frontSide}');
               widget.bloc.onAddStudy(
                   widget.question, widget.subject, _answerQuality.toInt());
               Navigator.pop(context);
@@ -54,7 +53,6 @@ class _AnswerQuestionScreenState extends State<AnswerQuestionScreen> {
               size: 26,
             ),
             onPressed: () {
-              print('I pressed the delete question button.');
             },
           ),
         ],

@@ -36,7 +36,6 @@ class Deck extends StatelessWidget {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(12), topRight: Radius.circular(12))),
           builder: (myContext) => DeletionModal(subject: _subject, bloc: _mainBloc,),
         );
-        print('I long pressed the deck.');
       },
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 18, vertical: 12),

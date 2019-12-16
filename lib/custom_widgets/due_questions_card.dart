@@ -30,7 +30,6 @@ class DueQuestionsCard extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        print('I pressed the blue button!');
         pushMany(context, _answerScreens(context, myDueQuestions));
       },
       child: Container(

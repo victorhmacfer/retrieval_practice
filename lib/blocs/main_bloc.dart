@@ -137,14 +137,10 @@ class MainBloc extends BlocBase {
   }
 
   Future<void> onCoverPhotoSearchSubmitted(String searchKeyword) async {
-    print('Entrei no onCoverPhotoSearch...');
     List<DeckCoverPhoto> myPhotosList;
     try {
       myPhotosList = await _fetchListOfCoverPhotos(searchKeyword);
-      print('myPhotosList : ');
-      print(myPhotosList);
     } on SocketException catch (e) {
-      print('entrei no catch de socket');
       _deckCoverPhotoListStreamController.add([]);
       return;
     }
@@ -155,7 +151,6 @@ class MainBloc extends BlocBase {
   // TODO: fetches hardcoded number of photos...  30.
   Future<List<DeckCoverPhoto>> _fetchListOfCoverPhotos(
       String searchKeyword) async {
-    print('Entrei no fetchList...');
 
     //TODO: THE QUERY PARAMETERS DONT WORK !!! THIS RETURNS ALL RESULTS FOR THE KEYWORD , NOT ONLY 30
     final String searchUrl =
@@ -194,8 +189,6 @@ class MainBloc extends BlocBase {
     String dir = (await getApplicationDocumentsDirectory()).path;
     File file = File('$dir/$filename');
     await file.writeAsBytes(bytes);
-    print(file.path);
-    print(await file.lastModified());
     return file;
   }
 
@@ -209,10 +202,8 @@ class MainBloc extends BlocBase {
     bool fileExists = await file.exists();
 
     if (fileExists) {
-      print('Entrei no file exists');
       _photoFileStreamController.add(file);
     } else {
-      print('Entrei no ELSE do file exists');
       var photoFile = await _downloadPhoto(photo, 'photo-id-${photo.id}');
       _photoFileStreamController.add(photoFile);
     }

@@ -62,7 +62,6 @@ class _CreateQuestionScreenState extends State<CreateQuestionScreen> {
                 FocusScope.of(context).requestFocus(frontFocusNode);
                 // FocusScope.of(context).requestFocus(frontFocusNode);
               } else if (index == 1) {
-                print('entrei no onTap index 1');
                 //FocusScope.of(context).unfocus();
                 //frontFocusNode.unfocus();
                 
