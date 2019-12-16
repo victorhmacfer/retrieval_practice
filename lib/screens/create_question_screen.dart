@@ -16,7 +16,19 @@ class CreateQuestionScreen extends StatefulWidget {
 
 class _CreateQuestionScreenState extends State<CreateQuestionScreen> {
   final myFrontController = TextEditingController();
+
   final myBackController = TextEditingController();
+  FocusNode frontFocusNode;
+  FocusNode backFocusNode;
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    frontFocusNode = FocusNode();
+    backFocusNode = FocusNode();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +54,23 @@ class _CreateQuestionScreenState extends State<CreateQuestionScreen> {
             ),
           ],
           bottom: TabBar(
+            onTap: (index) {
+              if (index == 0) {
+                //FocusScope.of(context).unfocus();
+                //backFocusNode.unfocus();
+                
+                FocusScope.of(context).requestFocus(frontFocusNode);
+                // FocusScope.of(context).requestFocus(frontFocusNode);
+              } else if (index == 1) {
+                print('entrei no onTap index 1');
+                //FocusScope.of(context).unfocus();
+                //frontFocusNode.unfocus();
+                
+                FocusScope.of(context).requestFocus(backFocusNode);
+                
+              }
+
+            },
             indicatorColor: appBlue,
             labelPadding: EdgeInsets.all(16),
             tabs: <Widget>[
@@ -52,8 +81,8 @@ class _CreateQuestionScreenState extends State<CreateQuestionScreen> {
         ),
         body: TabBarView(
           children: <Widget>[
-            _frontOrBackSide('Front', myFrontController),
-            _frontOrBackSide('Back', myBackController),
+            _frontOrBackSide('Front', myFrontController, frontFocusNode),
+            _frontOrBackSide('Back', myBackController, backFocusNode),
           ],
 
         ),
@@ -65,16 +94,22 @@ class _CreateQuestionScreenState extends State<CreateQuestionScreen> {
   void dispose() {
     myFrontController.dispose();
     myBackController.dispose();
+    frontFocusNode.dispose();
+    backFocusNode.dispose();
     super.dispose();
   }
 }
 
 
-Widget _frontOrBackSide(String message, aTextEditingcontroller) {
+Widget _frontOrBackSide(String message, aTextEditingcontroller, aFocusNode) {
   return Container(
           padding: EdgeInsets.all(24),
           constraints: BoxConstraints.expand(),
           child: TextField(
+            showCursor: true,
+            //autofocus: true,
+            focusNode: aFocusNode,
+            cursorColor: appBlue,
             controller: aTextEditingcontroller,
             decoration: InputDecoration.collapsed(
                 hintText: message,

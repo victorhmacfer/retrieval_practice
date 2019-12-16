@@ -73,8 +73,9 @@ class _CreateDeckScreenState extends State<CreateDeckScreen> {
                           );
                         }
 
-
-                        print(snapshot.data);
+                        // TODO: FIX THIS LATER.. FOR NOW I CANT CHOOSE A DIFFERENT PICTURE.
+                        // Image.file DOES NOT WORK !!!
+                        
                         // return Image.file(snapshot.data, fit: BoxFit.fill,);
                         // return Image.asset(snapshot.data, fit: BoxFit.fill,);
                         return Container();

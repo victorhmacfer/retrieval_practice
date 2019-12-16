@@ -145,19 +145,8 @@ class _PickCoverScreenState extends State<PickCoverScreen> {
 Widget _tinyImage(DeckCoverPhoto photo, MainBloc theBloc) {
   return GestureDetector(
     onTap: () {
-      print('I clicked a photo');
-
-      // see if image is already downloaded.. 
-      // if it is: have it ready to create subject with it.. pop to create deck
-      // if not:  download it, and ... 
-
-
-      //theBloc.downloadStuff(photo, 'photo-id-${photo.id}');
-
-      theBloc.onCoverPhotoChosen(photo);
-
-      
-
+      // TODO: Im disabling this call because Idk how to display a downloaded image.
+      //theBloc.onCoverPhotoChosen(photo);
     },
       child: ClipRRect(
       borderRadius: BorderRadius.circular(6),

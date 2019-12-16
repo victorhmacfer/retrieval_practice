@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:retrieval_practice/blocs/bloc_base.dart';
 import 'package:retrieval_practice/models/deck_cover_photo.dart';
@@ -202,7 +201,7 @@ class MainBloc extends BlocBase {
 
 
 
-
+  // TODO this is never called... Just making the app work again for now..
   Future<void> onCoverPhotoChosen(DeckCoverPhoto photo) async {
     String dir = (await getApplicationDocumentsDirectory()).path;
     File file = File('$dir/photo-id-${photo.id}');
