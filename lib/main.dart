@@ -4,9 +4,10 @@ import 'styles/my_styles.dart';
 import 'blocs/bloc_base.dart';
 import 'blocs/main_bloc.dart';
 
+
 void main() {
   // SystemChrome.setPreferredOrientations(
-      // [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  // [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   runApp(MyApp());
 }
 
@@ -31,6 +32,7 @@ class _MyAppState extends State<MyApp> {
       title: 'Retrieval Practice',
       theme: appTheme,
       home: BlocProvider<MainBloc>(bloc: _mainBloc, child: HomeScreen()),
+      //home: HomeScreen(),
       debugShowCheckedModeBanner: false,
     );
   }

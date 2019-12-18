@@ -46,15 +46,20 @@ class CardsDuePillButton extends StatelessWidget {
   final Subject subject;
   final MainBloc bloc;
 
-  CardsDuePillButton(this.subject, this.bloc) : _dueCards = subject.numOfDueQuestions;
-
+  CardsDuePillButton(this.subject, this.bloc)
+      : _dueCards = subject.numOfDueQuestions;
 
   List<Widget> _answerScreens(BuildContext context, List<Question> questions) {
     List<Widget> myList = [];
     for (var aQuestion in questions) {
-      myList.add(AnswerQuestionScreen(question: aQuestion, subject: subject, bloc: bloc, tapCallback: () {
-        Navigator.popUntil(context, ModalRoute.withName('/deckInfo'));
-      },));
+      myList.add(AnswerQuestionScreen(
+        question: aQuestion,
+        subject: subject,
+        bloc: bloc,
+        tapCallback: () {
+          Navigator.popUntil(context, ModalRoute.withName('/deckInfo'));
+        },
+      ));
     }
     return myList;
   }
@@ -86,12 +91,60 @@ class CardsDuePillButton extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 10),
               child: Text(
                 '$_dueCards due',
-                style: pillButtonTextStyle.copyWith(color: appDueQuestionLightRed),
+                style:
+                    pillButtonTextStyle.copyWith(color: appDueQuestionLightRed),
               ),
             ),
           ],
         ),
       ),
+    );
+  }
+}
+
+
+//TODO: fix shadows later
+class AccentPillButton extends StatelessWidget {
+  final String text;
+  AccentPillButton(this.text);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      child: Padding(
+        padding: const EdgeInsets.all(4.0),
+        child: Container(
+            height: 56,
+            //width: 264,
+            decoration: BoxDecoration(
+              //boxShadow: [BoxShadow(blurRadius: 2, offset: Offset(2, 2), color: Colors.grey[600])],
+              //TODO: CHANGE THIS TO A RADIAL GRADIENT !
+              gradient:
+                  LinearGradient(colors: [Color(0xFF2B7EDE), Color(0xFF3D54B9),]),
+              borderRadius: BorderRadius.circular(72),
+            ),
+            child: Center(
+              child: Text(text, style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w500),),
+            )),
+      ),
+    );
+  }
+}
+
+
+class HollowPillButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      child: Container(
+          height: 56,
+          decoration: BoxDecoration(
+            border: Border.all(color: appWhite, width: 2),
+            borderRadius: BorderRadius.circular(72),
+          ),
+          child: Center(
+            child: Text('SIGN UP', style: TextStyle(fontWeight: FontWeight.w500, fontSize: 15) ),
+          )),
     );
   }
 }
