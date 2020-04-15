@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:retrieval_practice/screens/home_screen.dart';
 import 'styles/my_styles.dart';
 import 'blocs/bloc_base.dart';
@@ -6,8 +7,6 @@ import 'blocs/main_bloc.dart';
 
 
 void main() {
-  // SystemChrome.setPreferredOrientations(
-  // [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   runApp(MyApp());
 }
 
@@ -28,6 +27,8 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
     return MaterialApp(
       title: 'Retrieval Practice',
       theme: appTheme,
