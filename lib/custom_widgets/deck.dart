@@ -39,7 +39,7 @@ class Deck extends StatelessWidget {
       },
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 18, vertical: 12),
-        height: 244,
+        height: 276,
         //this part is transparent..
         color: appBlack,
         child: ClipRRect(
@@ -51,14 +51,17 @@ class Deck extends StatelessWidget {
                 'assets/images/asian-woman.jpg',
                 fit: BoxFit.fill,
               ),
+              
               Positioned(
-                  width: 360,
-                  height: 70,
+                // FIXME: hardcoded big number for width... 
+                // big enough for most smartphones.. wont work for tablets.
+                  width: 500, 
+                  height: 84,
                   bottom: 0,
                   left: 0,
                   child: Container(
                     color: appDarkGrey,
-                    padding: EdgeInsets.only(top: 8, left: 16),
+                    padding: EdgeInsets.only(top: 16, left: 16),
                     alignment: Alignment.centerLeft,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
