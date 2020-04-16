@@ -27,6 +27,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+
+    var screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
@@ -44,13 +47,48 @@ class _HomeScreenState extends State<HomeScreen> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               if (snapshot.data.isEmpty) {
-                return Center(
-                  child: Text(
-                    'You have no decks yet...',
-                    style: deckTitleTextStyle,
-                  ),
+
+                return CustomScrollView(
+                  physics: NeverScrollableScrollPhysics(),
+                  slivers: <Widget>[
+                    SliverAppBar(
+                      expandedHeight: 56,
+                      backgroundColor: appBlack,
+                      title: Text(
+                        'Retrieval Practice',
+                        style: appTitleTextStyle
+                      ),
+                      centerTitle: true,
+                    ),
+                    SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                        (context, index) {
+                          return Container(
+                            height: screenHeight * 0.8, //FIXME: hardcoded.. 80% is meaningless just to make it work.
+                            alignment: Alignment.center,
+                            child: Container(
+                              width: screenHeight * 0.25, //FIXME: weird
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  Text('No decks yet', style: deckTitleTextStyle),
+                                  SizedBox(height: 10,),
+                                  Text(
+                                    'Create a deck of cards and it will show up here.',
+                                    style: TextStyle(color: appLightGrey, fontSize: 15, height: 1.4),)
+                                ],
+                              ),
+                            ),
+                          );
+                        }, childCount: 1
+                      ),
+                    ),
+                  ],
                 );
+
               }
+
+
               var numOfDueQuestions = mainBloc.allDueQuestions.length;
               var hasAnyDueQuestions = false;
               if (numOfDueQuestions > 0) hasAnyDueQuestions = true;
