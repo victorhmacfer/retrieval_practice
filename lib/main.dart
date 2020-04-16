@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:retrieval_practice/screens/get_started_screen.dart';
 import 'package:retrieval_practice/screens/home_screen.dart';
 import 'package:retrieval_practice/screens/login_screen.dart';
+import 'package:retrieval_practice/screens/signup_screen.dart';
 import 'styles/my_styles.dart';
 import 'blocs/bloc_base.dart';
 import 'blocs/main_bloc.dart';
@@ -35,7 +36,7 @@ class _MyAppState extends State<MyApp> {
       title: 'Retrieval Practice',
       theme: appTheme,
       // home: BlocProvider<MainBloc>(bloc: _mainBloc, child: HomeScreen()),
-      home: LoginScreen(),
+      home: SignUpScreen(),
       debugShowCheckedModeBanner: false,
     );
   }

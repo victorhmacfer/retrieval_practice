@@ -40,7 +40,7 @@ class SignUpScreen extends StatelessWidget {
                   style: TextStyle(
                       color: appBlack,
                       fontSize: 36,
-                      fontWeight: FontWeight.w400),
+                      fontWeight: FontWeight.w500),
                 ),
                 SizedBox(
                   height: 32,
@@ -86,6 +86,7 @@ class _MySignUpFormState extends State<MySignUpForm> {
                 SizedBox(
                   width: 140,
                   child: TextFormField(
+                    style: TextStyle(color: appBlack),
                     decoration: InputDecoration(
                         //contentPadding: EdgeInsets.only(left: 6),
 
@@ -95,7 +96,7 @@ class _MySignUpFormState extends State<MySignUpForm> {
                         filled: true,
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(32),
-                          borderSide: BorderSide(color: appBlue, width: 2),
+                          borderSide: BorderSide(color: appAuthFormFieldBlue, width: 2),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(32),
@@ -107,6 +108,7 @@ class _MySignUpFormState extends State<MySignUpForm> {
                 SizedBox(
                   width: 140,
                   child: TextFormField(
+                    style: TextStyle(color: appBlack),
                     decoration: InputDecoration(
                         hintText: 'Last name',
                         hintStyle: TextStyle(color: Colors.grey),
@@ -114,7 +116,7 @@ class _MySignUpFormState extends State<MySignUpForm> {
                         filled: true,
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(32),
-                          borderSide: BorderSide(color: appBlue, width: 2),
+                          borderSide: BorderSide(color: appAuthFormFieldBlue, width: 2),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(32),
@@ -129,6 +131,7 @@ class _MySignUpFormState extends State<MySignUpForm> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 12.0),
             child: TextFormField(
+              style: TextStyle(color: appBlack),
               decoration: InputDecoration(
                   //TODO: label is bugged ?  I will try to use it later
                   hintText: 'Email',
@@ -137,7 +140,7 @@ class _MySignUpFormState extends State<MySignUpForm> {
                   filled: true,
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(32),
-                    borderSide: BorderSide(color: appBlue, width: 2),
+                    borderSide: BorderSide(color: appAuthFormFieldBlue, width: 2),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(32),
@@ -146,6 +149,7 @@ class _MySignUpFormState extends State<MySignUpForm> {
             ),
           ),
           TextFormField(
+            style: TextStyle(color: appBlack),
             decoration: InputDecoration(
                 suffixIcon: IconButton(
                   onPressed: () {},
@@ -161,7 +165,7 @@ class _MySignUpFormState extends State<MySignUpForm> {
                 filled: true,
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(32),
-                  borderSide: BorderSide(color: appBlue, width: 2),
+                  borderSide: BorderSide(color: appAuthFormFieldBlue, width: 2),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(32),

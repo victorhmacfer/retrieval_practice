@@ -81,7 +81,7 @@ class _MyLoginFormState extends State<MyLoginForm> {
                   filled: true,
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(32),
-                    borderSide: BorderSide(color: Color(0xFF2B7EDE), width: 2),
+                    borderSide: BorderSide(color: appAuthFormFieldBlue, width: 2),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(32),
