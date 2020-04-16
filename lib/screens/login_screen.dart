@@ -39,7 +39,7 @@ class LoginScreen extends StatelessWidget {
                   style: TextStyle(
                       color: appBlack,
                       fontSize: 36,
-                      fontWeight: FontWeight.w400),
+                      fontWeight: FontWeight.w500),
                 ),
                 SizedBox(
                   height: 32,
@@ -72,6 +72,7 @@ class _MyLoginFormState extends State<MyLoginForm> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 12.0),
             child: TextFormField(
+              style: TextStyle(color: appBlack),
               decoration: InputDecoration(
                   //TODO: label is bugged ?  I will try to use it later
                   hintText: 'Email',
@@ -80,7 +81,7 @@ class _MyLoginFormState extends State<MyLoginForm> {
                   filled: true,
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(32),
-                    borderSide: BorderSide(color: appBlue, width: 2),
+                    borderSide: BorderSide(color: Color(0xFF2B7EDE), width: 2),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(32),
@@ -89,6 +90,7 @@ class _MyLoginFormState extends State<MyLoginForm> {
             ),
           ),
           TextFormField(
+            style: TextStyle(color: appBlack),
             decoration: InputDecoration(
                 suffixIcon: IconButton(
                   onPressed: () {},
@@ -104,7 +106,7 @@ class _MyLoginFormState extends State<MyLoginForm> {
                 filled: true,
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(32),
-                  borderSide: BorderSide(color: appBlue, width: 2),
+                  borderSide: BorderSide(color: Color(0xFF2B7EDE), width: 2),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(32),
@@ -118,6 +120,7 @@ class _MyLoginFormState extends State<MyLoginForm> {
               style: TextStyle(color: Colors.black),
             ),
           ),
+          // SizedBox(height: 160,),
           AccentPillButton('LOGIN'),
         ],
       ),
