@@ -60,7 +60,7 @@ class Deck extends StatelessWidget {
                   bottom: 0,
                   left: 0,
                   child: Container(
-                    color: appDarkGrey,
+                    color: appDeckBottomGrey,
                     padding: EdgeInsets.only(top: 16, left: 16),
                     alignment: Alignment.centerLeft,
                     child: Column(

@@ -54,21 +54,22 @@ class _CreateDeckScreenState extends State<CreateDeckScreen> {
         ],
       ),
       body: Container(
-        constraints: BoxConstraints.expand(height: 400),
+        constraints: BoxConstraints.expand(height: 400), //FIXME: hardcoded
         color: appBlack,
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
               Container(
-                height: 216,
+                height: 248,
                 child: Stack(
                   children: <Widget>[
+                    //FIXME: find solution for storing image locally and using it later
                     StreamBuilder<File>(
                       stream: widget.mainBloc.photoFileStream,
                       builder: (context, snapshot) {
                         if (!snapshot.hasData) {
                           return Image.asset(
-                            'assets/images/default-pic-better.jpg',
+                            'assets/images/white-default-pic.jpg',
                             fit: BoxFit.fill,
                           );
                         }

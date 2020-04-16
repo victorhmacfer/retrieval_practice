@@ -8,6 +8,7 @@ const appLightGrey = Color.fromRGBO(171, 171, 171, 1);
 const appGrey = Color.fromRGBO(72, 72, 72, 1);
 const appPillButtonGrey = Color.fromRGBO(50, 50, 52, 1);
 const appDarkGrey = Color.fromRGBO(44, 44, 44, 1);
+const appDeckBottomGrey = Color.fromRGBO(50, 50, 50, 1);
 const appHintTextGrey = Color.fromRGBO(110, 110, 110, 1);
 const appDueQuestionDarkRed = Color.fromRGBO(83, 41, 42, 1);
 const appDueQuestionLightRed = Color.fromRGBO(251, 139, 128, 1);
