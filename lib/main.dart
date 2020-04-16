@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:retrieval_practice/screens/get_started_screen.dart';
 import 'package:retrieval_practice/screens/home_screen.dart';
 import 'styles/my_styles.dart';
 import 'blocs/bloc_base.dart';
@@ -32,7 +33,8 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Retrieval Practice',
       theme: appTheme,
-      home: BlocProvider<MainBloc>(bloc: _mainBloc, child: HomeScreen()),
+      // home: BlocProvider<MainBloc>(bloc: _mainBloc, child: HomeScreen()),
+      home: GetStartedScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
