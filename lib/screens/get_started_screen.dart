@@ -31,7 +31,7 @@ class GetStartedScreen extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Text('SPACED', style: TextStyle(fontSize: 56, letterSpacing: 12),),
-              SizedBox(height: 272),
+              SizedBox(height: 256),
               Container(
                 // color: Colors.red,
                 height: 280,

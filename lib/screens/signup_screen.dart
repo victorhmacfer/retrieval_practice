@@ -179,7 +179,7 @@ class _MySignUpFormState extends State<MySignUpForm> {
               style: TextStyle(color: Colors.black),
             ),
           ),
-          AccentPillButton('SIGN UP'),
+          // AccentPillButton('SIGN UP'),
         ],
       ),
     );

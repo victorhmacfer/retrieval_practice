@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:retrieval_practice/screens/get_started_screen.dart';
+import 'package:retrieval_practice/screens/alt_get_started_screen.dart';
 import 'package:retrieval_practice/screens/home_screen.dart';
 import 'package:retrieval_practice/screens/login_screen.dart';
 import 'package:retrieval_practice/screens/signup_screen.dart';
@@ -41,3 +44,4 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
+

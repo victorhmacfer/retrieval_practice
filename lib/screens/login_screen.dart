@@ -121,7 +121,7 @@ class _MyLoginFormState extends State<MyLoginForm> {
             ),
           ),
           // SizedBox(height: 160,),
-          AccentPillButton('LOGIN'),
+          // AccentPillButton('LOGIN'),
         ],
       ),
     );
