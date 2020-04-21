@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:retrieval_practice/blocs/auth_bloc.dart';
+import 'package:retrieval_practice/blocs/bloc_base.dart';
 
 import 'package:retrieval_practice/styles/my_styles.dart';
 
@@ -70,6 +72,16 @@ class MySignUpForm extends StatefulWidget {
 class _MySignUpFormState extends State<MySignUpForm> {
   final _signUpFormKey = GlobalKey<FormState>();
 
+  final _firstNameKey = GlobalKey<FormFieldState>();
+  final _lastNameKey = GlobalKey<FormFieldState>();
+  final _emailKey = GlobalKey<FormFieldState>();
+  final _passwordKey = GlobalKey<FormFieldState>();
+
+  final _firstNameController = TextEditingController();
+  final _lastNameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -86,10 +98,16 @@ class _MySignUpFormState extends State<MySignUpForm> {
                 SizedBox(
                   width: 140,
                   child: TextFormField(
+                    key: _firstNameKey,
+                    controller: _firstNameController,
+                    validator: (text) {
+                      if (text.isEmpty) return 'Please, tell us!';
+                    },
+                    onChanged: (_) {
+                      _firstNameKey.currentState.validate();
+                    },
                     style: TextStyle(color: appBlack),
                     decoration: InputDecoration(
-                        //contentPadding: EdgeInsets.only(left: 6),
-
                         hintText: 'First name',
                         hintStyle: TextStyle(color: Colors.grey),
                         fillColor: formFieldGrey,
@@ -102,12 +120,32 @@ class _MySignUpFormState extends State<MySignUpForm> {
                           borderRadius: BorderRadius.circular(32),
                           borderSide:
                               BorderSide(color: formFieldGrey, width: 2),
-                        )),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(32),
+                          borderSide:
+                              BorderSide(color: appFormErrorRed, width: 2),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(32),
+                          borderSide:
+                              BorderSide(color: appFormErrorRed, width: 2),
+                        ),
+
+                    ),
                   ),
                 ),
                 SizedBox(
                   width: 140,
                   child: TextFormField(
+                    key: _lastNameKey,
+                    controller: _lastNameController,
+                    validator: (text) {
+                      if (text.isEmpty) return 'Please, tell us!';
+                    },
+                    onChanged: (_) {
+                      _lastNameKey.currentState.validate();
+                    },
                     style: TextStyle(color: appBlack),
                     decoration: InputDecoration(
                         hintText: 'Last name',
@@ -122,7 +160,18 @@ class _MySignUpFormState extends State<MySignUpForm> {
                           borderRadius: BorderRadius.circular(32),
                           borderSide:
                               BorderSide(color: formFieldGrey, width: 2),
-                        )),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(32),
+                          borderSide:
+                              BorderSide(color: appFormErrorRed, width: 2),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(32),
+                          borderSide:
+                              BorderSide(color: appFormErrorRed, width: 2),
+                        ),
+                    ),
                   ),
                 ),
               ],
@@ -131,6 +180,18 @@ class _MySignUpFormState extends State<MySignUpForm> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 12.0),
             child: TextFormField(
+              key: _emailKey,
+              controller: _emailController,
+              //FIXME: this validation is wrong !  Just providing one for now.
+              // it accepts "victor@gmail" without a ".com"  
+              validator: (email) {
+                if (!email.contains(RegExp(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$"))) {
+                  return 'Invalid email';
+                }
+              },
+              onChanged: (_) {
+                _emailKey.currentState.validate();
+              },
               style: TextStyle(color: appBlack),
               decoration: InputDecoration(
                   //TODO: label is bugged ?  I will try to use it later
@@ -145,11 +206,31 @@ class _MySignUpFormState extends State<MySignUpForm> {
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(32),
                     borderSide: BorderSide(color: formFieldGrey, width: 2),
-                  )),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(32),
+                          borderSide:
+                              BorderSide(color: appFormErrorRed, width: 2),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(32),
+                          borderSide:
+                              BorderSide(color: appFormErrorRed, width: 2),
+                        ),
+              ),
             ),
           ),
           TextFormField(
+            key: _passwordKey,
+            controller: _passwordController,
             style: TextStyle(color: appBlack),
+            validator: (pwd) {
+              if (pwd.length < 8) return 'Must be at least 8 characters long.';
+            },
+            onChanged: (_) {
+              _passwordKey.currentState.validate();
+            },
+            obscureText: true,
             decoration: InputDecoration(
                 suffixIcon: IconButton(
                   onPressed: () {},
@@ -170,7 +251,18 @@ class _MySignUpFormState extends State<MySignUpForm> {
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(32),
                   borderSide: BorderSide(color: formFieldGrey, width: 2),
-                )),
+                ),
+                errorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(32),
+                          borderSide:
+                              BorderSide(color: appFormErrorRed, width: 2),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(32),
+                          borderSide:
+                              BorderSide(color: appFormErrorRed, width: 2),
+                        ),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 16, bottom: 16, right: 24.0),
@@ -179,7 +271,21 @@ class _MySignUpFormState extends State<MySignUpForm> {
               style: TextStyle(color: Colors.black),
             ),
           ),
-          // AccentPillButton('SIGN UP'),
+          GestureDetector(
+            onTap: () async {
+              if (_signUpFormKey.currentState.validate()) {
+                // TODO:
+                var authBloc = BlocProvider.of<AuthBloc>(context);
+                var theEmail = _emailController.text;
+                var thePassword = _passwordController.text;
+                var user = await authBloc.signUpWithEmailAndPassword(theEmail, thePassword);
+                // send signup to firebase
+                // if registering works.. log in with those credentials
+                //  push replacement  home screen
+              }      
+            },
+            child: AccentPillButton('SIGN UP')
+          ),
         ],
       ),
     );

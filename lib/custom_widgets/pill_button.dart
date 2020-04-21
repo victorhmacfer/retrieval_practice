@@ -102,7 +102,6 @@ class CardsDuePillButton extends StatelessWidget {
   }
 }
 
-
 //TODO: fix shadows later
 class AccentPillButton extends StatelessWidget {
   final String text;
@@ -110,27 +109,32 @@ class AccentPillButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      child: Padding(
-        padding: const EdgeInsets.all(4.0),
-        child: Container(
-            height: 56,
-            //width: 264,
-            decoration: BoxDecoration(
-              //boxShadow: [BoxShadow(blurRadius: 2, offset: Offset(2, 2), color: Colors.grey[600])],
-              //TODO: CHANGE THIS TO A RADIAL GRADIENT !
-              gradient:
-                  LinearGradient(colors: [Color(0xFF2B7EDE), Color(0xFF3D54B9),]),
-              borderRadius: BorderRadius.circular(72),
+    return Padding(
+      padding: const EdgeInsets.all(4.0),
+      child: Container(
+          height: 56,
+          //width: 264,
+          decoration: BoxDecoration(
+            //boxShadow: [BoxShadow(blurRadius: 2, offset: Offset(2, 2), color: Colors.grey[600])],
+            //TODO: CHANGE THIS TO A RADIAL GRADIENT !
+            gradient: LinearGradient(colors: [
+              Color(0xFF2B7EDE),
+              Color(0xFF3D54B9),
+            ]),
+            borderRadius: BorderRadius.circular(72),
+          ),
+          child: Center(
+            child: Text(
+              text,
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500),
             ),
-            child: Center(
-              child: Text(text, style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w500),),
-            )),
-      ),
+          )),
     );
   }
 }
-
 
 class HollowPillButton extends StatelessWidget {
   @override
@@ -143,7 +147,8 @@ class HollowPillButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(72),
           ),
           child: Center(
-            child: Text('SIGN UP', style: TextStyle(fontWeight: FontWeight.w500, fontSize: 15) ),
+            child: Text('SIGN UP',
+                style: TextStyle(fontWeight: FontWeight.w500, fontSize: 15)),
           )),
     );
   }

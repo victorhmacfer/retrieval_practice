@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "180613430976",
+    "firebase_url": "https://retrieval-practice.firebaseio.com",
+    "project_id": "retrieval-practice",
+    "storage_bucket": "retrieval-practice.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:180613430976:android:247acb788da915855b3725",
+        "android_client_info": {
+          "package_name": "com.example.retrieval_practice"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "180613430976-42nlb8gs7hd16lnd3v9pg24mh7uv23l6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQk4uNtAb--WbG7j-aurGCu4adf-QMmHw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "180613430976-42nlb8gs7hd16lnd3v9pg24mh7uv23l6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

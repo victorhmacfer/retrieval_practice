@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:retrieval_practice/blocs/auth_bloc.dart';
 import 'package:retrieval_practice/screens/get_started_screen.dart';
 import 'package:retrieval_practice/screens/alt_get_started_screen.dart';
 import 'package:retrieval_practice/screens/home_screen.dart';
@@ -23,12 +24,14 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   MainBloc _mainBloc;
+  AuthBloc _authBloc;
 
   @override
   void initState() {
     super.initState();
     _mainBloc = MainBloc();
     _mainBloc.init();
+    _authBloc = AuthBloc();
   }
 
   @override
@@ -39,7 +42,8 @@ class _MyAppState extends State<MyApp> {
       title: 'Retrieval Practice',
       theme: appTheme,
       // home: BlocProvider<MainBloc>(bloc: _mainBloc, child: HomeScreen()),
-      home: SignUpScreen(),
+      home: BlocProvider<AuthBloc>(bloc: _authBloc, child: SignUpScreen()),
+      // home: GetStartedScreen(),
       debugShowCheckedModeBanner: false,
     );
   }

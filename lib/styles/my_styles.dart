@@ -14,6 +14,7 @@ const appDueQuestionDarkRed = Color.fromRGBO(83, 41, 42, 1);
 const appDueQuestionLightRed = Color.fromRGBO(251, 139, 128, 1);
 const appBlue = Color.fromRGBO(144, 202, 249, 1);
 const appFabBlue = Color.fromRGBO(130, 177, 255, 1);
+const appFormErrorRed = Color.fromRGBO(200, 0, 0, 1);
 
 const appAuthFormFieldBlue = Color(0xFF2B7EDE);
 
