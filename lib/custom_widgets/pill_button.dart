@@ -137,6 +137,10 @@ class AccentPillButton extends StatelessWidget {
 }
 
 class HollowPillButton extends StatelessWidget {
+
+  final String text;
+  HollowPillButton(this.text);
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -147,7 +151,7 @@ class HollowPillButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(72),
           ),
           child: Center(
-            child: Text('SIGN UP',
+            child: Text(text,
                 style: TextStyle(fontWeight: FontWeight.w500, fontSize: 15)),
           )),
     );

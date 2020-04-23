@@ -1,13 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:retrieval_practice/blocs/auth_bloc.dart';
+import 'package:retrieval_practice/blocs/main_bloc.dart';
 
 import 'package:retrieval_practice/custom_widgets/pill_button.dart';
+import 'package:retrieval_practice/screens/signup_screen.dart';
 import 'package:retrieval_practice/styles/my_styles.dart';
+
+import 'login_screen.dart';
 
 
 
 //TODO: fix appearance  and use styles
 class GetStartedScreen extends StatelessWidget {
+
+  final AuthBloc authBloc;
+  final MainBloc mainBloc;
+
+
+  GetStartedScreen(this.authBloc, this.mainBloc);
+
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
@@ -41,8 +54,32 @@ class GetStartedScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     AccentPillButton('GET STARTED'),
-                    HollowPillButton(),
-                    Text('Already registered ?', style: TextStyle(fontSize: 12),),
+
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context, 
+                          MaterialPageRoute(
+                            builder: (context) => SignUpScreen(authBloc, mainBloc),
+                          )
+                        );
+                      },
+                      child: HollowPillButton('SIGN UP')
+                    ),
+
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context, 
+                          MaterialPageRoute(
+                            builder: (context) => LoginScreen(authBloc),
+                          )
+                        );
+                      },
+                      child: Text('Already registered ?', style: TextStyle(fontSize: 12),),
+                    ),
+
+
                   ],
                 ),
               ),

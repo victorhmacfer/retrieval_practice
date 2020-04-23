@@ -15,6 +15,17 @@ class AuthBloc extends BlocBase {
     )).user;
   }
 
+  Future<bool> isSignedIn() async {
+    var theUser = await _auth.currentUser();
+    return theUser != null;
+  }
+
+  logout() async {
+    return await _auth.signOut();
+  }
+
+
+
 
 
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:retrieval_practice/blocs/auth_bloc.dart';
 
 import 'package:retrieval_practice/styles/my_styles.dart';
 
@@ -6,6 +7,11 @@ import 'package:retrieval_practice/custom_widgets/pill_button.dart';
 
 
 class LoginScreen extends StatelessWidget {
+
+  final AuthBloc authBloc;
+
+  LoginScreen(this.authBloc);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,10 +20,15 @@ class LoginScreen extends StatelessWidget {
         elevation: 0,
         leading: Padding(
           padding: const EdgeInsets.only(left: 4.0),
-          child: Icon(
-            Icons.clear,
-            size: 28,
-            color: appBlack,
+          child: GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
+                      child: Icon(
+              Icons.clear,
+              size: 28,
+              color: appBlack,
+            ),
           ),
         ),
       ),
@@ -120,8 +131,8 @@ class _MyLoginFormState extends State<MyLoginForm> {
               style: TextStyle(color: Colors.black),
             ),
           ),
-          // SizedBox(height: 160,),
-          // AccentPillButton('LOGIN'),
+          SizedBox(height: 120,),
+          AccentPillButton('LOGIN'),
         ],
       ),
     );

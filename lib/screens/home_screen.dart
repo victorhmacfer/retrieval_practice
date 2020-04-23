@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:retrieval_practice/blocs/auth_bloc.dart';
 import 'package:retrieval_practice/blocs/bloc_base.dart';
 import 'package:retrieval_practice/custom_widgets/deck.dart';
 import 'package:retrieval_practice/models/subject.dart';
@@ -9,22 +10,16 @@ import 'package:retrieval_practice/styles/my_styles.dart';
 
 import 'package:retrieval_practice/custom_widgets/due_questions_card.dart';
 
-class HomeScreen extends StatefulWidget {
-  @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
+class HomeScreen extends StatelessWidget {
 
-class _HomeScreenState extends State<HomeScreen> {
-  MainBloc mainBloc;
+  final AuthBloc authBloc;
+  final MainBloc mainBloc;
 
-  @override
-  void initState() {
-    super.initState();
-    mainBloc = BlocProvider.of<MainBloc>(context);
-  }
+  HomeScreen(this.authBloc, this.mainBloc);
 
   @override
   Widget build(BuildContext context) {
+
     SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(statusBarColor: Colors.transparent));
 
@@ -34,12 +29,13 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                settings: RouteSettings(name: '/createDeck'),
-                builder: (context) => CreateDeckScreen(mainBloc)),
-          );
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(
+          //       settings: RouteSettings(name: '/createDeck'),
+          //       builder: (context) => CreateDeckScreen(mainBloc)),
+          // );
+          authBloc.logout();
         },
       ),
       body: StreamBuilder<List<Subject>>(
