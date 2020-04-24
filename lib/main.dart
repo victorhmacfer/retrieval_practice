@@ -17,23 +17,10 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatefulWidget {
-  @override
-  _MyAppState createState() => _MyAppState();
-}
+class MyApp extends StatelessWidget {
 
-class _MyAppState extends State<MyApp> {
-  MainBloc _mainBloc;
-  AuthBloc _authBloc;
-
-  @override
-  void initState() {
-    super.initState();
-    _mainBloc = MainBloc();
-    _mainBloc.init();
-    _authBloc = AuthBloc();
-  }
-
+  final MainBloc _mainBloc = MainBloc();
+  final AuthBloc _authBloc = AuthBloc();
 
   @override
   Widget build(BuildContext context) {

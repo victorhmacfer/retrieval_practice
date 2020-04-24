@@ -10,12 +10,27 @@ import 'package:retrieval_practice/styles/my_styles.dart';
 
 import 'package:retrieval_practice/custom_widgets/due_questions_card.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
 
   final AuthBloc authBloc;
   final MainBloc mainBloc;
 
   HomeScreen(this.authBloc, this.mainBloc);
+
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+
+
+  @override
+  void initState() {
+    super.initState();
+    widget.mainBloc.init();
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -35,11 +50,12 @@ class HomeScreen extends StatelessWidget {
           //       settings: RouteSettings(name: '/createDeck'),
           //       builder: (context) => CreateDeckScreen(mainBloc)),
           // );
-          authBloc.logout();
+          // FIXME: remove this
+          widget.authBloc.logout();
         },
       ),
       body: StreamBuilder<List<Subject>>(
-          stream: mainBloc.subjectListStream,
+          stream: widget.mainBloc.subjectListStream,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               if (snapshot.data.isEmpty) {
@@ -85,7 +101,7 @@ class HomeScreen extends StatelessWidget {
               }
 
 
-              var numOfDueQuestions = mainBloc.allDueQuestions.length;
+              var numOfDueQuestions = widget.mainBloc.allDueQuestions.length;
               var hasAnyDueQuestions = false;
               if (numOfDueQuestions > 0) hasAnyDueQuestions = true;
 
@@ -105,13 +121,13 @@ class HomeScreen extends StatelessWidget {
                     delegate: SliverChildListDelegate.fixed([
                       Visibility(
                         visible: hasAnyDueQuestions,
-                        child: DueQuestionsCard(mainBloc),
+                        child: DueQuestionsCard(widget.mainBloc),
                       )
                     ]),
                   ),
                   SliverList(
                     delegate: SliverChildBuilderDelegate((context, index) {
-                      return Deck(snapshot.data[index], mainBloc);
+                      return Deck(snapshot.data[index], widget.mainBloc);
                     }, childCount: snapshot.data.length),
                   ),
                 ],

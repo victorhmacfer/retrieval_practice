@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:retrieval_practice/blocs/auth_bloc.dart';
 import 'package:retrieval_practice/blocs/bloc_base.dart';
 import 'package:retrieval_practice/blocs/main_bloc.dart';
@@ -288,22 +289,32 @@ class _MySignUpFormState extends State<MySignUpForm> {
                   // TODO:
                   var theEmail = _emailController.text;
                   var thePassword = _passwordController.text;
-                  var user = await widget.authBloc
+
+                  var respStatus = await widget.authBloc
                       .signUpWithEmailAndPassword(theEmail, thePassword);
 
-                  print(user.email);
-
-                  Navigator.pushReplacement(
-                    context, 
-                    MaterialPageRoute(
-                      builder: (context) => HomeScreen(
-                        widget.authBloc, 
-                        widget.mainBloc)),
-                  );
-
-                  
-                  // if registering works.. log in with those credentials
-                  //  push replacement  home screen
+                  if (respStatus == SignUpResponseStatus.SUCCESS) {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              HomeScreen(widget.authBloc, widget.mainBloc)),
+                      (route) => false,
+                    );
+                  } else if (respStatus ==
+                      SignUpResponseStatus.EMAIL_ALREADY_IN_USE) {
+                    Scaffold.of(context).showSnackBar(SnackBar(
+                      duration: Duration(seconds: 3),
+                      content: Text(
+                        'Email already in use!',
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: appWhite,
+                            fontWeight: FontWeight.w500),
+                      ),
+                      backgroundColor: Colors.red[400],
+                    ));
+                  }
                 }
               },
               child: AccentPillButton('SIGN UP')),

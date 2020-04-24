@@ -9,23 +9,17 @@ import 'package:retrieval_practice/styles/my_styles.dart';
 
 import 'login_screen.dart';
 
-
-
 //TODO: fix appearance  and use styles
 class GetStartedScreen extends StatelessWidget {
-
   final AuthBloc authBloc;
   final MainBloc mainBloc;
 
-
   GetStartedScreen(this.authBloc, this.mainBloc);
-
 
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(statusBarColor: Colors.transparent));
-
 
     return Material(
       child: Container(
@@ -33,53 +27,51 @@ class GetStartedScreen extends StatelessWidget {
         constraints: BoxConstraints.expand(),
         decoration: BoxDecoration(
             image: DecorationImage(
-                image: AssetImage(
-                    'assets/images/space-get-started.jpg'
-                ),
-                fit: BoxFit.fill
-                    )),
+                image: AssetImage('assets/images/space-get-started.jpg'),
+                fit: BoxFit.fill)),
         child: Container(
           // color: Colors.green,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Text('SPACED', style: TextStyle(fontSize: 56, letterSpacing: 12),),
+              Text(
+                'SPACED',
+                style: TextStyle(fontSize: 56, letterSpacing: 12),
+              ),
               SizedBox(height: 256),
               Container(
                 // color: Colors.red,
                 height: 280,
-                padding: const EdgeInsets.symmetric(vertical: 56, horizontal: 44),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 56, horizontal: 44),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     AccentPillButton('GET STARTED'),
-
+                    GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    SignUpScreen(authBloc, mainBloc),
+                              ));
+                        },
+                        child: HollowPillButton('SIGN UP')),
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
-                          context, 
-                          MaterialPageRoute(
-                            builder: (context) => SignUpScreen(authBloc, mainBloc),
-                          )
-                        );
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LoginScreen(authBloc),
+                            ));
                       },
-                      child: HollowPillButton('SIGN UP')
+                      child: Text(
+                        'Already registered ?',
+                        style: TextStyle(fontSize: 12),
+                      ),
                     ),
-
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context, 
-                          MaterialPageRoute(
-                            builder: (context) => LoginScreen(authBloc),
-                          )
-                        );
-                      },
-                      child: Text('Already registered ?', style: TextStyle(fontSize: 12),),
-                    ),
-
-
                   ],
                 ),
               ),
