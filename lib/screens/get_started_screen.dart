@@ -64,7 +64,7 @@ class GetStartedScreen extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => LoginScreen(authBloc),
+                              builder: (context) => LoginScreen(authBloc, mainBloc),
                             ));
                       },
                       child: Text(

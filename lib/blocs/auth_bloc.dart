@@ -5,6 +5,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 enum SignUpResponseStatus { SUCCESS, EMAIL_ALREADY_IN_USE }
 
+enum LoginResponseStatus {SUCCESS, USER_NOT_FOUND, WRONG_PASSWORD}
+
 class AuthBloc extends BlocBase {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -38,8 +40,31 @@ class AuthBloc extends BlocBase {
   }
 
   logout() async {
+    _loggedInUser = null;
     return await _auth.signOut();
   }
+
+
+
+  Future<LoginResponseStatus> loginWithEmailAndPassword(email, pwd) async {
+
+    FirebaseUser user;
+    try {
+      user = (await _auth.signInWithEmailAndPassword(email: email, password: pwd)).user;
+    } on PlatformException catch (e) {
+      if (e.code == 'ERROR_USER_NOT_FOUND') {
+        return LoginResponseStatus.USER_NOT_FOUND;
+      } else if (e.code == 'ERROR_WRONG_PASSWORD') {
+        return LoginResponseStatus.WRONG_PASSWORD;
+      }
+    }
+
+    _loggedInUser = user;
+    return LoginResponseStatus.SUCCESS;
+  }
+
+
+
 
   @override
   void dispose() {
