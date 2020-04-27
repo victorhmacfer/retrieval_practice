@@ -111,20 +111,28 @@ class _MyLoginFormState extends State<MyLoginForm> {
 
               style: TextStyle(color: appBlack),
               decoration: InputDecoration(
-                  //TODO: label is bugged ?  I will try to use it later
-                  hintText: 'Email',
-                  hintStyle: TextStyle(color: Colors.grey),
-                  fillColor: formFieldGrey,
-                  filled: true,
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(32),
-                    borderSide:
-                        BorderSide(color: appAuthFormFieldBlue, width: 2),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(32),
-                    borderSide: BorderSide(color: formFieldGrey, width: 2),
-                  )),
+                //TODO: label is bugged ?  I will try to use it later
+                hintText: 'Email',
+                hintStyle: TextStyle(color: Colors.grey),
+                fillColor: formFieldGrey,
+                filled: true,
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(32),
+                  borderSide: BorderSide(color: appAuthFormFieldBlue, width: 2),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(32),
+                  borderSide: BorderSide(color: formFieldGrey, width: 2),
+                ),
+                errorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(32),
+                  borderSide: BorderSide(color: appFormErrorRed, width: 2),
+                ),
+                focusedErrorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(32),
+                  borderSide: BorderSide(color: appFormErrorRed, width: 2),
+                ),
+              ),
             ),
           ),
           TextFormField(
@@ -139,26 +147,35 @@ class _MyLoginFormState extends State<MyLoginForm> {
             },
             style: TextStyle(color: appBlack),
             decoration: InputDecoration(
-                suffixIcon: IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.visibility_off,
-                    color: Colors.grey,
-                  ),
-                  padding: const EdgeInsets.only(right: 24),
+              suffixIcon: IconButton(
+                onPressed: () {},
+                icon: Icon(
+                  Icons.visibility_off,
+                  color: Colors.grey,
                 ),
-                hintText: 'Password',
-                hintStyle: TextStyle(color: Colors.grey),
-                fillColor: formFieldGrey,
-                filled: true,
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(32),
-                  borderSide: BorderSide(color: Color(0xFF2B7EDE), width: 2),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(32),
-                  borderSide: BorderSide(color: formFieldGrey, width: 2),
-                )),
+                padding: const EdgeInsets.only(right: 24),
+              ),
+              hintText: 'Password',
+              hintStyle: TextStyle(color: Colors.grey),
+              fillColor: formFieldGrey,
+              filled: true,
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(32),
+                borderSide: BorderSide(color: Color(0xFF2B7EDE), width: 2),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(32),
+                borderSide: BorderSide(color: formFieldGrey, width: 2),
+              ),
+              errorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(32),
+                borderSide: BorderSide(color: appFormErrorRed, width: 2),
+              ),
+              focusedErrorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(32),
+                borderSide: BorderSide(color: appFormErrorRed, width: 2),
+              ),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 16, bottom: 16, right: 24.0),

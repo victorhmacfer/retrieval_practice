@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:retrieval_practice/blocs/auth_bloc.dart';
 import 'package:retrieval_practice/blocs/bloc_base.dart';
 import 'package:retrieval_practice/blocs/main_bloc.dart';
+import 'package:retrieval_practice/screens/login_screen.dart';
 
 import 'package:retrieval_practice/styles/my_styles.dart';
 
@@ -273,11 +274,24 @@ class _MySignUpFormState extends State<MySignUpForm> {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 16, bottom: 16, right: 24.0),
-            child: Text(
-              ' Already registered?',
-              style: TextStyle(color: Colors.black),
+          GestureDetector(
+            onTap: () {
+              Navigator.pushReplacement(
+                context, 
+                MaterialPageRoute(
+                  builder: (context) => LoginScreen(
+                      widget.authBloc, 
+                      widget.mainBloc
+                  ),
+                )
+              );
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(top: 16, bottom: 16, right: 24.0),
+              child: Text(
+                ' Already registered?',
+                style: TextStyle(color: Colors.black),
+              ),
             ),
           ),
           SizedBox(
