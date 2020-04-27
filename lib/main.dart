@@ -7,6 +7,7 @@ import 'package:retrieval_practice/screens/get_started_screen.dart';
 import 'package:retrieval_practice/screens/alt_get_started_screen.dart';
 import 'package:retrieval_practice/screens/home_screen.dart';
 import 'package:retrieval_practice/screens/login_screen.dart';
+import 'package:retrieval_practice/screens/settings_screen.dart';
 import 'package:retrieval_practice/screens/signup_screen.dart';
 import 'styles/my_styles.dart';
 import 'blocs/bloc_base.dart';
@@ -32,7 +33,10 @@ class MyApp extends StatelessWidget {
       // home: BlocProvider<MainBloc>(bloc: _mainBloc, child: HomeScreen()),
       // home: BlocProvider<AuthBloc>(bloc: _authBloc, child: SignUpScreen()),
       // home: GetStartedScreen(),
-      home: FirstScreenPicker(_authBloc, _mainBloc),
+
+
+      // home: FirstScreenPicker(_authBloc, _mainBloc),
+      home: SettingsScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
