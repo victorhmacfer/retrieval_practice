@@ -66,7 +66,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget _actionWithToggle(icon, textString) {
     return Container(
       // color: Colors.blue,
-      padding: EdgeInsets.symmetric(vertical: 15, horizontal: horizontalPadding),
+      padding: EdgeInsets.symmetric(vertical: 4, horizontal: horizontalPadding),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
@@ -78,14 +78,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ],
           ),
 
-          Switch(
-            activeColor: appBlue,
-            value: darkThemeEnabled, 
-            onChanged: (newValue) {
-              setState(() {
-                darkThemeEnabled = newValue;
-              });
-            }
+          Container(
+            // color: Colors.red,
+            child: Switch(
+              activeColor: appBlue,
+              value: darkThemeEnabled, 
+              onChanged: (newValue) {
+                setState(() {
+                  darkThemeEnabled = newValue;
+                });
+              }
+            ),
           ),
         ],
       ),
@@ -94,7 +97,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Widget _actionRow(icon, textString) {
     return Container(
-      // color: Colors.blue,
+      // color: Colors.yellow,
       padding: EdgeInsets.symmetric(vertical: 15, horizontal: horizontalPadding),
       child: Row(
         children: <Widget>[
