@@ -16,6 +16,8 @@ const appBlue = Color.fromRGBO(144, 202, 249, 1);
 const appFabBlue = Color.fromRGBO(130, 177, 255, 1);
 const appFormErrorRed = Color.fromRGBO(200, 0, 0, 1);
 
+const appProfileAvatarGreen = Color.fromRGBO(41, 105, 81, 1);
+
 const appAuthFormFieldBlue = Color(0xFF2B7EDE);
 
 const formFieldGrey = Color(0xFFE9E9E9);

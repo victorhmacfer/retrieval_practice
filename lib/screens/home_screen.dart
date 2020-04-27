@@ -6,12 +6,12 @@ import 'package:retrieval_practice/custom_widgets/deck.dart';
 import 'package:retrieval_practice/models/subject.dart';
 import 'package:retrieval_practice/screens/create_deck_screen.dart';
 import 'package:retrieval_practice/blocs/main_bloc.dart';
+import 'package:retrieval_practice/screens/settings_screen.dart';
 import 'package:retrieval_practice/styles/my_styles.dart';
 
 import 'package:retrieval_practice/custom_widgets/due_questions_card.dart';
 
 class HomeScreen extends StatefulWidget {
-
   final AuthBloc authBloc;
   final MainBloc mainBloc;
 
@@ -22,19 +22,52 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
-
   @override
   void initState() {
     super.initState();
     widget.mainBloc.init();
   }
 
+  Widget sliverAppBar(BuildContext context) {
+    return SliverAppBar(
+      actions: <Widget>[
+        GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context, 
+              MaterialPageRoute(
+                builder: (context) => SettingsScreen()
+              )
+            );
 
+          },
+          child: CircleAvatar(
+            radius: 16,
+            foregroundColor: appWhite,
+            child: Text(
+              'V',
+              style: TextStyle(fontSize: 16, color: appWhite),
+            ),
+            backgroundColor: appProfileAvatarGreen,
+          ),
+        ),
+        SizedBox(
+          width: 18,
+        )
+      ],
+      expandedHeight: 56.0,
+      backgroundColor: appBlack,
+      floating: true,
+      title: Text(
+        'Spaced',
+        style: appTitleTextStyle,
+      ),
+      centerTitle: true,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-
     SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(statusBarColor: Colors.transparent));
 
@@ -59,47 +92,42 @@ class _HomeScreenState extends State<HomeScreen> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               if (snapshot.data.isEmpty) {
-
                 return CustomScrollView(
                   physics: NeverScrollableScrollPhysics(),
                   slivers: <Widget>[
-                    SliverAppBar(
-                      expandedHeight: 56,
-                      backgroundColor: appBlack,
-                      title: Text(
-                        'Retrieval Practice',
-                        style: appTitleTextStyle
-                      ),
-                      centerTitle: true,
-                    ),
+                    //FIXME: this is duplicated
+                    sliverAppBar(context),
                     SliverList(
-                      delegate: SliverChildBuilderDelegate(
-                        (context, index) {
-                          return Container(
-                            height: screenHeight * 0.8, //FIXME: hardcoded.. 80% is meaningless just to make it work.
-                            alignment: Alignment.center,
-                            child: Container(
-                              width: screenHeight * 0.25, //FIXME: weird
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  Text('No decks yet', style: deckTitleTextStyle),
-                                  SizedBox(height: 10,),
-                                  Text(
-                                    'Create a deck of cards and it will show up here.',
-                                    style: TextStyle(color: appLightGrey, fontSize: 15, height: 1.4),)
-                                ],
-                              ),
+                      delegate: SliverChildBuilderDelegate((context, index) {
+                        return Container(
+                          height: screenHeight *
+                              0.8, //FIXME: hardcoded.. 80% is meaningless just to make it work.
+                          alignment: Alignment.center,
+                          child: Container(
+                            width: screenHeight * 0.25, //FIXME: weird
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Text('No decks yet', style: deckTitleTextStyle),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  'Create a deck of cards and it will show up here.',
+                                  style: TextStyle(
+                                      color: appLightGrey,
+                                      fontSize: 15,
+                                      height: 1.4),
+                                )
+                              ],
                             ),
-                          );
-                        }, childCount: 1
-                      ),
+                          ),
+                        );
+                      }, childCount: 1),
                     ),
                   ],
                 );
-
               }
-
 
               var numOfDueQuestions = widget.mainBloc.allDueQuestions.length;
               var hasAnyDueQuestions = false;
@@ -107,16 +135,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
               return CustomScrollView(
                 slivers: <Widget>[
-                  SliverAppBar(
-                    expandedHeight: 56.0,
-                    backgroundColor: appBlack,
-                    floating: true,
-                    title: Text(
-                      'Retrieval Practice',
-                      style: appTitleTextStyle,
-                    ),
-                    centerTitle: true,
-                  ),
+                  sliverAppBar(context),
                   SliverList(
                     delegate: SliverChildListDelegate.fixed([
                       Visibility(

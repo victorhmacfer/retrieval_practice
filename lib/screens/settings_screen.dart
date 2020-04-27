@@ -28,13 +28,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   bool darkThemeEnabled = false;
 
-  Widget _backIcon() {
-    return Container(
-      // color: Colors.purple,
-      padding: EdgeInsets.only(left: horizontalPadding),
-      alignment: Alignment.centerLeft,
-      constraints: BoxConstraints.expand(height: 24),
-      child: Icon(Icons.clear),
+  Widget _backIcon(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.pop(context);
+      },
+      child: Container(
+        // color: Colors.purple,
+        padding: EdgeInsets.only(left: horizontalPadding),
+        child: Icon(Icons.clear),
+      ),
     );
   }
 
@@ -130,7 +133,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            _backIcon(),
+            _backIcon(context),
             _avatarRow(),
             _actionWithToggle(Icon(Icons.brightness_3), 'Dark theme'),
             _actionRow(Icon(Icons.settings), 'Preferences'),

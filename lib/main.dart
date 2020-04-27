@@ -28,15 +28,13 @@ class MyApp extends StatelessWidget {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
     return MaterialApp(
-      title: 'Retrieval Practice',
+      title: 'Spaced',
       theme: appTheme,
       // home: BlocProvider<MainBloc>(bloc: _mainBloc, child: HomeScreen()),
       // home: BlocProvider<AuthBloc>(bloc: _authBloc, child: SignUpScreen()),
       // home: GetStartedScreen(),
 
-
-      // home: FirstScreenPicker(_authBloc, _mainBloc),
-      home: SettingsScreen(),
+      home: FirstScreenPicker(_authBloc, _mainBloc),
       debugShowCheckedModeBanner: false,
     );
   }
