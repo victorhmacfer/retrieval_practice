@@ -2,16 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:retrieval_practice/blocs/auth_bloc.dart';
-import 'package:retrieval_practice/screens/get_started_screen.dart';
-import 'package:retrieval_practice/screens/alt_get_started_screen.dart';
-import 'package:retrieval_practice/screens/home_screen.dart';
-import 'package:retrieval_practice/screens/login_screen.dart';
-import 'package:retrieval_practice/screens/settings_screen.dart';
-import 'package:retrieval_practice/screens/signup_screen.dart';
+
 import 'styles/my_styles.dart';
-import 'blocs/bloc_base.dart';
 import 'blocs/main_bloc.dart';
+import 'package:retrieval_practice/screens/first_screen_picker.dart';
+
 
 
 void main() {
@@ -40,25 +35,4 @@ class MyApp extends StatelessWidget {
 }
 
 
-class FirstScreenPicker extends StatelessWidget {
-
-  MainBloc mainBloc;
-
-  FirstScreenPicker(this.mainBloc);
-
-  @override
-  Widget build(BuildContext context) {
-
-    return FutureBuilder(
-      future: mainBloc.isSignedIn(),
-      builder: (context, snapshot) {
-        if (snapshot.data == false) {
-          return GetStartedScreen(mainBloc);
-        } 
-        
-        return HomeScreen(mainBloc);
-      }
-    );
-  }
-}
 

@@ -130,9 +130,18 @@ class MainBloc extends BlocBase {
   Future _initDb() async {
     var dir = await getApplicationDocumentsDirectory();
     await dir.create(recursive: true);
-    var dbPath = join(dir.path, DB_NAME);
+    var user = await loggedInUser;
+    var dbPath = join(dir.path, _makeDbName(user));
     db = await databaseFactoryIo.openDatabase(dbPath);
   }
+
+  String _makeDbName(FirebaseUser loggedInUser) {
+    if (loggedInUser == null) {
+      return 'loggedOut.db';
+    }
+    return 'user-${loggedInUser.uid}.db';
+  } 
+  
 
   Future<void> _populateSubjectListFromDb() async {
     final finder = Finder(sortOrders: [
@@ -257,8 +266,10 @@ class MainBloc extends BlocBase {
   }
 
   logout() async {
+    print('got inside logout');
     _loggedInUser = null;
-    return await _auth.signOut();
+    await _auth.signOut();
+    print('signout has finished');
   }
 
   Future<LoginResponseStatus> loginWithEmailAndPassword(email, pwd) async {

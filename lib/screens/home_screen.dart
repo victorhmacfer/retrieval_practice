@@ -35,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Navigator.push(
               context, 
               MaterialPageRoute(
-                builder: (context) => SettingsScreen()
+                builder: (context) => SettingsScreen(widget.mainBloc)
               )
             );
 
@@ -76,14 +76,12 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(
-          //       settings: RouteSettings(name: '/createDeck'),
-          //       builder: (context) => CreateDeckScreen(mainBloc)),
-          // );
-          // FIXME: remove this
-          widget.mainBloc.logout();
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                settings: RouteSettings(name: '/createDeck'),
+                builder: (context) => CreateDeckScreen(widget.mainBloc)),
+          );
         },
       ),
       body: StreamBuilder<List<Subject>>(

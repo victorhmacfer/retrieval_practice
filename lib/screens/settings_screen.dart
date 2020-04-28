@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:retrieval_practice/blocs/main_bloc.dart';
 import 'package:retrieval_practice/styles/my_styles.dart';
+
+import 'package:retrieval_practice/screens/first_screen_picker.dart';
 
 const _usernameStyle =
     TextStyle(color: appWhite, fontSize: 14, fontWeight: FontWeight.w500);
@@ -8,6 +11,12 @@ const _emailStyle = TextStyle(color: Colors.grey, fontSize: 12);
 
 // FIXME: hardcoded data
 class SettingsScreen extends StatefulWidget {
+
+  final MainBloc mainBloc;
+
+  SettingsScreen(this.mainBloc);
+
+
   @override
   _SettingsScreenState createState() => _SettingsScreenState();
 }
@@ -101,7 +110,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Widget _actionRow(icon, textString) {
     return Container(
-      // color: Colors.yellow,
+      //this is the same color as the background but
+      // containers with no color dont detect taps correctly
+      color: appBlack,
       padding:
           EdgeInsets.symmetric(vertical: 15, horizontal: horizontalPadding),
       child: Row(
@@ -147,7 +158,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
             _actionRow(Icon(Icons.event_note), 'Privacy Policy'),
             _actionRow(Icon(Icons.info_outline), 'About Spaced'),
             _divider(),
-            _actionRow(Icon(Icons.input), 'Log out'),
+
+
+            GestureDetector(
+              onTap: () async {
+                print('clicked on logout tile');
+                await widget.mainBloc.logout();
+                Navigator.pushAndRemoveUntil(
+                  context, 
+                  //giving it a new bloc.
+                  MaterialPageRoute(builder: (context) => FirstScreenPicker(MainBloc())), 
+                  (route) => false,
+                  );
+              },
+              child: _actionRow(Icon(Icons.input), 'Log out')
+            ),
           ],
         ),
       ),

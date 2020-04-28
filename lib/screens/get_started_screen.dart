@@ -45,7 +45,7 @@ class GetStartedScreen extends StatelessWidget {
                 // color: Colors.red,
                 height: 280,
                 padding:
-                    const EdgeInsets.symmetric(vertical: 56, horizontal: 44),
+                    const EdgeInsets.only(top: 56,bottom: 32, left: 44, right: 44),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -69,9 +69,13 @@ class GetStartedScreen extends StatelessWidget {
                               builder: (context) => LoginScreen(mainBloc),
                             ));
                       },
-                      child: Text(
-                        'Already registered ?',
-                        style: TextStyle(fontSize: 12),
+                      child: Container(
+                        // color: Colors.green,
+                        padding: EdgeInsets.only(top: 6, bottom: 24),
+                        child: Text(
+                          'Already registered ?',
+                          style: TextStyle(fontSize: 12),
+                        ),
                       ),
                     ),
                   ],
