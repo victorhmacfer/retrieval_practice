@@ -16,6 +16,10 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    var screenHeight = MediaQuery.of(context).size.height;
+
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: appWhite,
@@ -41,11 +45,10 @@ class LoginScreen extends StatelessWidget {
           padding: const EdgeInsets.all(32.0),
           child: SingleChildScrollView(
             child: Column(
-              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 SizedBox(
-                  height: 150,
+                  height: screenHeight * 0.2,
                 ),
                 Text(
                   'Login',
@@ -55,7 +58,7 @@ class LoginScreen extends StatelessWidget {
                       fontWeight: FontWeight.w500),
                 ),
                 SizedBox(
-                  height: 32,
+                  height: screenHeight * 0.05,
                 ),
                 MyLoginForm(authBloc, mainBloc),
               ],
@@ -88,13 +91,16 @@ class _MyLoginFormState extends State<MyLoginForm> {
 
   @override
   Widget build(BuildContext context) {
+
+    var screenHeight = MediaQuery.of(context).size.height;
+
     return Form(
       key: _loginFormKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12.0),
+            padding: EdgeInsets.symmetric(vertical: screenHeight * 0.02),
             child: TextFormField(
               key: _emailKey,
               controller: _emailController,
@@ -178,14 +184,18 @@ class _MyLoginFormState extends State<MyLoginForm> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 16, bottom: 16, right: 24.0),
+            padding: EdgeInsets.only(
+              top: screenHeight * 0.02, 
+              right: screenHeight * 0.03
+            ),
             child: Text(
               ' Reset password',
               style: TextStyle(color: Colors.black),
             ),
           ),
           SizedBox(
-            height: 120,
+            height: screenHeight * 0.06,
+            // height: screenHeight * 0.15,
           ),
           GestureDetector(
               onTap: () async {

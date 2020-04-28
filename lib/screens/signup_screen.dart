@@ -19,6 +19,9 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    var screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: appWhite,
@@ -47,19 +50,19 @@ class SignUpScreen extends StatelessWidget {
               //mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                SizedBox(
-                  height: 60,
+                SizedBox(height: screenHeight * 0.05,),
+                Container(
+                  padding: EdgeInsets.symmetric(vertical: screenHeight * 0.07),
+                  // color: Colors.red,
+                  child: Text(
+                    'Sign Up',
+                    style: TextStyle(
+                        color: appBlack,
+                        fontSize: 36,
+                        fontWeight: FontWeight.w500),
+                  ),
                 ),
-                Text(
-                  'Sign Up',
-                  style: TextStyle(
-                      color: appBlack,
-                      fontSize: 36,
-                      fontWeight: FontWeight.w500),
-                ),
-                SizedBox(
-                  height: 32,
-                ),
+                
                 MySignUpForm(authBloc, mainBloc),
               ],
             ),
@@ -99,99 +102,99 @@ class _MySignUpFormState extends State<MySignUpForm> {
 
   @override
   Widget build(BuildContext context) {
+
+    var screenHeight = MediaQuery.of(context).size.height;
+
     return Form(
       key: _signUpFormKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                SizedBox(
-                  width: 140,
-                  child: TextFormField(
-                    key: _firstNameKey,
-                    controller: _firstNameController,
-                    validator: (text) {
-                      if (text.isEmpty) return 'Please, tell us!';
-                    },
-                    onChanged: (_) {
-                      _firstNameKey.currentState.validate();
-                    },
-                    style: TextStyle(color: appBlack),
-                    decoration: InputDecoration(
-                      hintText: 'First name',
-                      hintStyle: TextStyle(color: Colors.grey),
-                      fillColor: formFieldGrey,
-                      filled: true,
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(32),
-                        borderSide:
-                            BorderSide(color: appAuthFormFieldBlue, width: 2),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(32),
-                        borderSide: BorderSide(color: formFieldGrey, width: 2),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(32),
-                        borderSide:
-                            BorderSide(color: appFormErrorRed, width: 2),
-                      ),
-                      focusedErrorBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(32),
-                        borderSide:
-                            BorderSide(color: appFormErrorRed, width: 2),
-                      ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              SizedBox(
+                width: 140,
+                child: TextFormField(
+                  key: _firstNameKey,
+                  controller: _firstNameController,
+                  validator: (text) {
+                    if (text.isEmpty) return 'Please, tell us!';
+                  },
+                  onChanged: (_) {
+                    _firstNameKey.currentState.validate();
+                  },
+                  style: TextStyle(color: appBlack),
+                  decoration: InputDecoration(
+                    hintText: 'First name',
+                    hintStyle: TextStyle(color: Colors.grey),
+                    fillColor: formFieldGrey,
+                    filled: true,
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(32),
+                      borderSide:
+                          BorderSide(color: appAuthFormFieldBlue, width: 2),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(32),
+                      borderSide: BorderSide(color: formFieldGrey, width: 2),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(32),
+                      borderSide:
+                          BorderSide(color: appFormErrorRed, width: 2),
+                    ),
+                    focusedErrorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(32),
+                      borderSide:
+                          BorderSide(color: appFormErrorRed, width: 2),
                     ),
                   ),
                 ),
-                SizedBox(
-                  width: 140,
-                  child: TextFormField(
-                    key: _lastNameKey,
-                    controller: _lastNameController,
-                    validator: (text) {
-                      if (text.isEmpty) return 'Please, tell us!';
-                    },
-                    onChanged: (_) {
-                      _lastNameKey.currentState.validate();
-                    },
-                    style: TextStyle(color: appBlack),
-                    decoration: InputDecoration(
-                      hintText: 'Last name',
-                      hintStyle: TextStyle(color: Colors.grey),
-                      fillColor: formFieldGrey,
-                      filled: true,
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(32),
-                        borderSide:
-                            BorderSide(color: appAuthFormFieldBlue, width: 2),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(32),
-                        borderSide: BorderSide(color: formFieldGrey, width: 2),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(32),
-                        borderSide:
-                            BorderSide(color: appFormErrorRed, width: 2),
-                      ),
-                      focusedErrorBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(32),
-                        borderSide:
-                            BorderSide(color: appFormErrorRed, width: 2),
-                      ),
+              ),
+              SizedBox(
+                width: 140,
+                child: TextFormField(
+                  key: _lastNameKey,
+                  controller: _lastNameController,
+                  validator: (text) {
+                    if (text.isEmpty) return 'Please, tell us!';
+                  },
+                  onChanged: (_) {
+                    _lastNameKey.currentState.validate();
+                  },
+                  style: TextStyle(color: appBlack),
+                  decoration: InputDecoration(
+                    hintText: 'Last name',
+                    hintStyle: TextStyle(color: Colors.grey),
+                    fillColor: formFieldGrey,
+                    filled: true,
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(32),
+                      borderSide:
+                          BorderSide(color: appAuthFormFieldBlue, width: 2),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(32),
+                      borderSide: BorderSide(color: formFieldGrey, width: 2),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(32),
+                      borderSide:
+                          BorderSide(color: appFormErrorRed, width: 2),
+                    ),
+                    focusedErrorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(32),
+                      borderSide:
+                          BorderSide(color: appFormErrorRed, width: 2),
                     ),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12.0),
+            padding: EdgeInsets.symmetric(vertical: screenHeight * 0.02),
             child: TextFormField(
               key: _emailKey,
               controller: _emailController,
@@ -287,7 +290,10 @@ class _MySignUpFormState extends State<MySignUpForm> {
               );
             },
             child: Padding(
-              padding: const EdgeInsets.only(top: 16, bottom: 16, right: 24.0),
+              padding: EdgeInsets.only(
+                top: screenHeight * 0.02, 
+                right: screenHeight * 0.03,
+              ),
               child: Text(
                 ' Already registered?',
                 style: TextStyle(color: Colors.black),
@@ -295,7 +301,7 @@ class _MySignUpFormState extends State<MySignUpForm> {
             ),
           ),
           SizedBox(
-            height: 120,
+            height: screenHeight * 0.08,
           ),
           GestureDetector(
               onTap: () async {

@@ -21,6 +21,8 @@ class GetStartedScreen extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(statusBarColor: Colors.transparent));
 
+    var screenHeight = MediaQuery.of(context).size.height;
+
     return Material(
       child: Container(
         alignment: Alignment(0, 1.0),
@@ -38,7 +40,7 @@ class GetStartedScreen extends StatelessWidget {
                 'SPACED',
                 style: TextStyle(fontSize: 56, letterSpacing: 12),
               ),
-              SizedBox(height: 256),
+              SizedBox(height: screenHeight * 0.25),
               Container(
                 // color: Colors.red,
                 height: 280,
