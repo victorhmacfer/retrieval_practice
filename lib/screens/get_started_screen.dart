@@ -11,10 +11,10 @@ import 'login_screen.dart';
 
 //TODO: fix appearance  and use styles
 class GetStartedScreen extends StatelessWidget {
-  final AuthBloc authBloc;
+
   final MainBloc mainBloc;
 
-  GetStartedScreen(this.authBloc, this.mainBloc);
+  GetStartedScreen(this.mainBloc);
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +57,7 @@ class GetStartedScreen extends StatelessWidget {
                               context,
                               MaterialPageRoute(
                                 builder: (context) =>
-                                    SignUpScreen(authBloc, mainBloc),
+                                    SignUpScreen(mainBloc),
                               ));
                         },
                         child: HollowPillButton('SIGN UP')),
@@ -66,7 +66,7 @@ class GetStartedScreen extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => LoginScreen(authBloc, mainBloc),
+                              builder: (context) => LoginScreen(mainBloc),
                             ));
                       },
                       child: Text(

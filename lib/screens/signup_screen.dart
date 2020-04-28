@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:retrieval_practice/blocs/auth_bloc.dart';
+
 import 'package:retrieval_practice/blocs/bloc_base.dart';
 import 'package:retrieval_practice/blocs/main_bloc.dart';
 import 'package:retrieval_practice/screens/login_screen.dart';
@@ -12,10 +12,9 @@ import 'package:retrieval_practice/custom_widgets/pill_button.dart';
 import 'home_screen.dart';
 
 class SignUpScreen extends StatelessWidget {
-  final AuthBloc authBloc;
   final MainBloc mainBloc;
 
-  SignUpScreen(this.authBloc, this.mainBloc);
+  SignUpScreen(this.mainBloc);
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +62,7 @@ class SignUpScreen extends StatelessWidget {
                   ),
                 ),
                 
-                MySignUpForm(authBloc, mainBloc),
+                MySignUpForm(mainBloc),
               ],
             ),
           ),
@@ -78,10 +77,10 @@ class SignUpScreen extends StatelessWidget {
 //TODO: fix appearance
 
 class MySignUpForm extends StatefulWidget {
-  final AuthBloc authBloc;
+
   final MainBloc mainBloc;
 
-  MySignUpForm(this.authBloc, this.mainBloc);
+  MySignUpForm(this.mainBloc);
 
   @override
   _MySignUpFormState createState() => _MySignUpFormState();
@@ -282,10 +281,7 @@ class _MySignUpFormState extends State<MySignUpForm> {
               Navigator.pushReplacement(
                 context, 
                 MaterialPageRoute(
-                  builder: (context) => LoginScreen(
-                      widget.authBloc, 
-                      widget.mainBloc
-                  ),
+                  builder: (context) => LoginScreen(widget.mainBloc),
                 )
               );
             },
@@ -310,7 +306,7 @@ class _MySignUpFormState extends State<MySignUpForm> {
                   var theEmail = _emailController.text;
                   var thePassword = _passwordController.text;
 
-                  var respStatus = await widget.authBloc
+                  var respStatus = await widget.mainBloc
                       .signUpWithEmailAndPassword(theEmail, thePassword);
 
                   if (respStatus == SignUpResponseStatus.SUCCESS) {
@@ -318,7 +314,7 @@ class _MySignUpFormState extends State<MySignUpForm> {
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              HomeScreen(widget.authBloc, widget.mainBloc)),
+                              HomeScreen(widget.mainBloc)),
                       (route) => false,
                     );
                   } else if (respStatus ==

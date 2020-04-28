@@ -21,7 +21,6 @@ void main() {
 class MyApp extends StatelessWidget {
 
   final MainBloc _mainBloc = MainBloc();
-  final AuthBloc _authBloc = AuthBloc();
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +33,7 @@ class MyApp extends StatelessWidget {
       // home: BlocProvider<AuthBloc>(bloc: _authBloc, child: SignUpScreen()),
       // home: GetStartedScreen(),
 
-      home: FirstScreenPicker(_authBloc, _mainBloc),
+      home: FirstScreenPicker(_mainBloc),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -43,22 +42,21 @@ class MyApp extends StatelessWidget {
 
 class FirstScreenPicker extends StatelessWidget {
 
-  AuthBloc authBloc;
   MainBloc mainBloc;
 
-  FirstScreenPicker(this.authBloc, this.mainBloc);
+  FirstScreenPicker(this.mainBloc);
 
   @override
   Widget build(BuildContext context) {
 
     return FutureBuilder(
-      future: authBloc.isSignedIn(),
+      future: mainBloc.isSignedIn(),
       builder: (context, snapshot) {
         if (snapshot.data == false) {
-          return GetStartedScreen(authBloc, mainBloc);
+          return GetStartedScreen(mainBloc);
         } 
         
-        return HomeScreen(authBloc, mainBloc);
+        return HomeScreen(mainBloc);
       }
     );
   }

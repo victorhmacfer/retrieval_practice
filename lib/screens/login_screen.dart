@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:retrieval_practice/blocs/auth_bloc.dart';
+// import 'package:retrieval_practice/blocs/auth_bloc.dart';
 import 'package:retrieval_practice/blocs/main_bloc.dart';
 
 import 'package:retrieval_practice/styles/my_styles.dart';
@@ -9,10 +9,10 @@ import 'package:retrieval_practice/custom_widgets/pill_button.dart';
 import 'home_screen.dart';
 
 class LoginScreen extends StatelessWidget {
-  final AuthBloc authBloc;
+
   final MainBloc mainBloc;
 
-  LoginScreen(this.authBloc, this.mainBloc);
+  LoginScreen(this.mainBloc);
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +60,7 @@ class LoginScreen extends StatelessWidget {
                 SizedBox(
                   height: screenHeight * 0.05,
                 ),
-                MyLoginForm(authBloc, mainBloc),
+                MyLoginForm(mainBloc),
               ],
             ),
           ),
@@ -71,10 +71,11 @@ class LoginScreen extends StatelessWidget {
 }
 
 class MyLoginForm extends StatefulWidget {
-  final AuthBloc authBloc;
+  
   final MainBloc mainBloc;
 
-  MyLoginForm(this.authBloc, this.mainBloc);
+  
+  MyLoginForm(this.mainBloc);
 
   @override
   _MyLoginFormState createState() => _MyLoginFormState();
@@ -203,7 +204,7 @@ class _MyLoginFormState extends State<MyLoginForm> {
                   var theEmail = _emailController.text;
                   var thePassword = _passwordController.text;
 
-                  var respStatus = await widget.authBloc
+                  var respStatus = await widget.mainBloc
                       .loginWithEmailAndPassword(theEmail, thePassword);
 
                   if (respStatus == LoginResponseStatus.USER_NOT_FOUND) {
@@ -235,7 +236,7 @@ class _MyLoginFormState extends State<MyLoginForm> {
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              HomeScreen(widget.authBloc, widget.mainBloc)),
+                              HomeScreen(widget.mainBloc)),
                       (route) => false,
                     );
                   }

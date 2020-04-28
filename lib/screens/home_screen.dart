@@ -12,10 +12,9 @@ import 'package:retrieval_practice/styles/my_styles.dart';
 import 'package:retrieval_practice/custom_widgets/due_questions_card.dart';
 
 class HomeScreen extends StatefulWidget {
-  final AuthBloc authBloc;
   final MainBloc mainBloc;
 
-  HomeScreen(this.authBloc, this.mainBloc);
+  HomeScreen(this.mainBloc);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -84,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
           //       builder: (context) => CreateDeckScreen(mainBloc)),
           // );
           // FIXME: remove this
-          widget.authBloc.logout();
+          widget.mainBloc.logout();
         },
       ),
       body: StreamBuilder<List<Subject>>(
