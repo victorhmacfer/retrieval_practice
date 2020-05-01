@@ -11,11 +11,9 @@ const _emailStyle = TextStyle(color: Colors.grey, fontSize: 12);
 
 // FIXME: hardcoded data
 class SettingsScreen extends StatefulWidget {
-
   final MainBloc mainBloc;
 
   SettingsScreen(this.mainBloc);
-
 
   @override
   _SettingsScreenState createState() => _SettingsScreenState();
@@ -39,7 +37,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
-  Widget _avatarRow() {
+  Widget _avatarRow(String firstName, String lastName, String email) {
     return Container(
       // color: Colors.red,
       padding: EdgeInsets.only(
@@ -53,7 +51,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             radius: 32,
             foregroundColor: appWhite,
             child: Text(
-              'V',
+              firstName[0].toUpperCase(),
               style: TextStyle(fontSize: 28),
             ),
             backgroundColor: Color.fromRGBO(41, 105, 81, 1),
@@ -64,9 +62,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text('victor ferreira', style: _usernameStyle),
+              Text('$firstName $lastName', style: _usernameStyle),
               Text(
-                'engvhmf@poli.ufrj.br',
+                email,
                 style: _emailStyle,
               ),
             ],
@@ -148,7 +146,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             _backIcon(context),
-            _avatarRow(),
+
+
+            StreamBuilder(
+                stream: widget.mainBloc.appUserStream,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    var firstName = snapshot.data.firstName;
+                    var lastName = snapshot.data.lastName;
+                    var email = snapshot.data.email;
+                    return _avatarRow(firstName, lastName, email);
+                  }
+                  return CircularProgressIndicator();
+                }),
+
+                
             _actionWithToggle(Icon(Icons.brightness_3), 'Dark theme'),
             _actionRow(Icon(Icons.settings), 'Preferences'),
             _actionRow(Icon(Icons.import_export), 'Import/Export'),
@@ -158,21 +170,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
             _actionRow(Icon(Icons.event_note), 'Privacy Policy'),
             _actionRow(Icon(Icons.info_outline), 'About Spaced'),
             _divider(),
-
-
             GestureDetector(
-              onTap: () async {
-                print('clicked on logout tile');
-                await widget.mainBloc.logout();
-                Navigator.pushAndRemoveUntil(
-                  context, 
-                  //giving it a new bloc.
-                  MaterialPageRoute(builder: (context) => FirstScreenPicker(MainBloc())), 
-                  (route) => false,
+                onTap: () async {
+                  print('clicked on logout tile');
+                  await widget.mainBloc.logout();
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    //giving it a new bloc.
+                    MaterialPageRoute(
+                        builder: (context) => FirstScreenPicker(MainBloc())),
+                    (route) => false,
                   );
-              },
-              child: _actionRow(Icon(Icons.input), 'Log out')
-            ),
+                },
+                child: _actionRow(Icon(Icons.input), 'Log out')),
           ],
         ),
       ),

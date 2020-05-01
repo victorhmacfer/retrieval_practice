@@ -7,36 +7,51 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:retrieval_practice/blocs/bloc_base.dart';
 import 'package:retrieval_practice/models/deck_cover_photo.dart';
 import 'package:retrieval_practice/models/question.dart';
-import 'package:retrieval_practice/models/subject.dart';
+import 'package:retrieval_practice/models/studied_subject.dart';
 import 'package:retrieval_practice/models/study.dart';
+import 'package:retrieval_practice/models/user.dart';
+import 'package:rxdart/subjects.dart';
 import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_io.dart';
+
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
 
-
-
-
-const DB_NAME = 'retrieval_practice.db';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 enum SignUpResponseStatus { SUCCESS, EMAIL_ALREADY_IN_USE }
 
 enum LoginResponseStatus { SUCCESS, USER_NOT_FOUND, WRONG_PASSWORD }
 
 
-
 class MainBloc extends BlocBase {
-  List<Subject> _subjects = [];
+  List<StudiedSubject> _subjects = [];
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  FirebaseUser _loggedInUser;
+  FirebaseUser _firebaseLoggedInUser;
+  final Firestore _firestoreInstance = Firestore.instance;
+  User _appUser;
 
-  final StreamController<List<Subject>> _subjectListStreamController =
-      StreamController.broadcast();
+  // StreamController<User> _appUserStreamController = StreamController.broadcast();
+  // Stream<User> get appUserStream => _appUserStreamController.stream;
 
-  Stream<List<Subject>> get subjectListStream =>
-      _subjectListStreamController.stream;
+  final _appUserBS = BehaviorSubject<User>();
+  Stream<User> get appUserStream => _appUserBS.stream;
+
+
+
+  // final StreamController<List<StudiedSubject>> _subjectListStreamController =
+  //     StreamController.broadcast();
+
+  // Stream<List<StudiedSubject>> get subjectListStream =>
+  //     _subjectListStreamController.stream;
+
+  final _subjectListBS = BehaviorSubject<List<StudiedSubject>>();
+  Stream<List<StudiedSubject>> get subjectListStream => _subjectListBS.stream;
+
+
+
 
   final StreamController<List<DeckCoverPhoto>>
       _deckCoverPhotoListStreamController = StreamController.broadcast();
@@ -73,14 +88,22 @@ class MainBloc extends BlocBase {
   Future<void> init() async {
     await _initDb();
     mySubjectStore = intMapStoreFactory.store('subjects');
+
+    _firebaseLoggedInUser = await loggedInUser;
+
+    if (_firebaseLoggedInUser != null) {
+      await _initializeAppUser();
+      _appUserBS.add(_appUser);
+    }
+    
     await _populateSubjectListFromDb();
-    _subjectListStreamController.add(_subjects);
+    _subjectListBS.add(_subjects);
   }
 
   Future<void> onCreateNewSubject(String title) async {
-    var newSubject = Subject(title);
+    var newSubject = StudiedSubject(title);
     _subjects.add(newSubject);
-    _subjectListStreamController.add(_subjects);
+    _subjectListBS.add(_subjects);
 
     //put new subject into database
     int key = await mySubjectStore.add(db, newSubject.toMap());
@@ -88,21 +111,21 @@ class MainBloc extends BlocBase {
   }
 
   Future<void> onCreateNewQuestion(String questionFrontSide,
-      String questionBackSide, Subject subject) async {
+      String questionBackSide, StudiedSubject subject) async {
     subject.addNewQuestion(questionFrontSide, questionBackSide);
 
     await _updateSubjectInDatabase(subject);
   }
 
-  Future<void> onAddStudy(Question q, Subject s, int answerQuality) async {
+  Future<void> onAddStudy(Question q, StudiedSubject s, int answerQuality) async {
     q.addStudy(Study(answerQuality, DateTime.now()));
     await _updateSubjectInDatabase(s);
   }
 
   //TODO: maybe this should return bool to inform about success
-  Future<void> onDeleteDeck(Subject subjectToBeDeleted) async {
+  Future<void> onDeleteDeck(StudiedSubject subjectToBeDeleted) async {
     _subjects.remove(subjectToBeDeleted);
-    _subjectListStreamController.add(_subjects);
+    _subjectListBS.add(_subjects);
 
     final finder = Finder(filter: Filter.byKey(subjectToBeDeleted.id));
     await mySubjectStore.delete(
@@ -112,13 +135,13 @@ class MainBloc extends BlocBase {
   }
 
   //TODO: maybe this should return bool to inform about success
-  Future<void> onDeleteQuestion(theQuestion, Subject itsSubject) async {
+  Future<void> onDeleteQuestion(theQuestion, StudiedSubject itsSubject) async {
     itsSubject.removeQuestion(theQuestion);
-    _subjectListStreamController.add(_subjects);
+    _subjectListBS.add(_subjects);
     _updateSubjectInDatabase(itsSubject);
   }
 
-  Future<int> _updateSubjectInDatabase(Subject theSubject) async {
+  Future<int> _updateSubjectInDatabase(StudiedSubject theSubject) async {
     final finder = Finder(filter: Filter.byKey(theSubject.id));
     return await mySubjectStore.update(
       db,
@@ -154,7 +177,7 @@ class MainBloc extends BlocBase {
     );
 
     _subjects = recordSnapshots.map((snapshot) {
-      Subject mySub = Subject.fromMap(snapshot.value);
+      StudiedSubject mySub = StudiedSubject.fromMap(snapshot.value);
       mySub.id = snapshot.key;
       return mySub;
     }).toList();
@@ -233,18 +256,15 @@ class MainBloc extends BlocBase {
   }
 
 
-  
-
-
 
   
 
   Future<FirebaseUser> get loggedInUser async {
-    if (_loggedInUser != null) return _loggedInUser;
+    if (_firebaseLoggedInUser != null) return _firebaseLoggedInUser;
     return _auth.currentUser();
   }
 
-  Future<SignUpResponseStatus> signUpWithEmailAndPassword(
+  Future<SignUpResponseStatus> signUpWithEmailAndPassword(firstName, lastName,
       email, password) async {
     FirebaseUser user;
     try {
@@ -256,7 +276,19 @@ class MainBloc extends BlocBase {
         return SignUpResponseStatus.EMAIL_ALREADY_IN_USE;
       }
     }
-    _loggedInUser = user;
+    _firebaseLoggedInUser = user;
+
+    await _firestoreInstance
+        .collection('users')
+        .document(_firebaseLoggedInUser.uid)
+        .setData({
+          'firstName': firstName,
+          'lastName': lastName,
+          'email': email,
+        });
+
+    _appUser = User(_firebaseLoggedInUser.uid, firstName, lastName, email);
+
     return SignUpResponseStatus.SUCCESS;
   }
 
@@ -267,7 +299,7 @@ class MainBloc extends BlocBase {
 
   logout() async {
     print('got inside logout');
-    _loggedInUser = null;
+    _firebaseLoggedInUser = null;
     await _auth.signOut();
     print('signout has finished');
   }
@@ -286,8 +318,21 @@ class MainBloc extends BlocBase {
       }
     }
 
-    _loggedInUser = user;
+    _firebaseLoggedInUser = user;
+
+    await _initializeAppUser();
+
     return LoginResponseStatus.SUCCESS;
+  }
+
+  Future<void> _initializeAppUser() async {
+    var docRef = await _firestoreInstance.collection('users')
+        .document('${_firebaseLoggedInUser.uid}');
+
+    var userMap = (await docRef.get()).data;
+    userMap['id'] = docRef.documentID;
+
+    _appUser = User.fromMap(userMap);
   }
 
 
@@ -295,7 +340,7 @@ class MainBloc extends BlocBase {
 
   @override
   void dispose() {
-    _subjectListStreamController.close();
+    _subjectListBS.close();
     db.close();
   }
 }

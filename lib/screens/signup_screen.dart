@@ -303,11 +303,13 @@ class _MySignUpFormState extends State<MySignUpForm> {
               onTap: () async {
                 if (_signUpFormKey.currentState.validate()) {
                   // TODO:
+                  var theFirstName = _firstNameController.text;
+                  var theLastName = _lastNameController.text;
                   var theEmail = _emailController.text;
                   var thePassword = _passwordController.text;
 
                   var respStatus = await widget.mainBloc
-                      .signUpWithEmailAndPassword(theEmail, thePassword);
+                      .signUpWithEmailAndPassword(theFirstName, theLastName, theEmail, thePassword);
 
                   if (respStatus == SignUpResponseStatus.SUCCESS) {
                     Navigator.pushAndRemoveUntil(

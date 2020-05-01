@@ -3,12 +3,12 @@ import 'package:retrieval_practice/blocs/main_bloc.dart';
 
 import 'package:retrieval_practice/custom_widgets/pill_button.dart';
 import 'package:retrieval_practice/custom_widgets/question_tile.dart';
-import 'package:retrieval_practice/models/subject.dart';
+import 'package:retrieval_practice/models/studied_subject.dart';
 import 'package:retrieval_practice/screens/create_question_screen.dart';
 import 'package:retrieval_practice/styles/my_styles.dart';
 
 class DeckInfoScreen extends StatefulWidget {
-  final Subject _subject;
+  final StudiedSubject _subject;
 
   final MainBloc _mainBloc;
 

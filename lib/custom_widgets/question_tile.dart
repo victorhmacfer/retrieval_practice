@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:retrieval_practice/blocs/main_bloc.dart';
 import 'package:retrieval_practice/models/question.dart';
-import 'package:retrieval_practice/models/subject.dart';
+import 'package:retrieval_practice/models/studied_subject.dart';
 import 'package:retrieval_practice/screens/answer_question_screen.dart';
 import 'package:retrieval_practice/styles/my_styles.dart';
 
 class QuestionTile extends StatelessWidget {
   final Question question;
-  final Subject subject;
+  final StudiedSubject subject;
   final MainBloc bloc;
 
   QuestionTile(this.question, this.subject, this.bloc);

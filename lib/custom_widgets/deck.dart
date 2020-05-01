@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:retrieval_practice/blocs/main_bloc.dart';
 import 'package:retrieval_practice/custom_widgets/deletion_modal.dart';
-import 'package:retrieval_practice/models/subject.dart';
+import 'package:retrieval_practice/models/studied_subject.dart';
 import 'package:retrieval_practice/screens/deck_info_screen.dart';
 import 'package:retrieval_practice/styles/my_styles.dart';
 
 class Deck extends StatelessWidget {
-  final Subject _subject;
+  final StudiedSubject _subject;
 
   final MainBloc _mainBloc;
 

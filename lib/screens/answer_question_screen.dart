@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:retrieval_practice/blocs/main_bloc.dart';
 import 'package:retrieval_practice/models/question.dart';
-import 'package:retrieval_practice/models/subject.dart';
+import 'package:retrieval_practice/models/studied_subject.dart';
 import 'package:retrieval_practice/styles/my_styles.dart';
 
 class AnswerQuestionScreen extends StatefulWidget {
   final Question question;
   final GestureTapCallback tapCallback;
-  final Subject subject;
+  final StudiedSubject subject;
   final MainBloc bloc;
 
   AnswerQuestionScreen(

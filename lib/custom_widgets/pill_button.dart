@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:retrieval_practice/blocs/main_bloc.dart';
 import 'package:retrieval_practice/models/question.dart';
-import 'package:retrieval_practice/models/subject.dart';
+import 'package:retrieval_practice/models/studied_subject.dart';
 import 'package:retrieval_practice/push_many.dart';
 import 'package:retrieval_practice/screens/answer_question_screen.dart';
 import 'package:retrieval_practice/styles/my_styles.dart';
@@ -43,7 +43,7 @@ class CardTotalPillButton extends StatelessWidget {
 
 class CardsDuePillButton extends StatelessWidget {
   final int _dueCards;
-  final Subject subject;
+  final StudiedSubject subject;
   final MainBloc bloc;
 
   CardsDuePillButton(this.subject, this.bloc)

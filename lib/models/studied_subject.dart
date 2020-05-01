@@ -1,6 +1,6 @@
 import 'question.dart';
 
-class Subject {
+class StudiedSubject {
   int id;
   String title;
 
@@ -16,9 +16,9 @@ class Subject {
     return List.unmodifiable(myList);
   }
 
-  Subject(this.title);
+  StudiedSubject(this.title);
 
-  Subject.withQuestions(this.id, this.title, this._questions);
+  StudiedSubject.withQuestions(this.id, this.title, this._questions);
 
   Map<String, dynamic> toMap() {
     // create list of question maps from list of question objects
@@ -34,13 +34,13 @@ class Subject {
     };
   }
 
-  factory Subject.fromMap(Map<String, dynamic> map) {
+  factory StudiedSubject.fromMap(Map<String, dynamic> map) {
     // create list of question objects from list of question maps
     var questionsList = List.generate(map['questions'].length, (i) {
       return Question.fromMap(map['questions'][i]);
     }, growable: true);
 
-    return Subject.withQuestions(map['id'], map['title'], questionsList);
+    return StudiedSubject.withQuestions(map['id'], map['title'], questionsList);
   }
 
   int get totalNumOfQuestions => _questions.length;

@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:retrieval_practice/blocs/auth_bloc.dart';
 import 'package:retrieval_practice/blocs/bloc_base.dart';
 import 'package:retrieval_practice/custom_widgets/deck.dart';
-import 'package:retrieval_practice/models/subject.dart';
+import 'package:retrieval_practice/models/studied_subject.dart';
 import 'package:retrieval_practice/screens/create_deck_screen.dart';
 import 'package:retrieval_practice/blocs/main_bloc.dart';
 import 'package:retrieval_practice/screens/settings_screen.dart';
@@ -33,21 +33,27 @@ class _HomeScreenState extends State<HomeScreen> {
         GestureDetector(
           onTap: () {
             Navigator.push(
-              context, 
-              MaterialPageRoute(
-                builder: (context) => SettingsScreen(widget.mainBloc)
-              )
-            );
-
+                context,
+                MaterialPageRoute(
+                    builder: (context) => SettingsScreen(widget.mainBloc)));
           },
-          child: CircleAvatar(
-            radius: 16,
-            foregroundColor: appWhite,
-            child: Text(
-              'V',
-              style: TextStyle(fontSize: 16, color: appWhite),
-            ),
-            backgroundColor: appProfileAvatarGreen,
+          child: StreamBuilder(
+            stream: widget.mainBloc.appUserStream,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return CircleAvatar(
+                  radius: 16,
+                  foregroundColor: appWhite,
+                  child: Text(
+                    snapshot.data.firstName[0].toUpperCase(),
+                    style: TextStyle(fontSize: 16, color: appWhite),
+                  ),
+                  backgroundColor: appProfileAvatarGreen,
+                );
+              }
+
+              return Container();
+            },
           ),
         ),
         SizedBox(
@@ -84,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
           );
         },
       ),
-      body: StreamBuilder<List<Subject>>(
+      body: StreamBuilder<List<StudiedSubject>>(
           stream: widget.mainBloc.subjectListStream,
           builder: (context, snapshot) {
             if (snapshot.hasData) {

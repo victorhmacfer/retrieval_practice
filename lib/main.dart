@@ -10,6 +10,7 @@ import 'package:retrieval_practice/screens/first_screen_picker.dart';
 
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
 

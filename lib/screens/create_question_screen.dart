@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:retrieval_practice/blocs/main_bloc.dart';
-import 'package:retrieval_practice/models/subject.dart';
+import 'package:retrieval_practice/models/studied_subject.dart';
 import 'package:retrieval_practice/styles/my_styles.dart';
 
 class CreateQuestionScreen extends StatefulWidget {
-  final Subject subject;
+  final StudiedSubject subject;
 
   final MainBloc _mainBloc;
 
