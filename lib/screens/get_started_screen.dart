@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:retrieval_practice/blocs/auth_bloc.dart';
 import 'package:retrieval_practice/blocs/main_bloc.dart';
 
 import 'package:retrieval_practice/custom_widgets/pill_button.dart';
