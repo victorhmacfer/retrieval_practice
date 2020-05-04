@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:retrieval_practice/blocs/main_bloc.dart';
 
@@ -47,8 +49,27 @@ class _DeckInfoScreenState extends State<DeckInfoScreen> {
     ];
   }
 
+  // FIXME: this is absolute trash..
+  Widget _imageWidget(StudiedSubject _sub, double screenHeight) {
+    if (_sub.deckPhotoPath == 'default') {
+      return Image.asset(
+        'assets/images/white-default-pic.jpg',
+        height: screenHeight * 0.29,
+        fit: BoxFit.fill,
+      );
+    }
+    var photoFile = File(_sub.deckPhotoPath);
+    return Image.file(
+      photoFile,
+      height: screenHeight * 0.29,
+      fit: BoxFit.fill,);
+  }
+
   @override
   Widget build(BuildContext context) {
+
+    var screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
@@ -76,11 +97,13 @@ class _DeckInfoScreenState extends State<DeckInfoScreen> {
           SliverList(
             delegate: SliverChildListDelegate(
               [
-                Image.asset(
-                  'assets/images/default-pic-better.jpg',
-                  height: 216,
-                  fit: BoxFit.fill,
-                ),
+                // Image.asset(
+                //   'assets/images/default-pic-better.jpg',
+                //   height: 216,
+                //   fit: BoxFit.fill,
+                // ),
+                _imageWidget(widget._subject, screenHeight),
+
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 20.0),
                   color: appBlack,

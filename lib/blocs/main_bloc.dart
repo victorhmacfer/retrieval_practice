@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:retrieval_practice/blocs/bloc_base.dart';
 import 'package:retrieval_practice/models/deck_cover_photo.dart';
+import 'package:retrieval_practice/models/local_photo_file.dart';
 import 'package:retrieval_practice/models/question.dart';
 import 'package:retrieval_practice/models/studied_subject.dart';
 import 'package:retrieval_practice/models/study.dart';
@@ -61,10 +62,10 @@ class MainBloc extends BlocBase {
   Stream<List<DeckCoverPhoto>> get deckCoverPhotoListStream =>
       _deckCoverPhotoListStreamController.stream;
 
-  final StreamController<File> _photoFileStreamController =
+  final StreamController<LocalPhotoFile> _localPhotoFileStreamController =
       StreamController.broadcast();
 
-  Stream<File> get photoFileStream => _photoFileStreamController.stream;
+  Stream<LocalPhotoFile> get photoFileStream => _localPhotoFileStreamController.stream;
 
   Database db;
 
@@ -100,8 +101,8 @@ class MainBloc extends BlocBase {
     _subjectListBS.add(_subjects);
   }
 
-  Future<void> onCreateNewSubject(String title) async {
-    var newSubject = StudiedSubject(title);
+  Future<void> onCreateNewSubject(String title, {String localPhotoFilePath = 'default'}) async {
+    var newSubject = StudiedSubject(title, localPhotoFilePath);
     _subjects.add(newSubject);
     _subjectListBS.add(_subjects);
 
@@ -192,8 +193,8 @@ class MainBloc extends BlocBase {
       return;
     }
     _deckCoverPhotoListStreamController.add(myPhotosList);
-    
   }
+
 
   // TODO: fetches hardcoded number of photos...  30.
   Future<List<DeckCoverPhoto>> _fetchListOfCoverPhotos(
@@ -203,6 +204,8 @@ class MainBloc extends BlocBase {
     final String searchUrl =
         'https://api.unsplash.com/search/photos/?client_id=238cc98d67d016f02e5aaf29a168c5aa8975d78bdf892198657abd3b49629b13' +
             '&query=$searchKeyword&per_page=30';
+
+    print('searchUrl is $searchUrl');
 
     final response = await http.get(searchUrl);
 
@@ -228,30 +231,56 @@ class MainBloc extends BlocBase {
     String myDownloadLink = photo.downloadLink +
         '?client_id=238cc98d67d016f02e5aaf29a168c5aa8975d78bdf892198657abd3b49629b13';
 
-    final http.Response response = await http.get(myDownloadLink);
+    print(myDownloadLink);
 
-    var bytes = response.bodyBytes;
+    final http.Response responseForUrl = await http.get(myDownloadLink);
+
+    String url = jsonDecode(responseForUrl.body)['url'];
+
+    final http.Response photoDownloadResponse = await http.get(url);
+
+    print('url is $url');
+
+    print('inside _downloadPhoto.. line after response.. response is ${responseForUrl.body}');
+    
+    var bytes = photoDownloadResponse.bodyBytes;
 
     //TODO: THIS IS DUPLICATED CODE !!! HANDLE LATER
     String dir = (await getApplicationDocumentsDirectory()).path;
+
+    print('line after dir.. dir is $dir');
     File file = File('$dir/$filename');
+
+    print('file path is ${file.path}');
     await file.writeAsBytes(bytes);
+    print('line after file writeasbytes');
     return file;
   }
 
 
-  // TODO this is never called... Just making the app work again for now..
   Future<void> onCoverPhotoChosen(DeckCoverPhoto photo) async {
     String dir = (await getApplicationDocumentsDirectory()).path;
-    File file = File('$dir/photo-id-${photo.id}');
+
+    print('the dir is: $dir');
+
+    final filename = 'photo-id-${photo.id}';
+
+    File file = File('$dir/$filename');
+    
+    print(file.path);
 
     bool fileExists = await file.exists();
 
     if (fileExists) {
-      _photoFileStreamController.add(file);
+      print('got inside fileExists');
+      final theLocalPhotoFile = LocalPhotoFile(file.path, file);
+      _localPhotoFileStreamController.add(theLocalPhotoFile);
     } else {
-      var photoFile = await _downloadPhoto(photo, 'photo-id-${photo.id}');
-      _photoFileStreamController.add(photoFile);
+      print('got inside else of fileExists');
+      var photoFile = await _downloadPhoto(photo, filename);
+      final theLocalPhotoFile = LocalPhotoFile(photoFile.path, photoFile);
+      print('line after _downloadPhoto call');
+      _localPhotoFileStreamController.add(theLocalPhotoFile);
     }
   }
 

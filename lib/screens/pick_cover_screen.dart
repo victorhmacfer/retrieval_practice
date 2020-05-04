@@ -91,8 +91,8 @@ class _PickCoverScreenState extends State<PickCoverScreen> {
           stream: widget.bloc.deckCoverPhotoListStream,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              print('snapshot has data'); 
-              isLoading = false; 
+              print('snapshot has data');
+              isLoading = false;
               if (snapshot.data.isEmpty) {
                 return Container(
                   //color: Colors.red,
@@ -132,25 +132,19 @@ class _PickCoverScreenState extends State<PickCoverScreen> {
             } else {
               return Container();
             }
-
-
-            
           }),
     );
   }
 }
 
-
-
 Widget _tinyImage(DeckCoverPhoto photo, MainBloc theBloc) {
   return GestureDetector(
     onTap: () {
       // TODO: Im disabling this call because Idk how to display a downloaded image.
-      //theBloc.onCoverPhotoChosen(photo);
+      theBloc.onCoverPhotoChosen(photo);
     },
-      child: ClipRRect(
+    child: ClipRRect(
       borderRadius: BorderRadius.circular(6),
-      // child: Image.asset('assets/images/asian-woman.jpg', fit: BoxFit.fill,),
       child: Image.network(photo.url, fit: BoxFit.cover),
     ),
   );

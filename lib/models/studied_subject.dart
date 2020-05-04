@@ -4,6 +4,8 @@ class StudiedSubject {
   int id;
   String title;
 
+  String deckPhotoPath;
+
   List<Question> _questions = [];
 
   List<Question> get questions => List.unmodifiable(_questions);
@@ -16,9 +18,9 @@ class StudiedSubject {
     return List.unmodifiable(myList);
   }
 
-  StudiedSubject(this.title);
+  StudiedSubject(this.title, this.deckPhotoPath);
 
-  StudiedSubject.withQuestions(this.id, this.title, this._questions);
+  StudiedSubject.withQuestions(this.id, this.title, this.deckPhotoPath, this._questions);
 
   Map<String, dynamic> toMap() {
     // create list of question maps from list of question objects
@@ -31,6 +33,7 @@ class StudiedSubject {
       'id': id,
       'title': title,
       'questions': questionsList,
+      'deckPhotoPath': deckPhotoPath
     };
   }
 
@@ -40,7 +43,7 @@ class StudiedSubject {
       return Question.fromMap(map['questions'][i]);
     }, growable: true);
 
-    return StudiedSubject.withQuestions(map['id'], map['title'], questionsList);
+    return StudiedSubject.withQuestions(map['id'], map['title'], map['deckPhotoPath'], questionsList);
   }
 
   int get totalNumOfQuestions => _questions.length;

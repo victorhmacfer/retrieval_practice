@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:retrieval_practice/blocs/main_bloc.dart';
 import 'package:retrieval_practice/models/deck_cover_photo.dart';
+import 'package:retrieval_practice/models/local_photo_file.dart';
 import 'package:retrieval_practice/screens/pick_cover_screen.dart';
 import 'package:retrieval_practice/styles/my_styles.dart';
 
@@ -20,15 +21,20 @@ class _CreateDeckScreenState extends State<CreateDeckScreen> {
 
   DeckCoverPhoto coverPhoto;
 
+  String localPhotoFilePath;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
   }
 
   @override
   Widget build(BuildContext context) {
+    var screenWidth = MediaQuery.of(context).size.width;
+
+    print('screen width is $screenWidth');
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -46,8 +52,17 @@ class _CreateDeckScreenState extends State<CreateDeckScreen> {
               color: appWhite,
               size: 30,
             ),
+            //FIXME: this is AWFUL
             onPressed: () {
-              widget.mainBloc.onCreateNewSubject(myController.text);
+              if (localPhotoFilePath == null) {
+                widget.mainBloc.onCreateNewSubject(myController.text);
+              }
+              else {
+                widget.mainBloc.onCreateNewSubject(
+                  myController.text, 
+                  localPhotoFilePath: localPhotoFilePath
+                );
+              }
               Navigator.pop(context);
             },
           )
@@ -60,31 +75,28 @@ class _CreateDeckScreenState extends State<CreateDeckScreen> {
           child: Column(
             children: <Widget>[
               Container(
+                // color: Colors.red,
                 height: 248,
                 child: Stack(
                   children: <Widget>[
-                    //FIXME: find solution for storing image locally and using it later
-                    StreamBuilder<File>(
-                      stream: widget.mainBloc.photoFileStream,
-                      builder: (context, snapshot) {
-                        if (!snapshot.hasData) {
-                          return Image.asset(
-                            'assets/images/white-default-pic.jpg',
-                            fit: BoxFit.fill,
+                    StreamBuilder<LocalPhotoFile>(
+                        stream: widget.mainBloc.photoFileStream,
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData) {
+                            return Image.asset(
+                              'assets/images/white-default-pic.jpg',
+                              fit: BoxFit.fill,
+                            );
+                          }
+
+                          localPhotoFilePath = snapshot.data.filePath;
+
+                          return Image.file(
+                            snapshot.data.photoFile,
+                            fit: BoxFit.cover,
+                            width: screenWidth,
                           );
-                        }
-
-                        // TODO: FIX THIS LATER.. FOR NOW I CANT CHOOSE A DIFFERENT PICTURE.
-                        // Image.file DOES NOT WORK !!!
-                        
-                        // return Image.file(snapshot.data, fit: BoxFit.fill,);
-                        // return Image.asset(snapshot.data, fit: BoxFit.fill,);
-                        return Container();
-
-
-
-                      }
-                    ),
+                        }),
                     Positioned(
                         right: 16,
                         bottom: 24,
@@ -93,9 +105,8 @@ class _CreateDeckScreenState extends State<CreateDeckScreen> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    settings:
-                                        RouteSettings(name: '/createQuestion'),
-                                    builder: (context) => PickCoverScreen(bloc: widget.mainBloc)));
+                                    builder: (context) => PickCoverScreen(
+                                        bloc: widget.mainBloc)));
                           },
                           child: Container(
                             height: 36,

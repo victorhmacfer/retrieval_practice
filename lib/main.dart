@@ -7,15 +7,12 @@ import 'styles/my_styles.dart';
 import 'blocs/main_bloc.dart';
 import 'package:retrieval_practice/screens/first_screen_picker.dart';
 
-
-
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-
   final MainBloc _mainBloc = MainBloc();
 
   @override
@@ -25,15 +22,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Spaced',
       theme: appTheme,
-      // home: BlocProvider<MainBloc>(bloc: _mainBloc, child: HomeScreen()),
-      // home: BlocProvider<AuthBloc>(bloc: _authBloc, child: SignUpScreen()),
-      // home: GetStartedScreen(),
-
       home: FirstScreenPicker(_mainBloc),
       debugShowCheckedModeBanner: false,
     );
   }
 }
-
-
-

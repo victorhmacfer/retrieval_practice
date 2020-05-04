@@ -12,7 +12,7 @@ class DeckCoverPhoto {
     return DeckCoverPhoto(
       id: map['id'],
       // TODO: IM ALWAYS GRABBING THE SMALL ONE.. CHANGE THIS LATER
-      url: map['urls']['regular'],
+      url: map['urls']['small'],
       downloadLink: map['links']['download_location']
     );
   }

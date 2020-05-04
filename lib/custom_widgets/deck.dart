@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:retrieval_practice/blocs/main_bloc.dart';
 import 'package:retrieval_practice/custom_widgets/deletion_modal.dart';
@@ -12,12 +14,22 @@ class Deck extends StatelessWidget {
 
   Deck(this._subject, this._mainBloc);
 
+  // FIXME: this is absolute trash..
+  Widget _imageWidget(StudiedSubject _sub) {
+    if (_sub.deckPhotoPath == 'default') {
+      return Image.asset(
+        'assets/images/white-default-pic.jpg',
+        fit: BoxFit.fill,
+      );
+    }
+    var photoFile = File(_sub.deckPhotoPath);
+    return Image.file(photoFile);
+  }
+
   @override
   Widget build(BuildContext context) {
-
     var totalNumOfQuestions = _subject.totalNumOfQuestions;
     var questionString = (totalNumOfQuestions > 1) ? 'questions' : 'question';
-
 
     //TODO: this is temporary
     return GestureDetector(
@@ -33,8 +45,13 @@ class Deck extends StatelessWidget {
         showModalBottomSheet(
           context: context,
           backgroundColor: appDarkGrey,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(12), topRight: Radius.circular(12))),
-          builder: (myContext) => DeletionModal(subject: _subject, bloc: _mainBloc,),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(12), topRight: Radius.circular(12))),
+          builder: (myContext) => DeletionModal(
+            subject: _subject,
+            bloc: _mainBloc,
+          ),
         );
       },
       child: Container(
@@ -47,15 +64,11 @@ class Deck extends StatelessWidget {
           child: Stack(
             fit: StackFit.expand,
             children: <Widget>[
-              Image.asset(
-                'assets/images/asian-woman.jpg',
-                fit: BoxFit.fill,
-              ),
-              
+              _imageWidget(_subject),
               Positioned(
-                // FIXME: hardcoded big number for width... 
-                // big enough for most smartphones.. wont work for tablets.
-                  width: 500, 
+                  // FIXME: hardcoded big number for width...
+                  // big enough for most smartphones.. wont work for tablets.
+                  width: 500,
                   height: 84,
                   bottom: 0,
                   left: 0,
