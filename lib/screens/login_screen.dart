@@ -153,6 +153,7 @@ class _MyLoginFormState extends State<MyLoginForm> {
               _passwordKey.currentState.validate();
             },
             style: TextStyle(color: appBlack),
+            obscureText: true,
             decoration: InputDecoration(
               suffixIcon: IconButton(
                 onPressed: () {},
