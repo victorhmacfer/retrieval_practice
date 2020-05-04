@@ -37,18 +37,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
-  Widget _avatarRow(String firstName, String lastName, String email) {
+  Widget _avatarRow(String firstName, String lastName, String email, screenHeight, screenWidth) {
     return Container(
       // color: Colors.red,
       padding: EdgeInsets.only(
-          top: 28,
-          bottom: 20,
+          top: screenHeight * 0.033,
+          bottom: screenHeight * 0.024,
           left: horizontalPadding,
           right: horizontalPadding),
       child: Row(
         children: <Widget>[
           CircleAvatar(
-            radius: 32,
+            radius: screenWidth * 0.078,
             foregroundColor: appWhite,
             child: Text(
               firstName[0].toUpperCase(),
@@ -74,7 +74,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
-  Widget _actionWithToggle(icon, textString) {
+  Widget _actionWithToggle(icon, textString, screenHeight, screenWidth) {
     return Container(
       // color: Colors.blue,
       padding: EdgeInsets.symmetric(vertical: 4, horizontal: horizontalPadding),
@@ -85,7 +85,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             children: <Widget>[
               icon,
               SizedBox(
-                width: 34,
+                width: screenWidth * 0.083,
               ),
               Text(textString),
             ],
@@ -106,18 +106,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
-  Widget _actionRow(icon, textString) {
+  Widget _actionRow(icon, textString, screenHeight, screenWidth) {
     return Container(
       //this is the same color as the background but
       // containers with no color dont detect taps correctly
       color: appBlack,
       padding:
-          EdgeInsets.symmetric(vertical: 15, horizontal: horizontalPadding),
+          EdgeInsets.symmetric(vertical: screenHeight * 0.018, horizontal: horizontalPadding),
       child: Row(
         children: <Widget>[
           icon,
           SizedBox(
-            width: 34,
+            width: screenWidth * 0.083,
           ),
           Text(textString),
         ],
@@ -125,9 +125,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
-  Widget _divider() {
+  Widget _divider(screenHeight) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
+      padding: EdgeInsets.symmetric(vertical: screenHeight * 0.012),
       child: Container(
         height: 1,
         color: Color.fromRGBO(33, 33, 33, 1),
@@ -137,10 +137,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    var screenHeight = MediaQuery.of(context).size.height;
+    var screenWidth = MediaQuery.of(context).size.width;
+
+    print(screenHeight);
+    print(screenWidth);
+
+    print(screenHeight);
+
     return Material(
       child: Container(
         constraints: BoxConstraints.expand(),
-        padding: EdgeInsets.symmetric(vertical: 44),
+        padding: EdgeInsets.only(top: screenHeight * 0.052),
         color: appBlack,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -155,21 +164,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     var firstName = snapshot.data.firstName;
                     var lastName = snapshot.data.lastName;
                     var email = snapshot.data.email;
-                    return _avatarRow(firstName, lastName, email);
+                    return _avatarRow(firstName, lastName, email, screenHeight, screenWidth);
                   }
                   return CircularProgressIndicator();
                 }),
 
                 
-            _actionWithToggle(Icon(Icons.brightness_3), 'Dark theme'),
-            _actionRow(Icon(Icons.settings), 'Preferences'),
-            _actionRow(Icon(Icons.import_export), 'Import/Export'),
-            _divider(),
-            _actionRow(Icon(Icons.feedback), 'Send feedback'),
-            _actionRow(Icon(Icons.star_border), 'Rate us'),
-            _actionRow(Icon(Icons.event_note), 'Privacy Policy'),
-            _actionRow(Icon(Icons.info_outline), 'About Spaced'),
-            _divider(),
+            _actionWithToggle(Icon(Icons.brightness_3), 'Dark theme', screenHeight, screenWidth),
+            _actionRow(Icon(Icons.settings), 'Preferences', screenHeight, screenWidth),
+            _actionRow(Icon(Icons.import_export), 'Import/Export', screenHeight, screenWidth),
+            _divider(screenHeight),
+            _actionRow(Icon(Icons.feedback), 'Send feedback', screenHeight, screenWidth),
+            _actionRow(Icon(Icons.star_border), 'Rate us', screenHeight, screenWidth),
+            _actionRow(Icon(Icons.event_note), 'Privacy Policy', screenHeight, screenWidth),
+            _actionRow(Icon(Icons.info_outline), 'About Spaced', screenHeight, screenWidth),
+            _divider(screenHeight),
             GestureDetector(
                 onTap: () async {
                   print('clicked on logout tile');
@@ -182,7 +191,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     (route) => false,
                   );
                 },
-                child: _actionRow(Icon(Icons.input), 'Log out')),
+                child: _actionRow(Icon(Icons.input), 'Log out', screenHeight, screenWidth)),
           ],
         ),
       ),

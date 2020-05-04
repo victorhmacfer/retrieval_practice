@@ -23,7 +23,7 @@ class Deck extends StatelessWidget {
       );
     }
     var photoFile = File(_sub.deckPhotoPath);
-    return Image.file(photoFile);
+    return Image.file(photoFile, fit: BoxFit.fill,);
   }
 
   @override
@@ -66,9 +66,7 @@ class Deck extends StatelessWidget {
             children: <Widget>[
               _imageWidget(_subject),
               Positioned(
-                  // FIXME: hardcoded big number for width...
-                  // big enough for most smartphones.. wont work for tablets.
-                  width: 500,
+                  right: 0,
                   height: 84,
                   bottom: 0,
                   left: 0,
