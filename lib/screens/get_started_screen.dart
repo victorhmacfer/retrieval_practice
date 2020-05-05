@@ -4,7 +4,6 @@ import 'package:retrieval_practice/blocs/main_bloc.dart';
 
 import 'package:retrieval_practice/custom_widgets/pill_button.dart';
 import 'package:retrieval_practice/screens/signup_screen.dart';
-import 'package:retrieval_practice/styles/my_styles.dart';
 
 import 'login_screen.dart';
 

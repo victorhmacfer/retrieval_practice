@@ -25,7 +25,6 @@ enum SignUpResponseStatus { SUCCESS, EMAIL_ALREADY_IN_USE }
 
 enum LoginResponseStatus { SUCCESS, USER_NOT_FOUND, WRONG_PASSWORD }
 
-
 class MainBloc extends BlocBase {
   List<StudiedSubject> _subjects = [];
 
@@ -34,29 +33,14 @@ class MainBloc extends BlocBase {
   final Firestore _firestoreInstance = Firestore.instance;
   User _appUser;
 
-  // StreamController<User> _appUserStreamController = StreamController.broadcast();
-  // Stream<User> get appUserStream => _appUserStreamController.stream;
-
   final _appUserBS = BehaviorSubject<User>();
   Stream<User> get appUserStream => _appUserBS.stream;
-
-
-
-  // final StreamController<List<StudiedSubject>> _subjectListStreamController =
-  //     StreamController.broadcast();
-
-  // Stream<List<StudiedSubject>> get subjectListStream =>
-  //     _subjectListStreamController.stream;
 
   final _subjectListBS = BehaviorSubject<List<StudiedSubject>>();
   Stream<List<StudiedSubject>> get subjectListStream => _subjectListBS.stream;
 
-
-
-
   final StreamController<List<DeckCoverPhoto>>
       _deckCoverPhotoListStreamController = StreamController.broadcast();
-
 
   // IN CASE OF ERROR WHILE FETCHING PHOTOS, AN EMPTY LIST IS PUT ON THE STREAM !
   Stream<List<DeckCoverPhoto>> get deckCoverPhotoListStream =>
@@ -65,7 +49,8 @@ class MainBloc extends BlocBase {
   final StreamController<LocalPhotoFile> _localPhotoFileStreamController =
       StreamController.broadcast();
 
-  Stream<LocalPhotoFile> get photoFileStream => _localPhotoFileStreamController.stream;
+  Stream<LocalPhotoFile> get photoFileStream =>
+      _localPhotoFileStreamController.stream;
 
   Database db;
 
@@ -96,12 +81,13 @@ class MainBloc extends BlocBase {
       await _initializeAppUser();
       _appUserBS.add(_appUser);
     }
-    
+
     await _populateSubjectListFromDb();
     _subjectListBS.add(_subjects);
   }
 
-  Future<void> onCreateNewSubject(String title, {String localPhotoFilePath = 'default'}) async {
+  Future<void> onCreateNewSubject(String title,
+      {String localPhotoFilePath = 'default'}) async {
     var newSubject = StudiedSubject(title, localPhotoFilePath);
     _subjects.add(newSubject);
     _subjectListBS.add(_subjects);
@@ -118,7 +104,8 @@ class MainBloc extends BlocBase {
     await _updateSubjectInDatabase(subject);
   }
 
-  Future<void> onAddStudy(Question q, StudiedSubject s, int answerQuality) async {
+  Future<void> onAddStudy(
+      Question q, StudiedSubject s, int answerQuality) async {
     q.addStudy(Study(answerQuality, DateTime.now()));
     await _updateSubjectInDatabase(s);
   }
@@ -164,8 +151,7 @@ class MainBloc extends BlocBase {
       return 'loggedOut.db';
     }
     return 'user-${loggedInUser.uid}.db';
-  } 
-  
+  }
 
   Future<void> _populateSubjectListFromDb() async {
     final finder = Finder(sortOrders: [
@@ -188,19 +174,17 @@ class MainBloc extends BlocBase {
     List<DeckCoverPhoto> myPhotosList;
     try {
       myPhotosList = await _fetchListOfCoverPhotos(searchKeyword);
-    } on SocketException catch (e) {
+    } on SocketException {
       _deckCoverPhotoListStreamController.add([]);
       return;
     }
     _deckCoverPhotoListStreamController.add(myPhotosList);
   }
 
-
   // TODO: fetches hardcoded number of photos...  30.
   Future<List<DeckCoverPhoto>> _fetchListOfCoverPhotos(
       String searchKeyword) async {
-
-    //TODO: THE QUERY PARAMETERS DONT WORK !!! THIS RETURNS ALL RESULTS FOR THE KEYWORD , NOT ONLY 30
+    //TODO: THE QUERY PARAMETERS DONT WORK !!! THIS RETURNS ALL RESULTS FOR THE KEYWORD , NOT JUST 30
     final String searchUrl =
         'https://api.unsplash.com/search/photos/?client_id=238cc98d67d016f02e5aaf29a168c5aa8975d78bdf892198657abd3b49629b13' +
             '&query=$searchKeyword&per_page=30';
@@ -225,8 +209,6 @@ class MainBloc extends BlocBase {
     }
   }
 
-
-
   Future<File> _downloadPhoto(DeckCoverPhoto photo, String filename) async {
     String myDownloadLink = photo.downloadLink +
         '?client_id=238cc98d67d016f02e5aaf29a168c5aa8975d78bdf892198657abd3b49629b13';
@@ -241,8 +223,9 @@ class MainBloc extends BlocBase {
 
     print('url is $url');
 
-    print('inside _downloadPhoto.. line after response.. response is ${responseForUrl.body}');
-    
+    print(
+        'inside _downloadPhoto.. line after response.. response is ${responseForUrl.body}');
+
     var bytes = photoDownloadResponse.bodyBytes;
 
     //TODO: THIS IS DUPLICATED CODE !!! HANDLE LATER
@@ -257,7 +240,6 @@ class MainBloc extends BlocBase {
     return file;
   }
 
-
   Future<void> onCoverPhotoChosen(DeckCoverPhoto photo) async {
     String dir = (await getApplicationDocumentsDirectory()).path;
 
@@ -266,7 +248,7 @@ class MainBloc extends BlocBase {
     final filename = 'photo-id-${photo.id}';
 
     File file = File('$dir/$filename');
-    
+
     print(file.path);
 
     bool fileExists = await file.exists();
@@ -284,17 +266,13 @@ class MainBloc extends BlocBase {
     }
   }
 
-
-
-  
-
   Future<FirebaseUser> get loggedInUser async {
     if (_firebaseLoggedInUser != null) return _firebaseLoggedInUser;
     return _auth.currentUser();
   }
 
-  Future<SignUpResponseStatus> signUpWithEmailAndPassword(firstName, lastName,
-      email, password) async {
+  Future<SignUpResponseStatus> signUpWithEmailAndPassword(
+      firstName, lastName, email, password) async {
     FirebaseUser user;
     try {
       user = (await _auth.createUserWithEmailAndPassword(
@@ -311,10 +289,10 @@ class MainBloc extends BlocBase {
         .collection('users')
         .document(_firebaseLoggedInUser.uid)
         .setData({
-          'firstName': firstName,
-          'lastName': lastName,
-          'email': email,
-        });
+      'firstName': firstName,
+      'lastName': lastName,
+      'email': email,
+    });
 
     _appUser = User(_firebaseLoggedInUser.uid, firstName, lastName, email);
 
@@ -355,7 +333,8 @@ class MainBloc extends BlocBase {
   }
 
   Future<void> _initializeAppUser() async {
-    var docRef = await _firestoreInstance.collection('users')
+    var docRef = _firestoreInstance
+        .collection('users')
         .document('${_firebaseLoggedInUser.uid}');
 
     var userMap = (await docRef.get()).data;
@@ -363,9 +342,6 @@ class MainBloc extends BlocBase {
 
     _appUser = User.fromMap(userMap);
   }
-
-
-  
 
   @override
   void dispose() {

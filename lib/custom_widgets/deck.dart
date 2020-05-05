@@ -31,7 +31,6 @@ class Deck extends StatelessWidget {
     var totalNumOfQuestions = _subject.totalNumOfQuestions;
     var questionString = (totalNumOfQuestions > 1) ? 'questions' : 'question';
 
-    //TODO: this is temporary
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -57,7 +56,7 @@ class Deck extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 18, vertical: 12),
         height: 276,
-        //this part is transparent..
+        //this part is transparent... needs color for accepting touches
         color: appBlack,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(16.0),

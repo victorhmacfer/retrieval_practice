@@ -70,7 +70,6 @@ class QuestionTile extends StatelessWidget {
                     child: Text('Yes'),
                     onPressed: () {
                       bloc.onDeleteQuestion(question, subject);
-                      //TODO: this solution is temporary !!!
                       // The deck info screen does not update to handle the deletion
                       // of the question.. The only widget that knows about that
                       // deletion is the homescreen (which has a streambuilder for list of subjects).

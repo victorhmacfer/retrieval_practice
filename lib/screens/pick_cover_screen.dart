@@ -3,8 +3,6 @@ import 'package:retrieval_practice/blocs/main_bloc.dart';
 import 'package:retrieval_practice/models/deck_cover_photo.dart';
 import 'package:retrieval_practice/styles/my_styles.dart';
 
-import 'package:http/http.dart' as http;
-
 class PickCoverScreen extends StatefulWidget {
   final MainBloc bloc;
   PickCoverScreen({this.bloc});
@@ -20,7 +18,6 @@ class _PickCoverScreenState extends State<PickCoverScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     isLoading = false;
     //myFocusNode = FocusNode();
@@ -140,7 +137,6 @@ class _PickCoverScreenState extends State<PickCoverScreen> {
 Widget _tinyImage(DeckCoverPhoto photo, MainBloc theBloc) {
   return GestureDetector(
     onTap: () {
-      // TODO: Im disabling this call because Idk how to display a downloaded image.
       theBloc.onCoverPhotoChosen(photo);
     },
     child: ClipRRect(

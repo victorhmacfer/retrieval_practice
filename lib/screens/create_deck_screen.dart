@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:retrieval_practice/blocs/main_bloc.dart';
 import 'package:retrieval_practice/models/deck_cover_photo.dart';
@@ -25,7 +23,6 @@ class _CreateDeckScreenState extends State<CreateDeckScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 

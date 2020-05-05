@@ -53,7 +53,6 @@ var appTheme = ThemeData(
   accentColor: appBlue,
   textSelectionHandleColor: appBlue,
 
-  //TODO: make this button bigger
   floatingActionButtonTheme: FloatingActionButtonThemeData(
     foregroundColor: appBlack,
     backgroundColor: appFabBlue,

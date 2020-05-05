@@ -24,7 +24,6 @@ class _CreateQuestionScreenState extends State<CreateQuestionScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     frontFocusNode = FocusNode();
     backFocusNode = FocusNode();

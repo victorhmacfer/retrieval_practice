@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
-import 'package:retrieval_practice/blocs/bloc_base.dart';
 import 'package:retrieval_practice/blocs/main_bloc.dart';
 import 'package:retrieval_practice/screens/login_screen.dart';
-
 import 'package:retrieval_practice/styles/my_styles.dart';
-
 import 'package:retrieval_practice/custom_widgets/pill_button.dart';
 
 import 'home_screen.dart';
@@ -18,7 +14,6 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     var screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
@@ -49,7 +44,9 @@ class SignUpScreen extends StatelessWidget {
               //mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                SizedBox(height: screenHeight * 0.05,),
+                SizedBox(
+                  height: screenHeight * 0.05,
+                ),
                 Container(
                   padding: EdgeInsets.symmetric(vertical: screenHeight * 0.07),
                   // color: Colors.red,
@@ -61,7 +58,6 @@ class SignUpScreen extends StatelessWidget {
                         fontWeight: FontWeight.w500),
                   ),
                 ),
-                
                 MySignUpForm(mainBloc),
               ],
             ),
@@ -72,12 +68,7 @@ class SignUpScreen extends StatelessWidget {
   }
 }
 
-//TODO: create a custom decorated textformfield to be reused !
-
-//TODO: fix appearance
-
 class MySignUpForm extends StatefulWidget {
-
   final MainBloc mainBloc;
 
   MySignUpForm(this.mainBloc);
@@ -101,7 +92,6 @@ class _MySignUpFormState extends State<MySignUpForm> {
 
   @override
   Widget build(BuildContext context) {
-
     var screenHeight = MediaQuery.of(context).size.height;
 
     return Form(
@@ -140,13 +130,11 @@ class _MySignUpFormState extends State<MySignUpForm> {
                     ),
                     errorBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(32),
-                      borderSide:
-                          BorderSide(color: appFormErrorRed, width: 2),
+                      borderSide: BorderSide(color: appFormErrorRed, width: 2),
                     ),
                     focusedErrorBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(32),
-                      borderSide:
-                          BorderSide(color: appFormErrorRed, width: 2),
+                      borderSide: BorderSide(color: appFormErrorRed, width: 2),
                     ),
                   ),
                 ),
@@ -179,13 +167,11 @@ class _MySignUpFormState extends State<MySignUpForm> {
                     ),
                     errorBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(32),
-                      borderSide:
-                          BorderSide(color: appFormErrorRed, width: 2),
+                      borderSide: BorderSide(color: appFormErrorRed, width: 2),
                     ),
                     focusedErrorBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(32),
-                      borderSide:
-                          BorderSide(color: appFormErrorRed, width: 2),
+                      borderSide: BorderSide(color: appFormErrorRed, width: 2),
                     ),
                   ),
                 ),
@@ -279,15 +265,14 @@ class _MySignUpFormState extends State<MySignUpForm> {
           GestureDetector(
             onTap: () {
               Navigator.pushReplacement(
-                context, 
-                MaterialPageRoute(
-                  builder: (context) => LoginScreen(widget.mainBloc),
-                )
-              );
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => LoginScreen(widget.mainBloc),
+                  ));
             },
             child: Padding(
               padding: EdgeInsets.only(
-                top: screenHeight * 0.02, 
+                top: screenHeight * 0.02,
                 right: screenHeight * 0.03,
               ),
               child: Text(
@@ -302,21 +287,20 @@ class _MySignUpFormState extends State<MySignUpForm> {
           GestureDetector(
               onTap: () async {
                 if (_signUpFormKey.currentState.validate()) {
-                  // TODO:
                   var theFirstName = _firstNameController.text;
                   var theLastName = _lastNameController.text;
                   var theEmail = _emailController.text;
                   var thePassword = _passwordController.text;
 
                   var respStatus = await widget.mainBloc
-                      .signUpWithEmailAndPassword(theFirstName, theLastName, theEmail, thePassword);
+                      .signUpWithEmailAndPassword(
+                          theFirstName, theLastName, theEmail, thePassword);
 
                   if (respStatus == SignUpResponseStatus.SUCCESS) {
                     Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(
-                          builder: (context) =>
-                              HomeScreen(widget.mainBloc)),
+                          builder: (context) => HomeScreen(widget.mainBloc)),
                       (route) => false,
                     );
                   } else if (respStatus ==
