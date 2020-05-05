@@ -4,7 +4,7 @@ import 'package:retrieval_practice/models/question.dart';
 import 'package:retrieval_practice/models/studied_subject.dart';
 import 'package:retrieval_practice/styles/my_styles.dart';
 
-class AnswerQuestionScreen extends StatefulWidget {
+class AnswerQuestionScreen extends StatelessWidget {
   final Question question;
   final GestureTapCallback tapCallback;
   final StudiedSubject subject;
@@ -13,39 +13,75 @@ class AnswerQuestionScreen extends StatefulWidget {
   AnswerQuestionScreen(
       {this.question, this.subject, this.bloc, this.tapCallback});
 
-  @override
-  _AnswerQuestionScreenState createState() => _AnswerQuestionScreenState();
-}
+  // double _answerQuality;
 
-class _AnswerQuestionScreenState extends State<AnswerQuestionScreen> {
-  double _answerQuality = 0;
+
+  Widget _answerButtonGrid(BuildContext ctxt, screenHeight, screenWidth) {
+
+    return Container(
+      // color: Colors.yellow,
+      height: screenHeight * 0.3,
+      child: GridView.count(
+        padding: EdgeInsets.symmetric(horizontal: 16),
+        // mainAxisSpacing: 16,
+        // crossAxisSpacing: 16,
+        crossAxisCount: 3,
+        children: <Widget>[
+          _answerButton(ctxt, screenWidth, 0),
+          _answerButton(ctxt, screenWidth, 1),
+          _answerButton(ctxt, screenWidth, 2),
+          _answerButton(ctxt, screenWidth, 3),
+          _answerButton(ctxt, screenWidth, 4),
+          _answerButton(ctxt, screenWidth, 5),
+        ],
+        ),
+    );
+  }
+
+
+  Widget _answerButton(BuildContext ctxt, screenWidth, int number) {
+
+    return GestureDetector(
+      onTap: () {
+        bloc.onAddStudy(question, subject, number);
+        Navigator.pop(ctxt);
+      },
+          child: Container(
+        color: appBlack,
+        child: FractionallySizedBox(
+          widthFactor: 0.7,
+          heightFactor: 0.7,
+          child: Container(
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: Color.fromRGBO(235, 235, 235, 1),
+              borderRadius: BorderRadius.circular(50),
+            ),
+            child: Text('$number', style: TextStyle(color: appGrey, fontSize: 24),),
+          ),
+        ),
+      ),
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {
+    var screenHeight = MediaQuery.of(context).size.height;
+    var screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          onPressed: widget.tapCallback,
+          onPressed: tapCallback,
         ),
         title: Text(
-          'OS Concepts',
+          'Due cards',
           style: deckTitleTextStyle,
         ),
         centerTitle: true,
         actions: <Widget>[
-          IconButton(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            icon: Icon(
-              Icons.check,
-              size: 28,
-            ),
-            onPressed: () {
-              widget.bloc.onAddStudy(
-                  widget.question, widget.subject, _answerQuality.toInt());
-              Navigator.pop(context);
-            },
-          ),
           IconButton(
             padding: EdgeInsets.symmetric(horizontal: 16),
             icon: Icon(
@@ -58,35 +94,24 @@ class _AnswerQuestionScreenState extends State<AnswerQuestionScreen> {
         ],
       ),
       body: Container(
+        // color: Colors.green,
         padding: EdgeInsets.all(24),
         constraints: BoxConstraints.expand(),
         child: SingleChildScrollView(
           child: Container(
-            height: 500,
+            // color: Colors.red,
+            height: screenHeight * 0.82,
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 TextFormField(
-                  initialValue: widget.question.frontSide,
+                  initialValue: question.frontSide,
                   decoration: InputDecoration.collapsed(hintText: ''),
                   //TODO: this maxLines should be changed later ! Just making it work for now
                   maxLines: 10,
                   style: TextStyle(fontSize: 18),
                 ),
-                SizedBox(
-                  height: 48,
-                ),
-                Slider(
-                  value: _answerQuality,
-                  onChanged: (newValue) {
-                    setState(() {
-                      _answerQuality = newValue;
-                    });
-                  },
-                  divisions: 5,
-                  min: 0,
-                  max: 5,
-                  label: '${_answerQuality.toInt()}',
-                )
+                _answerButtonGrid(context, screenHeight, screenWidth),
               ],
             ),
           ),
