@@ -118,7 +118,7 @@ class _PickCoverScreenState extends State<PickCoverScreen> {
 
                     // create widget from this deckCoverPhoto
 
-                    return _tinyImage(myDeckPhoto, widget.bloc);
+                    return _tinyImage(context, myDeckPhoto, widget.bloc);
                   }),
                 ),
               );
@@ -134,10 +134,11 @@ class _PickCoverScreenState extends State<PickCoverScreen> {
   }
 }
 
-Widget _tinyImage(DeckCoverPhoto photo, MainBloc theBloc) {
+Widget _tinyImage(BuildContext ctxt, DeckCoverPhoto photo, MainBloc theBloc) {
   return GestureDetector(
     onTap: () {
       theBloc.onCoverPhotoChosen(photo);
+      Navigator.pop(ctxt);
     },
     child: ClipRRect(
       borderRadius: BorderRadius.circular(6),
