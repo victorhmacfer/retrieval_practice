@@ -114,11 +114,9 @@ class AccentPillButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(4.0),
       child: Container(
-          height: 56,
-          //width: 264,
+        height: 56,
           decoration: BoxDecoration(
-            //boxShadow: [BoxShadow(blurRadius: 2, offset: Offset(2, 2), color: Colors.grey[600])],
-            //TODO: CHANGE THIS TO A RADIAL GRADIENT !
+            boxShadow: [BoxShadow(blurRadius: 2, spreadRadius: 1, color: Color.fromARGB(255, 50, 50, 50))],
             gradient: LinearGradient(colors: [
               Color(0xFF2B7EDE),
               Color(0xFF3D54B9),
