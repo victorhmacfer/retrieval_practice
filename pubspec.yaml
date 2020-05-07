@@ -55,6 +55,8 @@ flutter:
     - assets/images/default-pic.jpg
     - assets/images/white-default-pic.jpg
     - assets/images/space-get-started.jpg
+    - assets/images/launcher-icon-96.png
+    - assets/images/launcher-icon-192.png
 
 
 

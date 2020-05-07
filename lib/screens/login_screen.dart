@@ -19,7 +19,6 @@ class LoginScreen extends StatelessWidget {
 
     var screenHeight = MediaQuery.of(context).size.height;
 
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: appWhite,
@@ -47,8 +46,12 @@ class LoginScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
+                CircleAvatar(
+                    backgroundImage: AssetImage('assets/images/launcher-icon-192.png'),
+                    radius: 34,
+                ),
                 SizedBox(
-                  height: screenHeight * 0.2,
+                  height: screenHeight * 0.23,
                 ),
                 Text(
                   'Login',

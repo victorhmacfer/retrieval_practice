@@ -41,11 +41,14 @@ class SignUpScreen extends StatelessWidget {
           padding: const EdgeInsets.all(32.0),
           child: SingleChildScrollView(
             child: Column(
-              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
+                CircleAvatar(
+                    backgroundImage: AssetImage('assets/images/launcher-icon-192.png'),
+                    radius: 34,
+                ),
                 SizedBox(
-                  height: screenHeight * 0.05,
+                  height: screenHeight * 0.08,
                 ),
                 Container(
                   padding: EdgeInsets.symmetric(vertical: screenHeight * 0.07),
@@ -282,7 +285,7 @@ class _MySignUpFormState extends State<MySignUpForm> {
             ),
           ),
           SizedBox(
-            height: screenHeight * 0.08,
+            height: screenHeight * 0.05,
           ),
           GestureDetector(
               onTap: () async {

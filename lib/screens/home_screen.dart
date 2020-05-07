@@ -61,10 +61,11 @@ class _HomeScreenState extends State<HomeScreen> {
       expandedHeight: 56.0,
       backgroundColor: appBlack,
       floating: true,
-      title: Text(
-        'Spaced',
-        style: appTitleTextStyle,
-      ),
+      // title: Text(
+      //   'Spaced',
+      //   style: appTitleTextStyle,
+      // ),
+      title: _LogoWithTitle(),
       centerTitle: true,
     );
   }
@@ -156,6 +157,26 @@ class _HomeScreenState extends State<HomeScreen> {
 
             return Center(child: CircularProgressIndicator());
           }),
+    );
+  }
+}
+
+
+class _LogoWithTitle extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          CircleAvatar(
+            backgroundImage: AssetImage('assets/images/launcher-icon-96.png'),
+            radius: 16,
+          ),
+          SizedBox(width: 12),
+          Text('Spaced', style: appTitleTextStyle,)
+        ],
+      ),
     );
   }
 }
