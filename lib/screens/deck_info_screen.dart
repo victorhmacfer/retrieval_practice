@@ -97,11 +97,6 @@ class _DeckInfoScreenState extends State<DeckInfoScreen> {
           SliverList(
             delegate: SliverChildListDelegate(
               [
-                // Image.asset(
-                //   'assets/images/default-pic-better.jpg',
-                //   height: 216,
-                //   fit: BoxFit.fill,
-                // ),
                 _imageWidget(widget._subject, screenHeight),
 
                 Container(

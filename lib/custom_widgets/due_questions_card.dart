@@ -53,7 +53,7 @@ class DueQuestionsCard extends StatelessWidget {
                     '${myDueQuestions.length}',
                     style: TextStyle(fontSize: 44),
                   ),
-                  Text('  cards'),
+                  Text(myDueQuestions.length > 1 ? '  cards' : ' card'),
                 ],
               ),
               Row(

@@ -13,6 +13,8 @@ class CardTotalPillButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var cardOrCards = _totalOfCards > 1 ? ' cards' : ' card';
+
     return Container(
       height: 52,
       width: 150,
@@ -31,7 +33,7 @@ class CardTotalPillButton extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 10),
             child: Text(
-              '$_totalOfCards cards',
+              '$_totalOfCards $cardOrCards',
               style: pillButtonTextStyle.copyWith(color: appWhite),
             ),
           ),
@@ -137,7 +139,6 @@ class AccentPillButton extends StatelessWidget {
 }
 
 class HollowPillButton extends StatelessWidget {
-
   final String text;
   HollowPillButton(this.text);
 
