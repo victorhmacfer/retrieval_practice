@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-// import 'package:retrieval_practice/blocs/auth_bloc.dart';
 import 'package:retrieval_practice/blocs/main_bloc.dart';
 
 import 'package:retrieval_practice/styles/my_styles.dart';
@@ -9,14 +8,12 @@ import 'package:retrieval_practice/custom_widgets/pill_button.dart';
 import 'home_screen.dart';
 
 class LoginScreen extends StatelessWidget {
-
   final MainBloc mainBloc;
 
   LoginScreen(this.mainBloc);
 
   @override
   Widget build(BuildContext context) {
-
     var screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
@@ -47,8 +44,9 @@ class LoginScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 CircleAvatar(
-                    backgroundImage: AssetImage('assets/images/launcher-icon-192.png'),
-                    radius: 34,
+                  backgroundImage:
+                      AssetImage('assets/images/launcher-icon-192.png'),
+                  radius: 34,
                 ),
                 SizedBox(
                   height: screenHeight * 0.23,
@@ -74,10 +72,8 @@ class LoginScreen extends StatelessWidget {
 }
 
 class MyLoginForm extends StatefulWidget {
-  
   final MainBloc mainBloc;
 
-  
   MyLoginForm(this.mainBloc);
 
   @override
@@ -95,7 +91,6 @@ class _MyLoginFormState extends State<MyLoginForm> {
 
   @override
   Widget build(BuildContext context) {
-
     var screenHeight = MediaQuery.of(context).size.height;
 
     return Form(
@@ -190,9 +185,7 @@ class _MyLoginFormState extends State<MyLoginForm> {
           ),
           Padding(
             padding: EdgeInsets.only(
-              top: screenHeight * 0.02, 
-              right: screenHeight * 0.03
-            ),
+                top: screenHeight * 0.02, right: screenHeight * 0.03),
             child: Text(
               ' Reset password',
               style: TextStyle(color: Colors.black),
@@ -239,14 +232,14 @@ class _MyLoginFormState extends State<MyLoginForm> {
                     Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(
-                          builder: (context) =>
-                              HomeScreen(widget.mainBloc)),
+                          builder: (context) => HomeScreen(widget.mainBloc)),
                       (route) => false,
                     );
                   }
                 }
               },
               child: AccentPillButton('LOGIN')),
+          SizedBox(height: screenHeight * 0.45,)
         ],
       ),
     );

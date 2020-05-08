@@ -36,10 +36,10 @@ class SignUpScreen extends StatelessWidget {
       ),
       body: Container(
         constraints: BoxConstraints.expand(),
+        // color: Colors.red,
         color: appWhite,
-        child: Padding(
-          padding: const EdgeInsets.all(32.0),
-          child: SingleChildScrollView(
+        padding: const EdgeInsets.all(32.0),
+        child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
@@ -50,6 +50,7 @@ class SignUpScreen extends StatelessWidget {
                 SizedBox(
                   height: screenHeight * 0.08,
                 ),
+                
                 Container(
                   padding: EdgeInsets.symmetric(vertical: screenHeight * 0.07),
                   // color: Colors.red,
@@ -65,7 +66,7 @@ class SignUpScreen extends StatelessWidget {
               ],
             ),
           ),
-        ),
+        
       ),
     );
   }
@@ -323,6 +324,7 @@ class _MySignUpFormState extends State<MySignUpForm> {
                 }
               },
               child: AccentPillButton('SIGN UP')),
+              SizedBox(height: screenHeight * 0.45,),
         ],
       ),
     );
