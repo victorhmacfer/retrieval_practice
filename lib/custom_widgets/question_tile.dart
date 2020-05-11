@@ -53,7 +53,7 @@ class QuestionTile extends StatelessWidget {
           );
         } else {
           Scaffold.of(context).showSnackBar(SnackBar(
-            content: Text(localizedStrings.questionNotTheTimeToReviewYet),
+            content: Text(localizedStrings.questionNotTheTimeToReviewYet, style: snackBarTextStyle.copyWith(color: appBlack),),
           ));
         }
       },

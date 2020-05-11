@@ -30,6 +30,11 @@ const deckSubtitleTextStyle = TextStyle(
   color: appLightGrey,
 );
 
+const snackBarTextStyle = TextStyle(
+  fontSize: 16,
+  fontWeight: FontWeight.w500,
+);
+
 const noQuestionsYetTextStyle = TextStyle(
     fontSize: 18, height: 1.3, color: appWhite, fontWeight: FontWeight.w600);
 

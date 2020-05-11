@@ -214,10 +214,7 @@ class _MyLoginFormState extends State<MyLoginForm> {
                       duration: Duration(seconds: 3),
                       content: Text(
                         localizedStrings.loginEmailNotFound,
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: appWhite,
-                            fontWeight: FontWeight.w500),
+                        style: snackBarTextStyle.copyWith(color: appWhite),
                       ),
                       backgroundColor: Colors.red[400],
                     ));
@@ -226,10 +223,7 @@ class _MyLoginFormState extends State<MyLoginForm> {
                       duration: Duration(seconds: 3),
                       content: Text(
                         localizedStrings.wrongPassword,
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: appWhite,
-                            fontWeight: FontWeight.w500),
+                        style: snackBarTextStyle.copyWith(color: appWhite),
                       ),
                       backgroundColor: Colors.red[400],
                     ));
