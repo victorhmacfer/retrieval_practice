@@ -52,7 +52,7 @@ class LoginScreen extends StatelessWidget {
                   radius: 34,
                 ),
                 SizedBox(
-                  height: screenHeight * 0.23,
+                  height: screenHeight * 0.15,
                 ),
                 Text(
                   localizedStrings.loginScreenTitle,

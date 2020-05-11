@@ -50,9 +50,7 @@ class SignUpScreen extends StatelessWidget {
                     backgroundImage: AssetImage('assets/images/launcher-icon-192.png'),
                     radius: 34,
                 ),
-                SizedBox(
-                  height: screenHeight * 0.08,
-                ),
+                
                 
                 Container(
                   padding: EdgeInsets.symmetric(vertical: screenHeight * 0.07),
