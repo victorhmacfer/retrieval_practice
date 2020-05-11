@@ -11,18 +11,296 @@ class SpacedAppLocalizations {
     return Localizations.of<SpacedAppLocalizations>(context, SpacedAppLocalizations);
   }
 
+  //FIXME: edited 9 days ago is fixed for every question !
+  // havent implemented the logic for that yet
   static Map<String, Map<String, String>> _localizedValues = {
     'en': {
-      'title': 'Hello World',
+      'getStarted': 'GET STARTED', //get started screen
+      'signUp': 'SIGN UP',
+      'signUpScreenTitle': 'Sign Up',
+      'alreadyRegistered': 'Already registered ?',
+      'signUpFirstNameBlank': 'Please, tell us!',
+      'signUpLastNameBlank': 'This one too!',
+
+      'loginScreenTitle': 'Login', //login screen
+
+      'firstNameFormHintText': 'First name', // forms
+      'lastNameFormHintText': 'Last name',
+      'emailFormHintText': 'Email',
+      'passwordFormHintText': 'Password',
+      'resetPassword': 'Reset Password',
+      'loginEmailNotFound': "We couldn't find a user with this email!",
+      'passwordTooShort': 'Must be at least 8 characters long.',
+      'wrongPassword': 'Wrong password!',
+      'emailAlreadyInUse': 'Email already in use!',
+      'invalidEmail': 'Invalid email !',
+
+
+      'homeNoDecksYet': 'No decks yet!', //Home screen
+      'homeNoDecksYetSubText': 'Create a deck of cards and it will show up here.',
+
+      'dueQuestions': 'Due Questions', // due questions card
+      'minute': 'minute',
+      'minutes': 'minutes',
+      'learn': 'Learn',
+
+
+      'darkTheme': 'Dark Theme', // settings screen
+      'preferences': 'Preferences',
+      'importExport': 'Import/Export',
+      'sendFeedback': 'Send Feedback',
+      'rateUs': 'Rate Us',
+      'privacyPolicy': 'Privacy Policy',
+      'aboutTheApp': 'About Spaced',
+      'settingsLogout': 'Log out',
+
+      'createDeckTitle': 'Create deck', //create deck screen
+      'changeImage': 'Change Image',
+      'untitledHintText': 'Untitled',
+
+
+      'pickCoverTitle': 'Pick cover', //pick cover screen
+      'pickCoverSearchFieldLabel': 'Search term',
+
+
+      'question': 'question', //deck widget
+      'due': 'due',
+
+      'deckInfoNoQuestionsYet': "You haven't created any questions yet!", // deck info screen
+      'edited': 'edited',
+      'daysAgo': 'days ago',
+      'dayAgo': 'day ago'
+    
     },
-    'es': {
-      'title': 'Hola Mundo',
+    
+    'pt': {
+      'getStarted': 'COMEÇAR',
+      'signUp': 'REGISTRAR-SE',
+      'signUpScreenTitle': 'Registrar',
+      'alreadyRegistered': 'Já possui uma conta ?',
+      'signUpFirstNameBlank': 'Como nós te chamamos?',
+      'signUpLastNameBlank': 'E o sobrenome?',
+
+      'loginScreenTitle': 'Login', //login screen
+
+      'firstNameFormHintText': 'Nome', // forms
+      'lastNameFormHintText': 'Sobrenome',
+      'emailFormHintText': 'Email',
+      'passwordFormHintText': 'Senha',
+      'resetPassword': 'Esqueceu a senha?',
+      'loginEmailNotFound': "Usuário não encontrado!",
+      'passwordTooShort': 'A senha deve conter pelo menos 8 caracteres.',
+      'wrongPassword': 'Senha incorreta!',
+      'emailAlreadyInUse': 'Este email já foi utilizado por outro usuário.',
+      'invalidEmail': 'Email inválido !',
+
+      'homeNoDecksYet': 'Você ainda não criou nenhum deck!', //Home screen
+      'homeNoDecksYetSubText': 'Crie um e ele aparecerá aqui.',
+
+      'dueQuestions': 'Perguntas pendentes', // due questions card
+      'minute': 'minuto',
+      'minutes': 'minutos',
+      'learn': 'Praticar',
+
+
+      'darkTheme': 'Tema Escuro', // settings screen
+      'preferences': 'Preferências',
+      'importExport': 'Importar/Exportar',
+      'sendFeedback': 'Enviar Feedback',
+      'rateUs': 'Avaliar app',
+      'privacyPolicy': 'Política de Privacidade',
+      'aboutTheApp': 'Sobre o Spaced',
+      'settingsLogout': 'Sair',
+
+      'createDeckTitle': 'Criar deck', //create deck screen
+      'changeImage': 'Mudar capa',
+      'untitledHintText': 'Nome do deck',
+
+
+      'pickCoverTitle': 'Escolher capa', //pick cover screen
+      'pickCoverSearchFieldLabel': 'Buscar',
+
+
+      'question': 'pergunta', //deck widget
+      'due': 'pendente',
+
+      'deckInfoNoQuestionsYet': "Você ainda não criou nenhuma pergunta!", // deck info screen
+      'edited': 'editada',
+      'daysAgo': 'dias atrás',
+      'dayAgo': 'dia atrás'
+
+
     },
   };
 
-  String get title {
-    return _localizedValues[locale.languageCode]['title'];
+
+  // =================================  GET STARTED SCREEN  ========================================
+  String get getStarted {
+    return _localizedValues[locale.languageCode]['getStarted'];
   }
+  String get signUp {
+    return _localizedValues[locale.languageCode]['signUp'];
+  }
+  String get signUpScreenTitle {
+    return _localizedValues[locale.languageCode]['signUpScreenTitle'];
+  }
+
+  String get alreadyRegistered {
+    return _localizedValues[locale.languageCode]['alreadyRegistered'];
+  }
+  String get signUpFirstNameBlank {
+    return _localizedValues[locale.languageCode]['signUpFirstNameBlank'];
+  }
+  String get signUpLastNameBlank {
+    return _localizedValues[locale.languageCode]['signUpLastNameBlank'];
+  }
+
+  // =================================  LOGIN SCREEN  ========================================
+  String get loginScreenTitle {
+    return _localizedValues[locale.languageCode]['loginScreenTitle'];
+  }
+  // =================================  FORMS  ========================================
+
+  String get firstNameFormHintText {
+    return _localizedValues[locale.languageCode]['firstNameFormHintText'];
+  }
+
+  String get lastNameFormHintText {
+    return _localizedValues[locale.languageCode]['lastNameFormHintText'];
+  }
+
+  String get emailFormHintText {
+    return _localizedValues[locale.languageCode]['emailFormHintText'];
+  }
+
+  String get passwordFormHintText {
+    return _localizedValues[locale.languageCode]['passwordFormHintText'];
+  }
+
+  String get resetPassword {
+    return _localizedValues[locale.languageCode]['resetPassword'];
+  }
+  String get loginEmailNotFound {
+    return _localizedValues[locale.languageCode]['loginEmailNotFound'];
+  }
+  String get passwordTooShort {
+    return _localizedValues[locale.languageCode]['passwordTooShort'];
+  }
+  String get wrongPassword {
+    return _localizedValues[locale.languageCode]['wrongPassword'];
+  }
+  String get emailAlreadyInUse {
+    return _localizedValues[locale.languageCode]['emailAlreadyInUse'];
+  }
+  String get invalidEmail {
+    return _localizedValues[locale.languageCode]['invalidEmail'];
+  }
+
+  // =================================  HOME SCREEN  ========================================
+  String get homeNoDecksYet {
+    return _localizedValues[locale.languageCode]['homeNoDecksYet'];
+  }
+
+  String get homeNoDecksYetSubText {
+    return _localizedValues[locale.languageCode]['homeNoDecksYetSubText'];
+  }
+  // =================================  DUE QUESTIONS CARD  ========================================
+  String get dueQuestions {
+    return _localizedValues[locale.languageCode]['dueQuestions'];
+  }
+
+  String get minute {
+    return _localizedValues[locale.languageCode]['minute'];
+  }
+
+  String get minutes {
+    return _localizedValues[locale.languageCode]['minutes'];
+  }
+
+  String get learn {
+    return _localizedValues[locale.languageCode]['learn'];
+  }
+  // =================================  SETTINGS SCREEN  ========================================
+
+
+  String get darkTheme {
+    return _localizedValues[locale.languageCode]['darkTheme'];
+  }
+
+  String get preferences {
+    return _localizedValues[locale.languageCode]['preferences'];
+  }
+
+  String get importExport {
+    return _localizedValues[locale.languageCode]['importExport'];
+  }
+
+  String get sendFeedback {
+    return _localizedValues[locale.languageCode]['sendFeedback'];
+  }
+
+  String get rateUs {
+    return _localizedValues[locale.languageCode]['rateUs'];
+  }
+
+  String get privacyPolicy {
+    return _localizedValues[locale.languageCode]['privacyPolicy'];
+  }
+
+  String get aboutTheApp {
+    return _localizedValues[locale.languageCode]['aboutTheApp'];
+  }
+
+  String get settingsLogout {
+    return _localizedValues[locale.languageCode]['settingsLogout'];
+  }
+  // =================================  CREATE DECK SCREEN  ========================================
+  String get createDeckTitle {
+    return _localizedValues[locale.languageCode]['createDeckTitle'];
+  }
+
+  String get changeImage {
+    return _localizedValues[locale.languageCode]['changeImage'];
+  }
+
+  String get untitledHintText {
+    return _localizedValues[locale.languageCode]['untitledHintText'];
+  }
+  // =================================  PICK COVER SCREEN  ========================================
+  String get pickCoverTitle {
+    return _localizedValues[locale.languageCode]['pickCoverTitle'];
+  }
+
+  String get pickCoverSearchFieldLabel {
+    return _localizedValues[locale.languageCode]['pickCoverSearchFieldLabel'];
+  }
+  // =================================  DECK WIDGET  ========================================
+  String get question {
+    return _localizedValues[locale.languageCode]['question'];
+  }
+
+  String get due {
+    return _localizedValues[locale.languageCode]['due'];
+  }
+  // =================================  DECK INFO SCREEN  ========================================
+
+  String get deckInfoNoQuestionsYet {
+    return _localizedValues[locale.languageCode]['deckInfoNoQuestionsYet'];
+  }
+
+  String get edited {
+    return _localizedValues[locale.languageCode]['edited'];
+  }
+
+  String get daysAgo {
+    return _localizedValues[locale.languageCode]['daysAgo'];
+  }
+
+  String get dayAgo {
+    return _localizedValues[locale.languageCode]['dayAgo'];
+  }
+
+
 }
 
 
@@ -30,7 +308,7 @@ class SpacedAppLocalizationsDelegate extends LocalizationsDelegate<SpacedAppLoca
   const SpacedAppLocalizationsDelegate();
 
   @override
-  bool isSupported(Locale locale) => ['en', 'es'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => ['en', 'pt'].contains(locale.languageCode);
 
   @override
   Future<SpacedAppLocalizations> load(Locale locale) {

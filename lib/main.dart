@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'styles/my_styles.dart';
 import 'blocs/main_bloc.dart';
@@ -23,7 +24,9 @@ class MyApp extends StatelessWidget {
       title: 'Spaced',
       theme: appTheme,
       localizationsDelegates: [
-        SpacedAppLocalizationsDelegate()
+        SpacedAppLocalizationsDelegate(),
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
       ],
       supportedLocales: [
         const Locale('en'),

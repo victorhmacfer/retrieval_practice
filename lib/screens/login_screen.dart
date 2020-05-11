@@ -6,6 +6,7 @@ import 'package:retrieval_practice/styles/my_styles.dart';
 import 'package:retrieval_practice/custom_widgets/pill_button.dart';
 
 import 'home_screen.dart';
+import 'package:retrieval_practice/utils/app_i18n.dart';
 
 class LoginScreen extends StatelessWidget {
   final MainBloc mainBloc;
@@ -15,6 +16,8 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
+
+    var localizedStrings = SpacedAppLocalizations.of(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -52,7 +55,7 @@ class LoginScreen extends StatelessWidget {
                   height: screenHeight * 0.23,
                 ),
                 Text(
-                  'Login',
+                  localizedStrings.loginScreenTitle,
                   style: TextStyle(
                       color: appBlack,
                       fontSize: 36,
@@ -93,6 +96,8 @@ class _MyLoginFormState extends State<MyLoginForm> {
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
 
+    var localizedStrings = SpacedAppLocalizations.of(context);
+
     return Form(
       key: _loginFormKey,
       child: Column(
@@ -107,7 +112,7 @@ class _MyLoginFormState extends State<MyLoginForm> {
               validator: (email) {
                 if (!email.contains(RegExp(
                     r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$"))) {
-                  return 'Invalid email';
+                  return localizedStrings.invalidEmail;
                 }
               },
               onChanged: (_) {
@@ -117,7 +122,7 @@ class _MyLoginFormState extends State<MyLoginForm> {
               style: TextStyle(color: appBlack),
               decoration: InputDecoration(
                 //TODO: label is bugged ?  I will try to use it later
-                hintText: 'Email',
+                hintText: localizedStrings.emailFormHintText,
                 hintStyle: TextStyle(color: Colors.grey),
                 fillColor: formFieldGrey,
                 filled: true,
@@ -145,7 +150,7 @@ class _MyLoginFormState extends State<MyLoginForm> {
             controller: _passwordController,
             //FIXME:  everything here is duplicated in signup screen
             validator: (pwd) {
-              if (pwd.length < 8) return 'Must be at least 8 characters long.';
+              if (pwd.length < 8) return localizedStrings.passwordTooShort;
             },
             onChanged: (_) {
               _passwordKey.currentState.validate();
@@ -161,7 +166,7 @@ class _MyLoginFormState extends State<MyLoginForm> {
                 ),
                 padding: const EdgeInsets.only(right: 24),
               ),
-              hintText: 'Password',
+              hintText: localizedStrings.passwordFormHintText,
               hintStyle: TextStyle(color: Colors.grey),
               fillColor: formFieldGrey,
               filled: true,
@@ -187,7 +192,7 @@ class _MyLoginFormState extends State<MyLoginForm> {
             padding: EdgeInsets.only(
                 top: screenHeight * 0.02, right: screenHeight * 0.03),
             child: Text(
-              ' Reset password',
+              localizedStrings.resetPassword,
               style: TextStyle(color: Colors.black),
             ),
           ),
@@ -208,7 +213,7 @@ class _MyLoginFormState extends State<MyLoginForm> {
                     Scaffold.of(context).showSnackBar(SnackBar(
                       duration: Duration(seconds: 3),
                       content: Text(
-                        "We couldn't find a user with this email!",
+                        localizedStrings.loginEmailNotFound,
                         style: TextStyle(
                             fontSize: 16,
                             color: appWhite,
@@ -220,7 +225,7 @@ class _MyLoginFormState extends State<MyLoginForm> {
                     Scaffold.of(context).showSnackBar(SnackBar(
                       duration: Duration(seconds: 3),
                       content: Text(
-                        "Wrong password!",
+                        localizedStrings.wrongPassword,
                         style: TextStyle(
                             fontSize: 16,
                             color: appWhite,
@@ -238,7 +243,7 @@ class _MyLoginFormState extends State<MyLoginForm> {
                   }
                 }
               },
-              child: AccentPillButton('LOGIN')),
+              child: AccentPillButton(localizedStrings.loginScreenTitle.toUpperCase())),
           SizedBox(height: screenHeight * 0.45,)
         ],
       ),

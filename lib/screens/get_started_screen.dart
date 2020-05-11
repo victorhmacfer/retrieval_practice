@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:retrieval_practice/blocs/main_bloc.dart';
+import 'package:retrieval_practice/utils/app_i18n.dart';
 
 import 'package:retrieval_practice/custom_widgets/pill_button.dart';
 import 'package:retrieval_practice/screens/signup_screen.dart';
@@ -20,6 +21,8 @@ class GetStartedScreen extends StatelessWidget {
         SystemUiOverlayStyle(statusBarColor: Colors.transparent));
 
     var screenHeight = MediaQuery.of(context).size.height;
+
+    var localizedStrings = SpacedAppLocalizations.of(context);
 
     return Material(
       child: Container(
@@ -48,7 +51,7 @@ class GetStartedScreen extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    AccentPillButton('GET STARTED'),
+                    AccentPillButton(localizedStrings.getStarted),
                     GestureDetector(
                         onTap: () {
                           Navigator.push(
@@ -58,7 +61,7 @@ class GetStartedScreen extends StatelessWidget {
                                     SignUpScreen(mainBloc),
                               ));
                         },
-                        child: HollowPillButton('SIGN UP')),
+                        child: HollowPillButton(localizedStrings.signUp)),
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
@@ -71,7 +74,7 @@ class GetStartedScreen extends StatelessWidget {
                         // color: Colors.green,
                         padding: EdgeInsets.only(top: 6, bottom: 24),
                         child: Text(
-                          'Already registered ?',
+                          '${localizedStrings.alreadyRegistered}',
                           style: TextStyle(fontSize: 12),
                         ),
                       ),

@@ -4,6 +4,7 @@ import 'package:retrieval_practice/blocs/main_bloc.dart';
 import 'package:retrieval_practice/screens/login_screen.dart';
 import 'package:retrieval_practice/styles/my_styles.dart';
 import 'package:retrieval_practice/custom_widgets/pill_button.dart';
+import 'package:retrieval_practice/utils/app_i18n.dart';
 
 import 'home_screen.dart';
 
@@ -15,6 +16,8 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
+
+    var localizedStrings = SpacedAppLocalizations.of(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -55,7 +58,7 @@ class SignUpScreen extends StatelessWidget {
                   padding: EdgeInsets.symmetric(vertical: screenHeight * 0.07),
                   // color: Colors.red,
                   child: Text(
-                    'Sign Up',
+                    localizedStrings.signUpScreenTitle,
                     style: TextStyle(
                         color: Color.fromRGBO(23, 23, 23, 1),
                         fontSize: 36,
@@ -98,6 +101,8 @@ class _MySignUpFormState extends State<MySignUpForm> {
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
 
+    var localizedStrings = SpacedAppLocalizations.of(context);
+
     return Form(
       key: _signUpFormKey,
       child: Column(
@@ -112,14 +117,14 @@ class _MySignUpFormState extends State<MySignUpForm> {
                   key: _firstNameKey,
                   controller: _firstNameController,
                   validator: (text) {
-                    if (text.isEmpty) return 'Please, tell us!';
+                    if (text.isEmpty) return localizedStrings.signUpFirstNameBlank;
                   },
                   onChanged: (_) {
                     _firstNameKey.currentState.validate();
                   },
                   style: TextStyle(color: appBlack),
                   decoration: InputDecoration(
-                    hintText: 'First name',
+                    hintText: localizedStrings.firstNameFormHintText,
                     hintStyle: TextStyle(color: Colors.grey),
                     fillColor: formFieldGrey,
                     filled: true,
@@ -149,14 +154,14 @@ class _MySignUpFormState extends State<MySignUpForm> {
                   key: _lastNameKey,
                   controller: _lastNameController,
                   validator: (text) {
-                    if (text.isEmpty) return 'Please, tell us!';
+                    if (text.isEmpty) return localizedStrings.signUpLastNameBlank;
                   },
                   onChanged: (_) {
                     _lastNameKey.currentState.validate();
                   },
                   style: TextStyle(color: appBlack),
                   decoration: InputDecoration(
-                    hintText: 'Last name',
+                    hintText: localizedStrings.lastNameFormHintText,
                     hintStyle: TextStyle(color: Colors.grey),
                     fillColor: formFieldGrey,
                     filled: true,
@@ -192,7 +197,7 @@ class _MySignUpFormState extends State<MySignUpForm> {
               validator: (email) {
                 if (!email.contains(RegExp(
                     r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$"))) {
-                  return 'Invalid email';
+                  return localizedStrings.invalidEmail;
                 }
               },
               onChanged: (_) {
@@ -201,7 +206,7 @@ class _MySignUpFormState extends State<MySignUpForm> {
               style: TextStyle(color: appBlack),
               decoration: InputDecoration(
                 //TODO: label is bugged ?  I will try to use it later
-                hintText: 'Email',
+                hintText: localizedStrings.emailFormHintText,
                 hintStyle: TextStyle(color: Colors.grey),
                 fillColor: formFieldGrey,
                 filled: true,
@@ -229,7 +234,7 @@ class _MySignUpFormState extends State<MySignUpForm> {
             controller: _passwordController,
             style: TextStyle(color: appBlack),
             validator: (pwd) {
-              if (pwd.length < 8) return 'Must be at least 8 characters long.';
+              if (pwd.length < 8) return localizedStrings.passwordTooShort;
             },
             onChanged: (_) {
               _passwordKey.currentState.validate();
@@ -244,7 +249,7 @@ class _MySignUpFormState extends State<MySignUpForm> {
                 ),
                 padding: const EdgeInsets.only(right: 24),
               ),
-              hintText: 'Password',
+              hintText: localizedStrings.passwordFormHintText,
               hintStyle: TextStyle(color: Colors.grey),
               fillColor: formFieldGrey,
               filled: true,
@@ -280,7 +285,7 @@ class _MySignUpFormState extends State<MySignUpForm> {
                 right: screenHeight * 0.03,
               ),
               child: Text(
-                ' Already registered?',
+                localizedStrings.alreadyRegistered,
                 style: TextStyle(color: Colors.black),
               ),
             ),
@@ -312,7 +317,7 @@ class _MySignUpFormState extends State<MySignUpForm> {
                     Scaffold.of(context).showSnackBar(SnackBar(
                       duration: Duration(seconds: 3),
                       content: Text(
-                        'Email already in use!',
+                        localizedStrings.emailAlreadyInUse,
                         style: TextStyle(
                             fontSize: 16,
                             color: appWhite,
@@ -323,7 +328,7 @@ class _MySignUpFormState extends State<MySignUpForm> {
                   }
                 }
               },
-              child: AccentPillButton('SIGN UP')),
+              child: AccentPillButton(localizedStrings.signUp.toUpperCase())),
               SizedBox(height: screenHeight * 0.45,),
         ],
       ),
