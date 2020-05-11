@@ -64,12 +64,33 @@ class SpacedAppLocalizations {
 
 
       'question': 'question', //deck widget
+      'questions': 'questions', 
       'due': 'due',
+      'duePlural': 'due',
+      'delete': 'Delete',
 
       'deckInfoNoQuestionsYet': "You haven't created any questions yet!", // deck info screen
-      'edited': 'edited',
+
+
+      'edited': 'edited', //question tile
       'daysAgo': 'days ago',
-      'dayAgo': 'day ago'
+      'dayAgo': 'day ago',
+      'questionNotTheTimeToReviewYet': 'Not the time to review this one yet!',
+      'questionDeletionConfirmationQuestion': 'Do you really want to remove this question?',
+      'questionDeletionWarning': 'This action is IRREVERSIBLE.',
+      'cancel': 'Cancel',
+      'yes': 'yes',
+      'dayWordFirstLetter': 'd',
+
+      'questionFrontSide': 'Question', // create question screen
+      'questionBackSide': 'Answer',
+      'cardFrontSide': 'Front side',
+      'cardBackSide': 'Back side',
+
+      'dueCards': 'Due cards' // answer question screen
+
+
+
     
     },
     
@@ -122,12 +143,32 @@ class SpacedAppLocalizations {
 
 
       'question': 'pergunta', //deck widget
+      'questions': 'perguntas',
       'due': 'pendente',
+      'duePlural': 'pendentes',
+      'delete': 'Remover',
 
       'deckInfoNoQuestionsYet': "Você ainda não criou nenhuma pergunta!", // deck info screen
-      'edited': 'editada',
+
+
+      'edited': 'editada',  // question tile
       'daysAgo': 'dias atrás',
-      'dayAgo': 'dia atrás'
+      'dayAgo': 'dia atrás',
+      'questionNotTheTimeToReviewYet': 'Ainda não é hora de revisar essa pergunta!',
+      'questionDeletionConfirmationQuestion': 'Você realmente quer remover esta pergunta?',
+      'questionDeletionWarning': 'Esta ação é IRREVERSÍVEL.',
+      'cancel': 'Cancelar',
+      'yes': 'sim',
+      'dayWordFirstLetter': 'd',
+
+      'questionFrontSide': 'Pergunta', // create question screen
+      'questionBackSide': 'Resposta',
+      'cardFrontSide': 'Frente do card',
+      'cardBackSide': 'Verso do card',
+
+      'dueCards': 'Cards pendentes' // answer question screen
+
+
 
 
     },
@@ -278,15 +319,27 @@ class SpacedAppLocalizations {
   String get question {
     return _localizedValues[locale.languageCode]['question'];
   }
+  String get questions {
+    return _localizedValues[locale.languageCode]['questions'];
+  }
 
   String get due {
     return _localizedValues[locale.languageCode]['due'];
   }
+  String get duePlural {
+    return _localizedValues[locale.languageCode]['duePlural'];
+  }
+  String get delete {
+    return _localizedValues[locale.languageCode]['delete'];
+  }
+  
   // =================================  DECK INFO SCREEN  ========================================
 
   String get deckInfoNoQuestionsYet {
     return _localizedValues[locale.languageCode]['deckInfoNoQuestionsYet'];
   }
+
+  // =================================  QUESTION TILE  ========================================
 
   String get edited {
     return _localizedValues[locale.languageCode]['edited'];
@@ -298,6 +351,48 @@ class SpacedAppLocalizations {
 
   String get dayAgo {
     return _localizedValues[locale.languageCode]['dayAgo'];
+  }
+
+  String get questionNotTheTimeToReviewYet {
+    return _localizedValues[locale.languageCode]['questionNotTheTimeToReviewYet'];
+  }
+
+  String get questionDeletionConfirmationQuestion {
+    return _localizedValues[locale.languageCode]['questionDeletionConfirmationQuestion'];
+  }
+
+  String get questionDeletionWarning {
+    return _localizedValues[locale.languageCode]['questionDeletionWarning'];
+  }
+
+  String get cancel {
+    return _localizedValues[locale.languageCode]['cancel'];
+  }
+
+  String get yes {
+    return _localizedValues[locale.languageCode]['yes'];
+  }
+
+  String get dayWordFirstLetter {
+    return _localizedValues[locale.languageCode]['dayWordFirstLetter'];
+  }
+  // =================================  CREATE QUESTION SCREEN  ========================================
+  String get questionFrontSide {
+    return _localizedValues[locale.languageCode]['questionFrontSide'];
+  }
+
+  String get questionBackSide {
+    return _localizedValues[locale.languageCode]['questionBackSide'];
+  }
+  String get cardFrontSide {
+    return _localizedValues[locale.languageCode]['cardFrontSide'];
+  }
+  String get cardBackSide {
+    return _localizedValues[locale.languageCode]['cardBackSide'];
+  }
+  // =================================  ANSWER QUESTION SCREEN  ========================================
+  String get dueCards {
+    return _localizedValues[locale.languageCode]['dueCards'];
   }
 
 

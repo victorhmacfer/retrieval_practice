@@ -8,6 +8,7 @@ import 'package:retrieval_practice/custom_widgets/question_tile.dart';
 import 'package:retrieval_practice/models/studied_subject.dart';
 import 'package:retrieval_practice/screens/create_question_screen.dart';
 import 'package:retrieval_practice/styles/my_styles.dart';
+import 'package:retrieval_practice/utils/app_i18n.dart';
 
 class DeckInfoScreen extends StatefulWidget {
   final StudiedSubject _subject;
@@ -26,7 +27,7 @@ class _DeckInfoScreenState extends State<DeckInfoScreen> {
     super.initState();
   }
 
-  List<Widget> _questions() {
+  List<Widget> _questions(noQuestionsText) {
     var questionsList = widget._subject.questions;
 
     if (questionsList.isNotEmpty) {
@@ -42,7 +43,7 @@ class _DeckInfoScreenState extends State<DeckInfoScreen> {
         height: 300,
         width: 120,
         child: Text(
-          'Você ainda não criou\n nenhuma pergunta!',
+          noQuestionsText,
           style: noQuestionsYetTextStyle,
         ),
       )
@@ -69,6 +70,8 @@ class _DeckInfoScreenState extends State<DeckInfoScreen> {
   Widget build(BuildContext context) {
 
     var screenHeight = MediaQuery.of(context).size.height;
+
+    var localizedStrings = SpacedAppLocalizations.of(context);
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(
@@ -131,7 +134,7 @@ class _DeckInfoScreenState extends State<DeckInfoScreen> {
                   color: appBlack,
                   padding: EdgeInsets.only(bottom: 32.0),
                   child: Column(
-                    children: _questions(),
+                    children: _questions(localizedStrings.deckInfoNoQuestionsYet),
                   ),
                 ),
               ],

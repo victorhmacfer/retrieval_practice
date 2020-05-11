@@ -4,6 +4,7 @@ import 'package:retrieval_practice/models/question.dart';
 import 'package:retrieval_practice/models/studied_subject.dart';
 import 'package:retrieval_practice/screens/answer_question_screen.dart';
 import 'package:retrieval_practice/styles/my_styles.dart';
+import 'package:retrieval_practice/utils/app_i18n.dart';
 
 class QuestionTile extends StatelessWidget {
   final Question question;
@@ -29,6 +30,10 @@ class QuestionTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    var localizedStrings = SpacedAppLocalizations.of(context);
+
+
     return GestureDetector(
       onTap: () {
         if (question.isDue) {
@@ -48,7 +53,7 @@ class QuestionTile extends StatelessWidget {
           );
         } else {
           Scaffold.of(context).showSnackBar(SnackBar(
-            content: Text("Not the time to review this one yet!"),
+            content: Text(localizedStrings.questionNotTheTimeToReviewYet),
           ));
         }
       },
@@ -57,17 +62,17 @@ class QuestionTile extends StatelessWidget {
             context: context,
             builder: (context) {
               return AlertDialog(
-                title: Text('Do you really want to remove this question?'),
-                content: Text('This action is IRREVERSIBLE.'),
+                title: Text(localizedStrings.questionDeletionConfirmationQuestion),
+                content: Text(localizedStrings.questionDeletionWarning),
                 actions: <Widget>[
                   FlatButton(
-                    child: Text('Cancel'),
+                    child: Text(localizedStrings.cancel),
                     onPressed: () {
                       Navigator.pop(context);
                     },
                   ),
                   FlatButton(
-                    child: Text('Yes'),
+                    child: Text(localizedStrings.yes),
                     onPressed: () {
                       bloc.onDeleteQuestion(question, subject);
                       // The deck info screen does not update to handle the deletion
@@ -109,7 +114,8 @@ class QuestionTile extends StatelessWidget {
                     maxLines: 1,
                     style: deckTitleTextStyle.copyWith(fontSize: 18),
                   ),
-                  Text('edited 9 days ago', style: deckSubtitleTextStyle),
+                  // FIXME: this sentence might be structured differently in some languages.. so I should probably localize the entire sentence.
+                  Text('${localizedStrings.edited} 9 ${localizedStrings.daysAgo}', style: deckSubtitleTextStyle), 
                 ],
               ),
             )

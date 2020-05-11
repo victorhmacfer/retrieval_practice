@@ -8,6 +8,7 @@ import 'package:retrieval_practice/screens/settings_screen.dart';
 import 'package:retrieval_practice/styles/my_styles.dart';
 
 import 'package:retrieval_practice/custom_widgets/due_questions_card.dart';
+import 'package:retrieval_practice/utils/app_i18n.dart';
 
 class HomeScreen extends StatefulWidget {
   final MainBloc mainBloc;
@@ -77,6 +78,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
     var screenHeight = MediaQuery.of(context).size.height;
 
+    var localizedStrings = SpacedAppLocalizations.of(context);
+
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
@@ -110,12 +113,12 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: <Widget>[
-                                Text('No decks yet', style: deckTitleTextStyle),
+                                Text(localizedStrings.homeNoDecksYet, style: deckTitleTextStyle),
                                 SizedBox(
                                   height: 10,
                                 ),
                                 Text(
-                                  'Create a deck of cards and it will show up here.',
+                                  localizedStrings.homeNoDecksYetSubText,
                                   style: TextStyle(
                                       color: appLightGrey,
                                       fontSize: 15,

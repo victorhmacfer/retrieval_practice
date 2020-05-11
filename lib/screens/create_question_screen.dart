@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:retrieval_practice/blocs/main_bloc.dart';
 import 'package:retrieval_practice/models/studied_subject.dart';
 import 'package:retrieval_practice/styles/my_styles.dart';
+import 'package:retrieval_practice/utils/app_i18n.dart';
 
 class CreateQuestionScreen extends StatefulWidget {
   final StudiedSubject subject;
@@ -31,6 +32,10 @@ class _CreateQuestionScreenState extends State<CreateQuestionScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var localizedStrings = SpacedAppLocalizations.of(context);
+
+
+
     return DefaultTabController(
       length: 2,
           child: Scaffold(
@@ -55,32 +60,23 @@ class _CreateQuestionScreenState extends State<CreateQuestionScreen> {
           bottom: TabBar(
             onTap: (index) {
               if (index == 0) {
-                //FocusScope.of(context).unfocus();
-                //backFocusNode.unfocus();
-                
                 FocusScope.of(context).requestFocus(frontFocusNode);
-                // FocusScope.of(context).requestFocus(frontFocusNode);
               } else if (index == 1) {
-                //FocusScope.of(context).unfocus();
-                //frontFocusNode.unfocus();
-                
                 FocusScope.of(context).requestFocus(backFocusNode);
-                
               }
-
             },
             indicatorColor: appBlue,
             labelPadding: EdgeInsets.all(16),
             tabs: <Widget>[
-              Text('Front side'),
-              Text('Back side'),
+              Text(localizedStrings.cardFrontSide),
+              Text(localizedStrings.cardBackSide),
             ],
           ),
         ),
         body: TabBarView(
           children: <Widget>[
-            _frontOrBackSide('Front', myFrontController, frontFocusNode),
-            _frontOrBackSide('Back', myBackController, backFocusNode),
+            _frontOrBackSide(localizedStrings.questionFrontSide, myFrontController, frontFocusNode),
+            _frontOrBackSide(localizedStrings.questionBackSide, myBackController, backFocusNode),
           ],
 
         ),

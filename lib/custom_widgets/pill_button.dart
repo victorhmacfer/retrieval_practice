@@ -5,6 +5,7 @@ import 'package:retrieval_practice/models/studied_subject.dart';
 import 'package:retrieval_practice/push_many.dart';
 import 'package:retrieval_practice/screens/answer_question_screen.dart';
 import 'package:retrieval_practice/styles/my_styles.dart';
+import 'package:retrieval_practice/utils/app_i18n.dart';
 
 class CardTotalPillButton extends StatelessWidget {
   final int _totalOfCards;
@@ -70,6 +71,10 @@ class CardsDuePillButton extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Question> myDueQuestions = subject.dueQuestions;
 
+    var localizedStrings = SpacedAppLocalizations.of(context);
+
+    var duePluralizationChoice = (myDueQuestions.length > 1) ? localizedStrings.duePlural : localizedStrings.due;
+
     return GestureDetector(
       onTap: () {
         pushMany(context, _answerScreens(context, myDueQuestions));
@@ -92,7 +97,7 @@ class CardsDuePillButton extends StatelessWidget {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 10),
               child: Text(
-                '$_dueCards due',
+                '$_dueCards $duePluralizationChoice',
                 style:
                     pillButtonTextStyle.copyWith(color: appDueQuestionLightRed),
               ),

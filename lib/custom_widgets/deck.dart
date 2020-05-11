@@ -6,6 +6,7 @@ import 'package:retrieval_practice/custom_widgets/deletion_modal.dart';
 import 'package:retrieval_practice/models/studied_subject.dart';
 import 'package:retrieval_practice/screens/deck_info_screen.dart';
 import 'package:retrieval_practice/styles/my_styles.dart';
+import 'package:retrieval_practice/utils/app_i18n.dart';
 
 class Deck extends StatelessWidget {
   final StudiedSubject _subject;
@@ -29,7 +30,11 @@ class Deck extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var totalNumOfQuestions = _subject.totalNumOfQuestions;
-    var questionString = (totalNumOfQuestions > 1) ? 'questions' : 'question';
+
+    var localizedStrings = SpacedAppLocalizations.of(context);
+
+    var questionPluralizationChoice = (totalNumOfQuestions > 1) ? localizedStrings.questions : localizedStrings.question;
+    var duePluralizationChoice = (_subject.numOfDueQuestions > 1) ? localizedStrings.duePlural : localizedStrings.due;
 
     return GestureDetector(
       onTap: () {
@@ -84,7 +89,7 @@ class Deck extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          '$totalNumOfQuestions $questionString  |  ${_subject.numOfDueQuestions} due',
+                          '$totalNumOfQuestions $questionPluralizationChoice  |  ${_subject.numOfDueQuestions} $duePluralizationChoice',
                           style: deckSubtitleTextStyle,
                         ),
                       ],

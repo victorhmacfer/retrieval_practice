@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:retrieval_practice/blocs/main_bloc.dart';
 import 'package:retrieval_practice/models/deck_cover_photo.dart';
 import 'package:retrieval_practice/styles/my_styles.dart';
+import 'package:retrieval_practice/utils/app_i18n.dart';
 
 class PickCoverScreen extends StatefulWidget {
   final MainBloc bloc;
@@ -25,6 +26,8 @@ class _PickCoverScreenState extends State<PickCoverScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var localizedStrings = SpacedAppLocalizations.of(context);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: appBlack,
@@ -35,7 +38,7 @@ class _PickCoverScreenState extends State<PickCoverScreen> {
             },
             child: Icon(Icons.clear)),
         title: Text(
-          'Pick cover',
+          localizedStrings.pickCoverTitle,
           style: deckTitleTextStyle,
         ),
         bottom: PreferredSize(
@@ -77,7 +80,7 @@ class _PickCoverScreenState extends State<PickCoverScreen> {
                       Icons.send,
                       color: appBlue,
                     ),
-                    labelText: "Search term",
+                    labelText: localizedStrings.pickCoverSearchFieldLabel,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(32),
                     )),
@@ -113,11 +116,7 @@ class _PickCoverScreenState extends State<PickCoverScreen> {
                   crossAxisSpacing: 6,
                   crossAxisCount: 3,
                   children: List.generate(snapshot.data.length, (index) {
-                    // use index to grab photo in snapshot.data[index]
                     var myDeckPhoto = snapshot.data[index];
-
-                    // create widget from this deckCoverPhoto
-
                     return _tinyImage(context, myDeckPhoto, widget.bloc);
                   }),
                 ),

@@ -3,6 +3,7 @@ import 'package:retrieval_practice/blocs/main_bloc.dart';
 import 'package:retrieval_practice/styles/my_styles.dart';
 
 import 'package:retrieval_practice/screens/first_screen_picker.dart';
+import 'package:retrieval_practice/utils/app_i18n.dart';
 
 const _usernameStyle =
     TextStyle(color: appWhite, fontSize: 14, fontWeight: FontWeight.w500);
@@ -141,10 +142,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
 
-    print(screenHeight);
-    print(screenWidth);
+    var localizedStrings = SpacedAppLocalizations.of(context);
 
-    print(screenHeight);
 
     return Material(
       child: Container(
@@ -170,18 +169,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 }),
 
                 
-            _actionWithToggle(Icon(Icons.brightness_3), 'Dark theme', screenHeight, screenWidth),
-            _actionRow(Icon(Icons.settings), 'Preferences', screenHeight, screenWidth),
-            _actionRow(Icon(Icons.import_export), 'Import/Export', screenHeight, screenWidth),
+            _actionWithToggle(Icon(Icons.brightness_3), localizedStrings.darkTheme, screenHeight, screenWidth),
+            _actionRow(Icon(Icons.settings), localizedStrings.preferences, screenHeight, screenWidth),
+            _actionRow(Icon(Icons.import_export), localizedStrings.importExport, screenHeight, screenWidth),
             _divider(screenHeight),
-            _actionRow(Icon(Icons.feedback), 'Send feedback', screenHeight, screenWidth),
-            _actionRow(Icon(Icons.star_border), 'Rate us', screenHeight, screenWidth),
-            _actionRow(Icon(Icons.event_note), 'Privacy Policy', screenHeight, screenWidth),
-            _actionRow(Icon(Icons.info_outline), 'About Spaced', screenHeight, screenWidth),
+            _actionRow(Icon(Icons.feedback), localizedStrings.sendFeedback, screenHeight, screenWidth),
+            _actionRow(Icon(Icons.star_border), localizedStrings.rateUs, screenHeight, screenWidth),
+            _actionRow(Icon(Icons.event_note), localizedStrings.privacyPolicy, screenHeight, screenWidth),
+            _actionRow(Icon(Icons.info_outline), localizedStrings.aboutTheApp, screenHeight, screenWidth),
             _divider(screenHeight),
             GestureDetector(
                 onTap: () async {
-                  print('clicked on logout tile');
                   await widget.mainBloc.logout();
                   Navigator.pushAndRemoveUntil(
                     context,
@@ -191,7 +189,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     (route) => false,
                   );
                 },
-                child: _actionRow(Icon(Icons.input), 'Log out', screenHeight, screenWidth)),
+                child: _actionRow(Icon(Icons.input), localizedStrings.settingsLogout, screenHeight, screenWidth)),
           ],
         ),
       ),

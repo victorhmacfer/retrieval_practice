@@ -4,6 +4,7 @@ import 'package:retrieval_practice/models/deck_cover_photo.dart';
 import 'package:retrieval_practice/models/local_photo_file.dart';
 import 'package:retrieval_practice/screens/pick_cover_screen.dart';
 import 'package:retrieval_practice/styles/my_styles.dart';
+import 'package:retrieval_practice/utils/app_i18n.dart';
 
 class CreateDeckScreen extends StatefulWidget {
   final MainBloc mainBloc;
@@ -30,12 +31,13 @@ class _CreateDeckScreenState extends State<CreateDeckScreen> {
   Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
 
-    print('screen width is $screenWidth');
+    var localizedStrings = SpacedAppLocalizations.of(context);
+
 
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Create deck',
+          localizedStrings.createDeckTitle,
           style: deckTitleTextStyle,
         ),
         backgroundColor: appDarkGrey,
@@ -115,7 +117,7 @@ class _CreateDeckScreenState extends State<CreateDeckScreen> {
                               borderRadius: BorderRadius.circular(32),
                             ),
                             child: Text(
-                              'Change image',
+                              localizedStrings.changeImage,
                               style: deckTitleTextStyle.copyWith(fontSize: 15),
                             ),
                           ),
@@ -133,7 +135,7 @@ class _CreateDeckScreenState extends State<CreateDeckScreen> {
                     cursorWidth: 3,
                     autofocus: true,
                     decoration: InputDecoration.collapsed(
-                      hintText: 'Untitled',
+                      hintText: localizedStrings.untitledHintText,
                       hintStyle: hintTextStyle.copyWith(fontSize: 28),
                     )),
               ),

@@ -3,6 +3,7 @@ import 'package:retrieval_practice/blocs/main_bloc.dart';
 import 'package:retrieval_practice/models/question.dart';
 import 'package:retrieval_practice/models/studied_subject.dart';
 import 'package:retrieval_practice/styles/my_styles.dart';
+import 'package:retrieval_practice/utils/app_i18n.dart';
 
 class AnswerQuestionScreen extends StatelessWidget {
   final Question question;
@@ -63,6 +64,8 @@ class AnswerQuestionScreen extends StatelessWidget {
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
 
+    var localizedStrings = SpacedAppLocalizations.of(context);
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -70,7 +73,7 @@ class AnswerQuestionScreen extends StatelessWidget {
           onPressed: tapCallback,
         ),
         title: Text(
-          'Due cards',
+          localizedStrings.dueCards,
           style: deckTitleTextStyle,
         ),
         centerTitle: true,

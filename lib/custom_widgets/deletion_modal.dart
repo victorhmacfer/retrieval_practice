@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:retrieval_practice/models/studied_subject.dart';
 import 'package:retrieval_practice/styles/my_styles.dart';
 import 'package:retrieval_practice/blocs/main_bloc.dart';
+import 'package:retrieval_practice/utils/app_i18n.dart';
 
 class DeletionModal extends StatelessWidget {
   final StudiedSubject subject;
@@ -12,6 +13,9 @@ class DeletionModal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    var localizedStrings = SpacedAppLocalizations.of(context);
+
     return Container(
         padding: EdgeInsets.all(16),
         height: 120,
@@ -38,7 +42,7 @@ class DeletionModal extends StatelessWidget {
                     child: Icon(Icons.delete, color: appWhite),
                   ),
                   Text(
-                    'delete',
+                    localizedStrings.delete,
                     style: deckTitleTextStyle.copyWith(fontSize: 15),
                   )
                 ],

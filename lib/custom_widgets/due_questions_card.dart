@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:retrieval_practice/blocs/main_bloc.dart';
 import 'package:retrieval_practice/push_many.dart';
 import 'package:retrieval_practice/screens/answer_question_screen.dart';
+import 'package:retrieval_practice/utils/app_i18n.dart';
 
 //TODO: fix styles and colors
 class DueQuestionsCard extends StatelessWidget {
@@ -28,6 +29,8 @@ class DueQuestionsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     List<dynamic> myDueQuestions = bloc.allDueQuestions;
 
+    var localizedStrings = SpacedAppLocalizations.of(context);
+
     return GestureDetector(
       onTap: () {
         pushMany(context, _answerScreens(context, myDueQuestions));
@@ -46,14 +49,14 @@ class DueQuestionsCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text('DUE QUESTIONS'),
+              Text(localizedStrings.dueQuestions.toUpperCase()),
               Row(
                 children: <Widget>[
                   Text(
                     '${myDueQuestions.length}',
                     style: TextStyle(fontSize: 44),
                   ),
-                  Text(myDueQuestions.length > 1 ? '  cards' : ' card'),
+                  Text(myDueQuestions.length > 1 ? '  cards' : ' card'), // I chose to not internationalize this word.
                 ],
               ),
               Row(
@@ -62,10 +65,10 @@ class DueQuestionsCard extends StatelessWidget {
                   Row(
                     children: <Widget>[
                       Icon(Icons.timer),
-                      Text('2 minutes'),
+                      Text('2 ${localizedStrings.minutes}'), //FIXME: dummy text.. no logic involved
                     ],
                   ),
-                  Text('LEARN'),
+                  Text(localizedStrings.learn.toUpperCase()),
                 ],
               )
             ],
