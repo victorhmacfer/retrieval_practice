@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:retrieval_practice/blocs/main_bloc.dart';
 
@@ -8,7 +7,7 @@ import 'package:retrieval_practice/screens/home_screen.dart';
 
 class FirstScreenPicker extends StatelessWidget {
 
-  MainBloc mainBloc;
+  final MainBloc mainBloc;
 
   FirstScreenPicker(this.mainBloc);
 

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
+
 import 'package:retrieval_practice/blocs/main_bloc.dart';
-
 import 'package:retrieval_practice/styles/my_styles.dart';
-
 import 'package:retrieval_practice/custom_widgets/pill_button.dart';
-
-import 'home_screen.dart';
+import 'package:retrieval_practice/custom_widgets/auth_error_snackbar.dart';
+import 'package:retrieval_practice/screens/home_screen.dart';
 import 'package:retrieval_practice/utils/app_i18n.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -108,7 +107,11 @@ class _MyLoginFormState extends State<MyLoginForm> {
             child: TextFormField(
               key: _emailKey,
               controller: _emailController,
-              //FIXME: this validation is wrong AND duplicated in signupscreen
+              //This validation is wrong.. accepts "victor@gmail"
+              // It is also duplicated in signup screen, but I dont see a GOOD way
+              // to remove this duplication since the function needs access to
+              // a SpacedAppLocalizations object and the expected signature
+              // doesnt allow this extra parameter.
               validator: (email) {
                 if (!email.contains(RegExp(
                     r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$"))) {
@@ -118,30 +121,16 @@ class _MyLoginFormState extends State<MyLoginForm> {
               onChanged: (_) {
                 _emailKey.currentState.validate();
               },
-
               style: TextStyle(color: appBlack),
               decoration: InputDecoration(
-                //TODO: label is bugged ?  I will try to use it later
                 hintText: localizedStrings.emailFormHintText,
                 hintStyle: TextStyle(color: Colors.grey),
                 fillColor: formFieldGrey,
                 filled: true,
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(32),
-                  borderSide: BorderSide(color: appAuthFormFieldBlue, width: 2),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(32),
-                  borderSide: BorderSide(color: formFieldGrey, width: 2),
-                ),
-                errorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(32),
-                  borderSide: BorderSide(color: appFormErrorRed, width: 2),
-                ),
-                focusedErrorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(32),
-                  borderSide: BorderSide(color: appFormErrorRed, width: 2),
-                ),
+                focusedBorder: authFormFocusedBorder,
+                enabledBorder: authFormEnabledBorder,
+                errorBorder: authFormErrorBorder,
+                focusedErrorBorder: authFormFocusedErrorBorder,
               ),
             ),
           ),
@@ -170,22 +159,10 @@ class _MyLoginFormState extends State<MyLoginForm> {
               hintStyle: TextStyle(color: Colors.grey),
               fillColor: formFieldGrey,
               filled: true,
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(32),
-                borderSide: BorderSide(color: Color(0xFF2B7EDE), width: 2),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(32),
-                borderSide: BorderSide(color: formFieldGrey, width: 2),
-              ),
-              errorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(32),
-                borderSide: BorderSide(color: appFormErrorRed, width: 2),
-              ),
-              focusedErrorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(32),
-                borderSide: BorderSide(color: appFormErrorRed, width: 2),
-              ),
+              focusedBorder: authFormFocusedBorder,
+              enabledBorder: authFormEnabledBorder,
+              errorBorder: authFormErrorBorder,
+              focusedErrorBorder: authFormFocusedErrorBorder,
             ),
           ),
           Padding(
@@ -198,7 +175,6 @@ class _MyLoginFormState extends State<MyLoginForm> {
           ),
           SizedBox(
             height: screenHeight * 0.06,
-            // height: screenHeight * 0.15,
           ),
           GestureDetector(
               onTap: () async {
@@ -210,23 +186,11 @@ class _MyLoginFormState extends State<MyLoginForm> {
                       .loginWithEmailAndPassword(theEmail, thePassword);
 
                   if (respStatus == LoginResponseStatus.USER_NOT_FOUND) {
-                    Scaffold.of(context).showSnackBar(SnackBar(
-                      duration: Duration(seconds: 3),
-                      content: Text(
-                        localizedStrings.loginEmailNotFound,
-                        style: snackBarTextStyle.copyWith(color: appWhite),
-                      ),
-                      backgroundColor: Colors.red[400],
-                    ));
+                    Scaffold.of(context).showSnackBar(
+                        authErrorSnackBar(localizedStrings.loginEmailNotFound));
                   } else if (respStatus == LoginResponseStatus.WRONG_PASSWORD) {
-                    Scaffold.of(context).showSnackBar(SnackBar(
-                      duration: Duration(seconds: 3),
-                      content: Text(
-                        localizedStrings.wrongPassword,
-                        style: snackBarTextStyle.copyWith(color: appWhite),
-                      ),
-                      backgroundColor: Colors.red[400],
-                    ));
+                    Scaffold.of(context).showSnackBar(
+                        authErrorSnackBar(localizedStrings.wrongPassword));
                   } else {
                     Navigator.pushAndRemoveUntil(
                       context,
@@ -237,8 +201,11 @@ class _MyLoginFormState extends State<MyLoginForm> {
                   }
                 }
               },
-              child: AccentPillButton(localizedStrings.loginScreenTitle.toUpperCase())),
-          SizedBox(height: screenHeight * 0.45,)
+              child: AccentPillButton(
+                  localizedStrings.loginScreenTitle.toUpperCase())),
+          SizedBox(
+            height: screenHeight * 0.45,
+          )
         ],
       ),
     );

@@ -177,19 +177,20 @@ class MainBloc extends BlocBase {
     } on SocketException {
       _deckCoverPhotoListStreamController.add([]);
       return;
+    } on Exception {
+      _deckCoverPhotoListStreamController.add([]);
+      return;
     }
     _deckCoverPhotoListStreamController.add(myPhotosList);
   }
 
-  // TODO: fetches hardcoded number of photos...  30.
+ 
   Future<List<DeckCoverPhoto>> _fetchListOfCoverPhotos(
       String searchKeyword) async {
     //TODO: THE QUERY PARAMETERS DONT WORK !!! THIS RETURNS ALL RESULTS FOR THE KEYWORD , NOT JUST 30
     final String searchUrl =
         'https://api.unsplash.com/search/photos/?client_id=238cc98d67d016f02e5aaf29a168c5aa8975d78bdf892198657abd3b49629b13' +
             '&query=$searchKeyword&per_page=30';
-
-    print('searchUrl is $searchUrl');
 
     final response = await http.get(searchUrl);
 
@@ -199,13 +200,15 @@ class MainBloc extends BlocBase {
       final List myJsonResultsList = myJsonResponse['results'];
 
       List<DeckCoverPhoto> photosList = [];
-      for (int i = 0; i < 30; i++) {
-        photosList.add(DeckCoverPhoto.fromMap(myJsonResultsList[i]));
-      }
 
+      if (myJsonResultsList.isNotEmpty) {
+        for (int i = 0; i < 30; i++) {
+          photosList.add(DeckCoverPhoto.fromMap(myJsonResultsList[i]));
+        }
+      }
       return photosList;
     } else {
-      throw Exception('Failed to load photos.');
+      throw Exception('api returned a code != 200');
     }
   }
 
@@ -213,55 +216,36 @@ class MainBloc extends BlocBase {
     String myDownloadLink = photo.downloadLink +
         '?client_id=238cc98d67d016f02e5aaf29a168c5aa8975d78bdf892198657abd3b49629b13';
 
-    print(myDownloadLink);
-
     final http.Response responseForUrl = await http.get(myDownloadLink);
 
     String url = jsonDecode(responseForUrl.body)['url'];
 
     final http.Response photoDownloadResponse = await http.get(url);
 
-    print('url is $url');
-
-    print(
-        'inside _downloadPhoto.. line after response.. response is ${responseForUrl.body}');
-
     var bytes = photoDownloadResponse.bodyBytes;
 
     //TODO: THIS IS DUPLICATED CODE !!! HANDLE LATER
     String dir = (await getApplicationDocumentsDirectory()).path;
-
-    print('line after dir.. dir is $dir');
     File file = File('$dir/$filename');
-
-    print('file path is ${file.path}');
     await file.writeAsBytes(bytes);
-    print('line after file writeasbytes');
     return file;
   }
 
   Future<void> onCoverPhotoChosen(DeckCoverPhoto photo) async {
     String dir = (await getApplicationDocumentsDirectory()).path;
 
-    print('the dir is: $dir');
-
     final filename = 'photo-id-${photo.id}';
 
     File file = File('$dir/$filename');
 
-    print(file.path);
-
     bool fileExists = await file.exists();
 
     if (fileExists) {
-      print('got inside fileExists');
       final theLocalPhotoFile = LocalPhotoFile(file.path, file);
       _localPhotoFileStreamController.add(theLocalPhotoFile);
     } else {
-      print('got inside else of fileExists');
       var photoFile = await _downloadPhoto(photo, filename);
       final theLocalPhotoFile = LocalPhotoFile(photoFile.path, photoFile);
-      print('line after _downloadPhoto call');
       _localPhotoFileStreamController.add(theLocalPhotoFile);
     }
   }

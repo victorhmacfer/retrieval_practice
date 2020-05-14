@@ -63,3 +63,25 @@ var appTheme = ThemeData(
     backgroundColor: appFabBlue,
   ),
 );
+
+
+final authFormFocusedBorder = OutlineInputBorder(
+    borderRadius: BorderRadius.circular(32),
+    borderSide: BorderSide(color: appAuthFormFieldBlue, width: 2),
+);
+
+final authFormEnabledBorder = OutlineInputBorder(
+    borderRadius: BorderRadius.circular(32),
+    borderSide: BorderSide(color: formFieldGrey, width: 2),
+);
+
+final authFormErrorBorder = OutlineInputBorder(
+    borderRadius: BorderRadius.circular(32),
+    borderSide: BorderSide(color: appFormErrorRed, width: 2),
+);
+
+
+final authFormFocusedErrorBorder = OutlineInputBorder(
+    borderRadius: BorderRadius.circular(32),
+    borderSide: BorderSide(color: appFormErrorRed, width: 2),
+);

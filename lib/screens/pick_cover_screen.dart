@@ -14,14 +14,12 @@ class PickCoverScreen extends StatefulWidget {
 
 class _PickCoverScreenState extends State<PickCoverScreen> {
   TextEditingController myController = TextEditingController();
-  //FocusNode myFocusNode;
   bool isLoading;
 
   @override
   void initState() {
     super.initState();
     isLoading = false;
-    //myFocusNode = FocusNode();
   }
 
   @override
@@ -46,9 +44,7 @@ class _PickCoverScreenState extends State<PickCoverScreen> {
             child: Container(
               padding: EdgeInsets.all(16),
               height: 90,
-              //color: Colors.green[800],
               child: TextField(
-                //focusNode: myFocusNode,
                 controller: myController,
                 autofocus: true,
                 cursorColor: appBlue,
@@ -56,16 +52,17 @@ class _PickCoverScreenState extends State<PickCoverScreen> {
                   fontSize: 16,
                 ),
                 onEditingComplete: () {
-                  setState(() {
-                    isLoading = true;
-                  });
-                  widget.bloc.onCoverPhotoSearchSubmitted(myController.text);
+                  if (myController.text.isNotEmpty) {
+                    setState(() {
+                      isLoading = true;
+                    });
+                    widget.bloc.onCoverPhotoSearchSubmitted(myController.text);
+                  }
                   FocusScope.of(context).unfocus();
                 },
                 decoration: InputDecoration(
                     labelStyle: TextStyle(color: appBlue),
                     enabledBorder: OutlineInputBorder(
-                      //borderRadius: BorderRadius.circular(32),
                       borderSide: BorderSide.none,
                     ),
                     focusedBorder: OutlineInputBorder(
@@ -91,15 +88,12 @@ class _PickCoverScreenState extends State<PickCoverScreen> {
           stream: widget.bloc.deckCoverPhotoListStream,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              print('snapshot has data');
               isLoading = false;
               if (snapshot.data.isEmpty) {
                 return Container(
-                  //color: Colors.red,
                   alignment: Alignment.center,
-                  // padding: EdgeInsets.symmetric(horizontal: 32),
                   child: Text(
-                    'An error occurred when\nsearching for your image.',
+                    "${localizedStrings.pickCoverImageSearchError} '${myController.text}'",
                     textAlign: TextAlign.center,
                     style: deckTitleTextStyle.copyWith(
                         color: appWhite, height: 1.5, fontSize: 19),

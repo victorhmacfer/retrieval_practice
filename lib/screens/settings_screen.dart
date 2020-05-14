@@ -10,7 +10,7 @@ const _usernameStyle =
 
 const _emailStyle = TextStyle(color: Colors.grey, fontSize: 12);
 
-// FIXME: hardcoded data
+
 class SettingsScreen extends StatefulWidget {
   final MainBloc mainBloc;
 
@@ -31,16 +31,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
         Navigator.pop(context);
       },
       child: Container(
-        // color: Colors.purple,
         padding: EdgeInsets.only(left: horizontalPadding),
         child: Icon(Icons.clear),
       ),
     );
   }
 
-  Widget _avatarRow(String firstName, String lastName, String email, screenHeight, screenWidth) {
+  Widget _avatarRow(String firstName, String lastName, String email,
+      screenHeight, screenWidth) {
     return Container(
-      // color: Colors.red,
       padding: EdgeInsets.only(
           top: screenHeight * 0.033,
           bottom: screenHeight * 0.024,
@@ -77,7 +76,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Widget _actionWithToggle(icon, textString, screenHeight, screenWidth) {
     return Container(
-      // color: Colors.blue,
       padding: EdgeInsets.symmetric(vertical: 4, horizontal: horizontalPadding),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -92,7 +90,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ],
           ),
           Container(
-            // color: Colors.red,
             child: Switch(
                 activeColor: appBlue,
                 value: darkThemeEnabled,
@@ -112,8 +109,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
       //this is the same color as the background but
       // containers with no color dont detect taps correctly
       color: appBlack,
-      padding:
-          EdgeInsets.symmetric(vertical: screenHeight * 0.018, horizontal: horizontalPadding),
+      padding: EdgeInsets.symmetric(
+          vertical: screenHeight * 0.018, horizontal: horizontalPadding),
       child: Row(
         children: <Widget>[
           icon,
@@ -138,12 +135,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
 
     var localizedStrings = SpacedAppLocalizations.of(context);
-
 
     return Material(
       child: Container(
@@ -154,8 +149,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             _backIcon(context),
-
-
             StreamBuilder(
                 stream: widget.mainBloc.appUserStream,
                 builder: (context, snapshot) {
@@ -163,20 +156,26 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     var firstName = snapshot.data.firstName;
                     var lastName = snapshot.data.lastName;
                     var email = snapshot.data.email;
-                    return _avatarRow(firstName, lastName, email, screenHeight, screenWidth);
+                    return _avatarRow(
+                        firstName, lastName, email, screenHeight, screenWidth);
                   }
                   return CircularProgressIndicator();
                 }),
-
-                
-            _actionWithToggle(Icon(Icons.brightness_3), localizedStrings.darkTheme, screenHeight, screenWidth),
-            _actionRow(Icon(Icons.settings), localizedStrings.preferences, screenHeight, screenWidth),
-            _actionRow(Icon(Icons.import_export), localizedStrings.importExport, screenHeight, screenWidth),
+            _actionWithToggle(Icon(Icons.brightness_3),
+                localizedStrings.darkTheme, screenHeight, screenWidth),
+            _actionRow(Icon(Icons.settings), localizedStrings.preferences,
+                screenHeight, screenWidth),
+            _actionRow(Icon(Icons.import_export), localizedStrings.importExport,
+                screenHeight, screenWidth),
             _divider(screenHeight),
-            _actionRow(Icon(Icons.feedback), localizedStrings.sendFeedback, screenHeight, screenWidth),
-            _actionRow(Icon(Icons.star_border), localizedStrings.rateUs, screenHeight, screenWidth),
-            _actionRow(Icon(Icons.event_note), localizedStrings.privacyPolicy, screenHeight, screenWidth),
-            _actionRow(Icon(Icons.info_outline), localizedStrings.aboutTheApp, screenHeight, screenWidth),
+            _actionRow(Icon(Icons.feedback), localizedStrings.sendFeedback,
+                screenHeight, screenWidth),
+            _actionRow(Icon(Icons.star_border), localizedStrings.rateUs,
+                screenHeight, screenWidth),
+            _actionRow(Icon(Icons.event_note), localizedStrings.privacyPolicy,
+                screenHeight, screenWidth),
+            _actionRow(Icon(Icons.info_outline), localizedStrings.aboutTheApp,
+                screenHeight, screenWidth),
             _divider(screenHeight),
             GestureDetector(
                 onTap: () async {
@@ -189,7 +188,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     (route) => false,
                   );
                 },
-                child: _actionRow(Icon(Icons.input), localizedStrings.settingsLogout, screenHeight, screenWidth)),
+                child: _actionRow(
+                    Icon(Icons.input),
+                    localizedStrings.settingsLogout,
+                    screenHeight,
+                    screenWidth)),
           ],
         ),
       ),

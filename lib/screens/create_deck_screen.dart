@@ -27,12 +27,36 @@ class _CreateDeckScreenState extends State<CreateDeckScreen> {
     super.initState();
   }
 
+  Widget _changeImageButton(BuildContext ctx, String text) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+            ctx,
+            MaterialPageRoute(
+                builder: (context) => PickCoverScreen(bloc: widget.mainBloc)));
+      },
+      child: Container(
+        height: 36,
+        padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+        decoration: BoxDecoration(
+          color: Color.fromRGBO(32, 32, 32, 0.5),
+          borderRadius: BorderRadius.circular(32),
+        ),
+        child: Text(
+          text,
+          style: deckTitleTextStyle.copyWith(fontSize: 15),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
+    var screenHeight = MediaQuery.of(context).size.height;
+    print(screenHeight);
 
     var localizedStrings = SpacedAppLocalizations.of(context);
-
 
     return Scaffold(
       appBar: AppBar(
@@ -55,12 +79,9 @@ class _CreateDeckScreenState extends State<CreateDeckScreen> {
             onPressed: () {
               if (localPhotoFilePath == null) {
                 widget.mainBloc.onCreateNewSubject(myController.text);
-              }
-              else {
-                widget.mainBloc.onCreateNewSubject(
-                  myController.text, 
-                  localPhotoFilePath: localPhotoFilePath
-                );
+              } else {
+                widget.mainBloc.onCreateNewSubject(myController.text,
+                    localPhotoFilePath: localPhotoFilePath);
               }
               Navigator.pop(context);
             },
@@ -68,13 +89,13 @@ class _CreateDeckScreenState extends State<CreateDeckScreen> {
         ],
       ),
       body: Container(
-        constraints: BoxConstraints.expand(height: 400), //FIXME: hardcoded
+        constraints: BoxConstraints.expand(
+            height: screenHeight * 0.59),
         color: appBlack,
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
               Container(
-                // color: Colors.red,
                 height: 248,
                 child: Stack(
                   children: <Widget>[
@@ -99,29 +120,8 @@ class _CreateDeckScreenState extends State<CreateDeckScreen> {
                     Positioned(
                         right: 16,
                         bottom: 24,
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => PickCoverScreen(
-                                        bloc: widget.mainBloc)));
-                          },
-                          child: Container(
-                            height: 36,
-                            padding: EdgeInsets.symmetric(
-                                vertical: 8, horizontal: 16),
-                            decoration: BoxDecoration(
-                              color: Color.fromRGBO(32, 32, 32, 0.5),
-                              // color: Colors.blue,
-                              borderRadius: BorderRadius.circular(32),
-                            ),
-                            child: Text(
-                              localizedStrings.changeImage,
-                              style: deckTitleTextStyle.copyWith(fontSize: 15),
-                            ),
-                          ),
-                        )),
+                        child: _changeImageButton(
+                            context, localizedStrings.changeImage)),
                   ],
                 ),
               ),

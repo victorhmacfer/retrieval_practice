@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
 import 'package:retrieval_practice/blocs/main_bloc.dart';
+import 'package:retrieval_practice/custom_widgets/auth_error_snackbar.dart';
 import 'package:retrieval_practice/screens/login_screen.dart';
 import 'package:retrieval_practice/styles/my_styles.dart';
 import 'package:retrieval_practice/custom_widgets/pill_button.dart';
 import 'package:retrieval_practice/utils/app_i18n.dart';
 
-import 'home_screen.dart';
+import 'package:retrieval_practice/screens/home_screen.dart';
 
 class SignUpScreen extends StatelessWidget {
   final MainBloc mainBloc;
@@ -39,35 +40,31 @@ class SignUpScreen extends StatelessWidget {
       ),
       body: Container(
         constraints: BoxConstraints.expand(),
-        // color: Colors.red,
         color: appWhite,
         padding: const EdgeInsets.all(32.0),
         child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                CircleAvatar(
-                    backgroundImage: AssetImage('assets/images/launcher-icon-192.png'),
-                    radius: 34,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              CircleAvatar(
+                backgroundImage:
+                    AssetImage('assets/images/launcher-icon-192.png'),
+                radius: 34,
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(vertical: screenHeight * 0.07),
+                child: Text(
+                  localizedStrings.signUpScreenTitle,
+                  style: TextStyle(
+                      color: Color.fromRGBO(23, 23, 23, 1),
+                      fontSize: 36,
+                      fontWeight: FontWeight.w500),
                 ),
-                
-                
-                Container(
-                  padding: EdgeInsets.symmetric(vertical: screenHeight * 0.07),
-                  // color: Colors.red,
-                  child: Text(
-                    localizedStrings.signUpScreenTitle,
-                    style: TextStyle(
-                        color: Color.fromRGBO(23, 23, 23, 1),
-                        fontSize: 36,
-                        fontWeight: FontWeight.w500),
-                  ),
-                ),
-                MySignUpForm(mainBloc),
-              ],
-            ),
+              ),
+              MySignUpForm(mainBloc),
+            ],
           ),
-        
+        ),
       ),
     );
   }
@@ -98,6 +95,7 @@ class _MySignUpFormState extends State<MySignUpForm> {
   @override
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
+    var screenWidth = MediaQuery.of(context).size.width;
 
     var localizedStrings = SpacedAppLocalizations.of(context);
 
@@ -110,49 +108,37 @@ class _MySignUpFormState extends State<MySignUpForm> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               SizedBox(
-                width: 140,
+                width: screenWidth * 0.38,
                 child: TextFormField(
                   key: _firstNameKey,
                   controller: _firstNameController,
                   validator: (text) {
-                    if (text.isEmpty) return localizedStrings.signUpFirstNameBlank;
+                    if (text.isEmpty)
+                      return localizedStrings.signUpFirstNameBlank;
                   },
                   onChanged: (_) {
                     _firstNameKey.currentState.validate();
                   },
                   style: TextStyle(color: appBlack),
                   decoration: InputDecoration(
-                    hintText: localizedStrings.firstNameFormHintText,
-                    hintStyle: TextStyle(color: Colors.grey),
-                    fillColor: formFieldGrey,
-                    filled: true,
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(32),
-                      borderSide:
-                          BorderSide(color: appAuthFormFieldBlue, width: 2),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(32),
-                      borderSide: BorderSide(color: formFieldGrey, width: 2),
-                    ),
-                    errorBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(32),
-                      borderSide: BorderSide(color: appFormErrorRed, width: 2),
-                    ),
-                    focusedErrorBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(32),
-                      borderSide: BorderSide(color: appFormErrorRed, width: 2),
-                    ),
-                  ),
+                      hintText: localizedStrings.firstNameFormHintText,
+                      hintStyle: TextStyle(color: Colors.grey),
+                      fillColor: formFieldGrey,
+                      filled: true,
+                      focusedBorder: authFormFocusedBorder,
+                      enabledBorder: authFormEnabledBorder,
+                      errorBorder: authFormErrorBorder,
+                      focusedErrorBorder: authFormFocusedErrorBorder),
                 ),
               ),
               SizedBox(
-                width: 140,
+                width: screenWidth * 0.38,
                 child: TextFormField(
                   key: _lastNameKey,
                   controller: _lastNameController,
                   validator: (text) {
-                    if (text.isEmpty) return localizedStrings.signUpLastNameBlank;
+                    if (text.isEmpty)
+                      return localizedStrings.signUpLastNameBlank;
                   },
                   onChanged: (_) {
                     _lastNameKey.currentState.validate();
@@ -163,23 +149,10 @@ class _MySignUpFormState extends State<MySignUpForm> {
                     hintStyle: TextStyle(color: Colors.grey),
                     fillColor: formFieldGrey,
                     filled: true,
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(32),
-                      borderSide:
-                          BorderSide(color: appAuthFormFieldBlue, width: 2),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(32),
-                      borderSide: BorderSide(color: formFieldGrey, width: 2),
-                    ),
-                    errorBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(32),
-                      borderSide: BorderSide(color: appFormErrorRed, width: 2),
-                    ),
-                    focusedErrorBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(32),
-                      borderSide: BorderSide(color: appFormErrorRed, width: 2),
-                    ),
+                    focusedBorder: authFormFocusedBorder,
+                    enabledBorder: authFormEnabledBorder,
+                    errorBorder: authFormErrorBorder,
+                    focusedErrorBorder: authFormFocusedErrorBorder,
                   ),
                 ),
               ),
@@ -203,27 +176,14 @@ class _MySignUpFormState extends State<MySignUpForm> {
               },
               style: TextStyle(color: appBlack),
               decoration: InputDecoration(
-                //TODO: label is bugged ?  I will try to use it later
                 hintText: localizedStrings.emailFormHintText,
                 hintStyle: TextStyle(color: Colors.grey),
                 fillColor: formFieldGrey,
                 filled: true,
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(32),
-                  borderSide: BorderSide(color: appAuthFormFieldBlue, width: 2),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(32),
-                  borderSide: BorderSide(color: formFieldGrey, width: 2),
-                ),
-                errorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(32),
-                  borderSide: BorderSide(color: appFormErrorRed, width: 2),
-                ),
-                focusedErrorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(32),
-                  borderSide: BorderSide(color: appFormErrorRed, width: 2),
-                ),
+                focusedBorder: authFormFocusedBorder,
+                enabledBorder: authFormEnabledBorder,
+                errorBorder: authFormErrorBorder,
+                focusedErrorBorder: authFormFocusedErrorBorder,
               ),
             ),
           ),
@@ -251,22 +211,10 @@ class _MySignUpFormState extends State<MySignUpForm> {
               hintStyle: TextStyle(color: Colors.grey),
               fillColor: formFieldGrey,
               filled: true,
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(32),
-                borderSide: BorderSide(color: appAuthFormFieldBlue, width: 2),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(32),
-                borderSide: BorderSide(color: formFieldGrey, width: 2),
-              ),
-              errorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(32),
-                borderSide: BorderSide(color: appFormErrorRed, width: 2),
-              ),
-              focusedErrorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(32),
-                borderSide: BorderSide(color: appFormErrorRed, width: 2),
-              ),
+              focusedBorder: authFormFocusedBorder,
+              enabledBorder: authFormEnabledBorder,
+              errorBorder: authFormErrorBorder,
+              focusedErrorBorder: authFormFocusedErrorBorder,
             ),
           ),
           GestureDetector(
@@ -312,22 +260,15 @@ class _MySignUpFormState extends State<MySignUpForm> {
                     );
                   } else if (respStatus ==
                       SignUpResponseStatus.EMAIL_ALREADY_IN_USE) {
-                    Scaffold.of(context).showSnackBar(SnackBar(
-                      duration: Duration(seconds: 3),
-                      content: Text(
-                        localizedStrings.emailAlreadyInUse,
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: appWhite,
-                            fontWeight: FontWeight.w500),
-                      ),
-                      backgroundColor: Colors.red[400],
-                    ));
+                    Scaffold.of(context).showSnackBar(
+                        authErrorSnackBar(localizedStrings.emailAlreadyInUse));
                   }
                 }
               },
               child: AccentPillButton(localizedStrings.signUp.toUpperCase())),
-              SizedBox(height: screenHeight * 0.45,),
+          SizedBox(
+            height: screenHeight * 0.45,
+          ),
         ],
       ),
     );

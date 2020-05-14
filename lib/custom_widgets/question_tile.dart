@@ -30,9 +30,7 @@ class QuestionTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     var localizedStrings = SpacedAppLocalizations.of(context);
-
 
     return GestureDetector(
       onTap: () {
@@ -53,7 +51,10 @@ class QuestionTile extends StatelessWidget {
           );
         } else {
           Scaffold.of(context).showSnackBar(SnackBar(
-            content: Text(localizedStrings.questionNotTheTimeToReviewYet, style: snackBarTextStyle.copyWith(color: appBlack),),
+            content: Text(
+              localizedStrings.questionNotTheTimeToReviewYet,
+              style: snackBarTextStyle.copyWith(color: appBlack),
+            ),
           ));
         }
       },
@@ -62,7 +63,8 @@ class QuestionTile extends StatelessWidget {
             context: context,
             builder: (context) {
               return AlertDialog(
-                title: Text(localizedStrings.questionDeletionConfirmationQuestion),
+                title:
+                    Text(localizedStrings.questionDeletionConfirmationQuestion),
                 content: Text(localizedStrings.questionDeletionWarning),
                 actions: <Widget>[
                   FlatButton(
@@ -115,7 +117,9 @@ class QuestionTile extends StatelessWidget {
                     style: deckTitleTextStyle.copyWith(fontSize: 18),
                   ),
                   // FIXME: this sentence might be structured differently in some languages.. so I should probably localize the entire sentence.
-                  Text('${localizedStrings.edited} 9 ${localizedStrings.daysAgo}', style: deckSubtitleTextStyle), 
+                  Text(
+                      '${localizedStrings.edited} 9 ${localizedStrings.daysAgo}',
+                      style: deckSubtitleTextStyle),
                 ],
               ),
             )

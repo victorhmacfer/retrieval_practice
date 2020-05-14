@@ -24,7 +24,10 @@ class Deck extends StatelessWidget {
       );
     }
     var photoFile = File(_sub.deckPhotoPath);
-    return Image.file(photoFile, fit: BoxFit.fill,);
+    return Image.file(
+      photoFile,
+      fit: BoxFit.fill,
+    );
   }
 
   @override
@@ -33,8 +36,12 @@ class Deck extends StatelessWidget {
 
     var localizedStrings = SpacedAppLocalizations.of(context);
 
-    var questionPluralizationChoice = (totalNumOfQuestions > 1) ? localizedStrings.questions : localizedStrings.question;
-    var duePluralizationChoice = (_subject.numOfDueQuestions > 1) ? localizedStrings.duePlural : localizedStrings.due;
+    var questionPluralizationChoice = (totalNumOfQuestions > 1)
+        ? localizedStrings.questions
+        : localizedStrings.question;
+    var duePluralizationChoice = (_subject.numOfDueQuestions > 1)
+        ? localizedStrings.duePlural
+        : localizedStrings.due;
 
     return GestureDetector(
       onTap: () {

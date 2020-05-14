@@ -22,7 +22,6 @@ class _CreateQuestionScreenState extends State<CreateQuestionScreen> {
   FocusNode frontFocusNode;
   FocusNode backFocusNode;
 
-
   @override
   void initState() {
     super.initState();
@@ -34,13 +33,14 @@ class _CreateQuestionScreenState extends State<CreateQuestionScreen> {
   Widget build(BuildContext context) {
     var localizedStrings = SpacedAppLocalizations.of(context);
 
-
-
     return DefaultTabController(
       length: 2,
-          child: Scaffold(
+      child: Scaffold(
         appBar: AppBar(
-          title: Text(widget.subject.title, style: deckTitleTextStyle,),
+          title: Text(
+            widget.subject.title,
+            style: deckTitleTextStyle,
+          ),
           backgroundColor: appDarkGrey,
           centerTitle: true,
           actions: <Widget>[
@@ -51,8 +51,8 @@ class _CreateQuestionScreenState extends State<CreateQuestionScreen> {
                 size: 28,
               ),
               onPressed: () {
-                widget._mainBloc
-                    .onCreateNewQuestion(myFrontController.text, myBackController.text, widget.subject);
+                widget._mainBloc.onCreateNewQuestion(myFrontController.text,
+                    myBackController.text, widget.subject);
                 Navigator.pop(context);
               },
             ),
@@ -75,10 +75,11 @@ class _CreateQuestionScreenState extends State<CreateQuestionScreen> {
         ),
         body: TabBarView(
           children: <Widget>[
-            _frontOrBackSide(localizedStrings.questionFrontSide, myFrontController, frontFocusNode),
-            _frontOrBackSide(localizedStrings.questionBackSide, myBackController, backFocusNode),
+            _frontOrBackSide(localizedStrings.questionFrontSide,
+                myFrontController, frontFocusNode),
+            _frontOrBackSide(localizedStrings.questionBackSide,
+                myBackController, backFocusNode),
           ],
-
         ),
       ),
     );
@@ -94,22 +95,19 @@ class _CreateQuestionScreenState extends State<CreateQuestionScreen> {
   }
 }
 
-
 Widget _frontOrBackSide(String message, aTextEditingcontroller, aFocusNode) {
   return Container(
-          padding: EdgeInsets.all(24),
-          constraints: BoxConstraints.expand(),
-          child: TextField(
-            showCursor: true,
-            //autofocus: true,
-            focusNode: aFocusNode,
-            cursorColor: appBlue,
-            controller: aTextEditingcontroller,
-            decoration: InputDecoration.collapsed(
-                hintText: message,
-                hintStyle: hintTextStyle),
-            maxLines: 100,
-            style: TextStyle(fontSize: 18),
-          ),
-        );
+    padding: EdgeInsets.all(24),
+    constraints: BoxConstraints.expand(),
+    child: TextField(
+      showCursor: true,
+      focusNode: aFocusNode,
+      cursorColor: appBlue,
+      controller: aTextEditingcontroller,
+      decoration: InputDecoration.collapsed(
+          hintText: message, hintStyle: hintTextStyle),
+      maxLines: 100,
+      style: TextStyle(fontSize: 18),
+    ),
+  );
 }

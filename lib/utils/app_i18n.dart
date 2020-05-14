@@ -61,6 +61,7 @@ class SpacedAppLocalizations {
 
       'pickCoverTitle': 'Pick cover', //pick cover screen
       'pickCoverSearchFieldLabel': 'Search term',
+      'pickCoverImageSearchError': 'An error occurred when\nsearching for images of',
 
 
       'question': 'question', //deck widget
@@ -140,6 +141,7 @@ class SpacedAppLocalizations {
 
       'pickCoverTitle': 'Escolher capa', //pick cover screen
       'pickCoverSearchFieldLabel': 'Buscar',
+      'pickCoverImageSearchError': 'Ocorreu um erro na busca\npor imagens para',
 
 
       'question': 'pergunta', //deck widget
@@ -314,6 +316,9 @@ class SpacedAppLocalizations {
 
   String get pickCoverSearchFieldLabel {
     return _localizedValues[locale.languageCode]['pickCoverSearchFieldLabel'];
+  }
+  String get pickCoverImageSearchError {
+    return _localizedValues[locale.languageCode]['pickCoverImageSearchError'];
   }
   // =================================  DECK WIDGET  ========================================
   String get question {

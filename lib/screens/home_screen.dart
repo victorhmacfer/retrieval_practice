@@ -62,10 +62,6 @@ class _HomeScreenState extends State<HomeScreen> {
       expandedHeight: 56.0,
       backgroundColor: appBlack,
       floating: true,
-      // title: Text(
-      //   'Spaced',
-      //   style: appTitleTextStyle,
-      // ),
       title: _LogoWithTitle(),
       centerTitle: true,
     );
@@ -77,6 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
         SystemUiOverlayStyle(statusBarColor: Colors.transparent));
 
     var screenHeight = MediaQuery.of(context).size.height;
+    var screenWidth = MediaQuery.of(context).size.width;
 
     var localizedStrings = SpacedAppLocalizations.of(context);
 
@@ -100,16 +97,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 return CustomScrollView(
                   physics: NeverScrollableScrollPhysics(),
                   slivers: <Widget>[
-                    //FIXME: this is duplicated
                     sliverAppBar(context),
                     SliverList(
                       delegate: SliverChildBuilderDelegate((context, index) {
                         return Container(
-                          height: screenHeight *
-                              0.8, //FIXME: hardcoded.. 80% is meaningless just to make it work.
+                          height: screenHeight * 0.8, 
                           alignment: Alignment.center,
                           child: Container(
-                            width: screenHeight * 0.25, //FIXME: weird
+                            width: screenWidth * 0.45,
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: <Widget>[

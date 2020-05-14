@@ -5,12 +5,10 @@ import 'package:retrieval_practice/utils/app_i18n.dart';
 
 import 'package:retrieval_practice/custom_widgets/pill_button.dart';
 import 'package:retrieval_practice/screens/signup_screen.dart';
+import 'package:retrieval_practice/screens/login_screen.dart';
 
-import 'login_screen.dart';
 
-//TODO: fix appearance  and use styles
 class GetStartedScreen extends StatelessWidget {
-
   final MainBloc mainBloc;
 
   GetStartedScreen(this.mainBloc);
@@ -21,6 +19,8 @@ class GetStartedScreen extends StatelessWidget {
         SystemUiOverlayStyle(statusBarColor: Colors.transparent));
 
     var screenHeight = MediaQuery.of(context).size.height;
+    var screenWidth = MediaQuery.of(context).size.width;
+    
 
     var localizedStrings = SpacedAppLocalizations.of(context);
 
@@ -33,20 +33,20 @@ class GetStartedScreen extends StatelessWidget {
                 image: AssetImage('assets/images/space-get-started.jpg'),
                 fit: BoxFit.fill)),
         child: Container(
-          // color: Colors.green,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Text(
                 'SPACED',
-                style: TextStyle(fontSize: 56, letterSpacing: 12),
+                style: TextStyle(
+                    fontSize: screenWidth * 0.14,
+                    letterSpacing: screenWidth * 0.04),
               ),
               SizedBox(height: screenHeight * 0.25),
               Container(
-                // color: Colors.red,
                 height: 280,
                 padding:
-                    const EdgeInsets.only(top: 56,bottom: 32, left: 44, right: 44),
+                    EdgeInsets.only(top: 56, bottom: 32, left: 44, right: 44),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -57,8 +57,7 @@ class GetStartedScreen extends StatelessWidget {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>
-                                    SignUpScreen(mainBloc),
+                                builder: (context) => SignUpScreen(mainBloc),
                               ));
                         },
                         child: HollowPillButton(localizedStrings.signUp)),
@@ -71,7 +70,6 @@ class GetStartedScreen extends StatelessWidget {
                             ));
                       },
                       child: Container(
-                        // color: Colors.green,
                         padding: EdgeInsets.only(top: 6, bottom: 24),
                         child: Text(
                           '${localizedStrings.alreadyRegistered}',

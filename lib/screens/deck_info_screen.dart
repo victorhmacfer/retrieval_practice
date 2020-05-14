@@ -63,12 +63,12 @@ class _DeckInfoScreenState extends State<DeckInfoScreen> {
     return Image.file(
       photoFile,
       height: screenHeight * 0.29,
-      fit: BoxFit.fill,);
+      fit: BoxFit.fill,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-
     var screenHeight = MediaQuery.of(context).size.height;
 
     var localizedStrings = SpacedAppLocalizations.of(context);
@@ -101,7 +101,6 @@ class _DeckInfoScreenState extends State<DeckInfoScreen> {
             delegate: SliverChildListDelegate(
               [
                 _imageWidget(widget._subject, screenHeight),
-
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 20.0),
                   color: appBlack,
@@ -122,7 +121,8 @@ class _DeckInfoScreenState extends State<DeckInfoScreen> {
                           children: <Widget>[
                             CardTotalPillButton(
                                 widget._subject.totalNumOfQuestions),
-                            CardsDuePillButton(widget._subject, widget._mainBloc),
+                            CardsDuePillButton(
+                                widget._subject, widget._mainBloc),
                           ],
                         ),
                       ),
@@ -134,7 +134,8 @@ class _DeckInfoScreenState extends State<DeckInfoScreen> {
                   color: appBlack,
                   padding: EdgeInsets.only(bottom: 32.0),
                   child: Column(
-                    children: _questions(localizedStrings.deckInfoNoQuestionsYet),
+                    children:
+                        _questions(localizedStrings.deckInfoNoQuestionsYet),
                   ),
                 ),
               ],

@@ -38,7 +38,6 @@ class DueQuestionsCard extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 18, vertical: 8),
         height: 160,
-        //color: Colors.red,
         child: Container(
           padding: EdgeInsets.all(20),
           decoration: BoxDecoration(

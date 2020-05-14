@@ -13,7 +13,6 @@ class DeletionModal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     var localizedStrings = SpacedAppLocalizations.of(context);
 
     return Container(
